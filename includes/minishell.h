@@ -13,6 +13,10 @@ typedef struct	s_shell{
 	int	tmp_fd_0;
 }		t_shell;
 
+/*Fonctions*/
+void		pwd(void);
+void		envprint(void);
+void		echo(char *s);
 
 /*Utils*/
 int 		init_struct(void);
