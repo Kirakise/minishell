@@ -1,3 +1,5 @@
+#include "minishell.h"
+t_shell	g_shell;
 int main()
 {
 	char **line;
