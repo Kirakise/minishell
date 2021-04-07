@@ -5,3 +5,4 @@ typedef struct s_shell{
 	int tmp_fd_1;
 	int tmp_fd_0;
 }	t_shell;
+//hiiiii
