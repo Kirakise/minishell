@@ -1,12 +1,19 @@
 #include "minishell.h"
+
 t_shell	g_shell;
-int main()
+
+int main(int argc, char **argv, char **envp)
 {
 	char **line;
 	char *s;
+
+	init_struct();
+	g_data.env = envcpy(envp);
 	while (true)
 	{
-		s = get_next_line(0);
+		get_next_line(0, &s);
 		line = tvoipars(s);
 	}
 }
+
+
