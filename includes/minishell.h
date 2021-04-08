@@ -18,6 +18,8 @@ void		pwd(void);
 void		envprint(void);
 void		echo(char *s);
 
+char		**get_commands(char *str);
+
 /*Utils*/
 int 		init_struct(void);
 char		**envcpy(char **line);

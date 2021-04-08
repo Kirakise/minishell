@@ -9,11 +9,12 @@ int main(int argc, char **argv, char **envp)
 
 	init_struct();
 	g_data.env = envcpy(envp);
-	while (true)
+	while (1) //позволил себе заменить true на 1, но можешь и bool подключить офк
 	{
 		write(g_shell.fd_1, "minishell>", 10);
 		get_next_line(0, &s);
-		line = tvoipars(s);
+		line = get_commands(s);
+		free(s);
 	}
 }
 
