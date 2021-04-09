@@ -83,7 +83,8 @@ t_cmd	**get_commands(char *s)
 	t_cmd	*cmd;
 	t_list	*lst;
 
-//	printf("\n%-8s%s\n", "in: ", s);//
+	printf("\n%-8s%s\n", "in: ", s);//
+	lst = 0;
 	while (*s)
 	{
 		cmd = malloc(sizeof(t_cmd));
@@ -121,12 +122,14 @@ t_cmd	**get_commands(char *s)
 	}
 
 	t_cmd	**cmd_arr;
+	t_list	*lst_tmp;
 	int		size;
 	int		i;
 
 	size = ft_lst_getsize(lst);
 	cmd_arr = malloc(sizeof(t_list) * size + 1);//unprotected malloc!
 	i = 0;
+	lst_tmp = lst;
 	while (lst)
 	{
 		cmd_arr[i] = (t_cmd *)lst->content;
@@ -134,13 +137,14 @@ t_cmd	**get_commands(char *s)
 		lst = lst->next;
 	}
 	cmd_arr[i] = 0;
+	ft_lstdestroy(&lst_tmp);
 
-/*	i = 0;
+	i = 0;
 	while (cmd_arr[i])
 	{
 		printf("%-6s%d %s\n", "cmd: ", cmd_arr[i]->type, cmd_arr[i]->exec_name);
 		printf("%-8s%s\npipe: %d\n", "args: ", cmd_arr[i]->args, cmd_arr[i]->pipe);
 		i++;
-	}*/
+	}
 	return (cmd_arr);
 }
