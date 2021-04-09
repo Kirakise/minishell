@@ -1,11 +1,14 @@
-#include "minishell.h"
+#include "../../includes/minishell.h"
+
+extern t_shell g_shell;
 
 int	init_struct(void)
 {
 	g_shell.fd_1 = 1;
 	g_shell.fd_0 = 0;
-	g_shell.tmp_fd_1 = dup(g_data.fd_1);
-	g_shell.tmp_fd_0 = dup(g_data.fd_0);
+	g_shell.tmp_fd_1 = dup(g_shell.fd_1);
+	g_shell.tmp_fd_0 = dup(g_shell.fd_0);
+	return (1);
 }
 
 char	**envcpy(char **line)
@@ -16,7 +19,7 @@ char	**envcpy(char **line)
 	i = 0;
 	while (line[i])
 		i++;
-	if(!res = malloc(sizeof(char *) * i))
+	if(!(res = malloc(sizeof(char *) * i)))
 		return (0);
 	res[i] = 0;
 	i = 0;

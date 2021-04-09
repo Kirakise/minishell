@@ -1,4 +1,4 @@
-#include "libft.h"
+#include "../../../includes/libft.h"
 
 char	*ft_strjoin(char const *s1, char const *s2)
 {
@@ -10,7 +10,7 @@ char	*ft_strjoin(char const *s1, char const *s2)
 	len = ft_strlen(s1) + ft_strlen(s2);
 	str = malloc(sizeof(char) * (len + 1));
 	if (!str)
-	return (0);
+		return (0);
 	while (*s1)
 		*str++ = *s1++;
 	while (*s2)

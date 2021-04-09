@@ -1,6 +1,7 @@
-#include "minishell.h"
+#include "../../includes/minishell.h"
+#include "../../includes/libft.h"
 
-extern g_shell;
+extern t_shell g_shell;
 
 void	echo(char *s)
 {

@@ -15,7 +15,7 @@
 # ifndef BUFFER_SIZE
 #  define BUFFER_SIZE 16384
 # endif
-# include "libft.h"
+# include "../../includes/libft.h"
 
 int		find_nl(char *str);
 int		remain_update(char **str, int index);

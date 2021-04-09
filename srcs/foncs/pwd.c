@@ -1,4 +1,7 @@
-#include "minishell.h"
+#include "../../includes/minishell.h"
+#include "../../includes/libft.h"
+
+extern t_shell g_shell;
 
 void	pwd(void)
 {

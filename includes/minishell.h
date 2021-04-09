@@ -15,14 +15,14 @@ typedef struct	s_shell{
 //это не факт что пригодится, но пускай пока будет
 enum cmd_type
 {
-	c_echo,
-	c_cd,
-	c_pwd,
-	c_export,
-	c_unset,
-	c_env,
-	c_exit,
-	c_exec
+	c_echo = 1,
+	c_cd = 2,
+	c_pwd = 3,
+	c_export = 4,
+	c_unset = 5,
+	c_env = 6,
+	c_exit = 7,
+	c_exec = 8
 };
 
 /* структура с командами и аргументами

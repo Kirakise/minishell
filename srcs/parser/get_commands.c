@@ -1,6 +1,6 @@
 #include <stdio.h>
-#include "minishell.h"
-#include "libft.h"
+#include "../../includes/minishell.h"
+#include "../../includes/libft.h"
 
 //  вот эту функцию можно применить в той части программы, которая выполняет команды,
 //  заменив return на вызов соответствующих функций

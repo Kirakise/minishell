@@ -10,7 +10,8 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line.h"
+#include "../get_next_line.h"
+#include "../../../includes/libft.h"
 
 int		remain_initialize(char **remain)
 {
