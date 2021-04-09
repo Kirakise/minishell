@@ -72,6 +72,30 @@ static char *parse_input(char **input, int *end)
 	return (str);
 }
 
+static void	**lst_to_arr(t_list *lst, void **arr, int data_type)
+{
+	int		size;
+	int		i;
+	t_list	*lst_tmp;
+
+	lst_tmp = lst;
+	size = ft_lst_getsize(lst);
+	arr = malloc(sizeof(t_list) * size + 1);//unprotected malloc!
+	i = 0;
+	while (lst)
+	{
+		if (data_type == 0)
+			arr[i] = (char *)lst->content;
+		else
+			arr[i] = (t_cmd *)lst->content;
+		i++;
+		lst = lst->next;
+	}
+	arr[i] = 0;
+	ft_lstdestroy(&lst_tmp);
+	return (arr);
+}
+
 t_cmd	**get_commands(char *s)
 {
 	char	*str;
@@ -81,16 +105,11 @@ t_cmd	**get_commands(char *s)
 	t_list	*lst;
 	t_list	*arg_list;
 
-
-	t_list	*lst_tmp;
-	int		size;
-	int		i;
-
-//	printf("\n%-8s%s\n", "in: ", s);//
+	printf("\n%-8s%s\n", "in: ", s);//
 	lst = 0;
-	arg_list = 0;
 	while (*s)
 	{
+		arg_list = 0;
 		cmd = malloc(sizeof(t_cmd));
 		cmd->pipe = 0;
 		cmd->pipe_out = 0;
@@ -116,42 +135,21 @@ t_cmd	**get_commands(char *s)
 			}
 			str = 0;
 		}
-		size = ft_lst_getsize(arg_list);
-		cmd->args = malloc(sizeof(t_list) * size + 1);//unprotected malloc!
-		i = 0;
-		lst_tmp = arg_list;
-		while (arg_list)
-		{
-			cmd->args[i] = (char *)arg_list->content;
-			i++;
-			arg_list = arg_list->next;
-		}
-		cmd->args[i] = 0;
-		ft_lstdestroy(&lst_tmp);
-
+		cmd->args = (char **)lst_to_arr(arg_list, (void **)cmd->args, 0);
 		ft_lstadd_back(&lst, ft_lstnew(cmd));
 	}
 
 	t_cmd	**cmd_arr;
 
-	size = ft_lst_getsize(lst);
-	cmd_arr = malloc(sizeof(t_list) * size + 1);//unprotected malloc!
-	i = 0;
-	lst_tmp = lst;
-	while (lst)
-	{
-		cmd_arr[i] = (t_cmd *)lst->content;
-		i++;
-		lst = lst->next;
-	}
-	cmd_arr[i] = 0;
-	ft_lstdestroy(&lst_tmp);
+	cmd_arr = 0;
+	cmd_arr = (t_cmd **)lst_to_arr(lst, (void **)cmd_arr, 1);
 
-/*	i = 0;
+	int i = 0;
 	int j = 0;
 	while (cmd_arr[i])
 	{
 		printf("%-6s%d %s\n", "cmd: ", cmd_arr[i]->type, cmd_arr[i]->exec_name);
+		j = 0;
 		while (cmd_arr[i]->args[j])
 		{
 			printf("arg[%d]: %s\n", j, cmd_arr[i]->args[j]);
@@ -159,6 +157,6 @@ t_cmd	**get_commands(char *s)
 		}
 		printf("pipe: %d\n", cmd_arr[i]->pipe);
 		i++;
-	}*/
+	}
 	return (cmd_arr);
 }
