@@ -1,4 +1,4 @@
-SRCS = $(wildcard srcs/*.c srcs/foncs/*.c srcs/libft/*.c srcs/parser/*.c srcs/utils/*.c)
+SRCS = $(wildcard srcs/*.c srcs/foncs/*.c srcs/libft/src/*.c srcs/parser/*.c srcs/utils/*.c)
 OBJS = $(SRCS:%.c=%.o)
 NAME = minishell
 
@@ -7,7 +7,7 @@ all: $(OBJS)
 	gcc $^ -o $(NAME)
 
 %.o: %.c
-	gcc -Wall -Wextra -Werror -g -Iincludes $^ -o $@
+	gcc -Wall -Wextra -Werror -g -c $^ -o $@
 
 clean:
 	rm $(OBJS)

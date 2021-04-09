@@ -10,5 +10,8 @@ void	pwd(void)
 	s = malloc(256);
 	getcwd(s, 255);
 	if (s)
+	{
 		write(g_shell.fd_1, s, ft_strlen(s));
+		write(g_shell.fd_1, "\n", 1);
+	}
 }

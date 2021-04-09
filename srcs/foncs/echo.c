@@ -6,6 +6,7 @@ extern t_shell g_shell;
 void	echo(char *s)
 {
 	write(g_shell.fd_1, s, ft_strlen(s));
+	write(g_shell.fd_1, "\n", 1);
 }
 
 

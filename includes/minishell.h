@@ -3,6 +3,10 @@
 # include <stdio.h>
 # include <fcntl.h>
 # include "libft.h"
+# include "sys/types.h"
+# include <string.h>
+# include <errno.h>
+# include <sys/wait.h>
 
 typedef struct	s_shell{
 	char	**env;
@@ -10,6 +14,7 @@ typedef struct	s_shell{
 	int	fd_0;
 	int	tmp_fd_1;
 	int	tmp_fd_0;
+	int fd[2];
 }		t_shell;
 
 //это не факт что пригодится, но пускай пока будет
@@ -39,12 +44,15 @@ typedef struct	s_cmd
 	char	*exec_name;
 	char	*args;
 	int		pipe;
+	int		pipe_out;
 }				t_cmd;
 
 /*Fonctions*/
 void		pwd(void);
 void		envprint(void);
 void		echo(char *s);
+void		do_coms(t_cmd **cmd);
+int			do_exec(t_cmd *cmd);
 
 /*Parser*/
 t_cmd		**get_commands(char *s);

@@ -12,5 +12,6 @@ void envprint(void)
 	{
 		write(g_shell.fd_1, g_shell.env[i], ft_strlen(g_shell.env[i]));
 		write(1, "\n", 1);
+		i++;
 	}
 }

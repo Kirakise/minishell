@@ -7,9 +7,6 @@
 
 static int get_typeof_cmd(char *str)
 {
-	size_t len;
-
-	len = ft_strlen(str);
 	if (!ft_strcmp(str, "echo"))
 		return (c_echo);
 	else if (!ft_strcmp(str, "cd"))
