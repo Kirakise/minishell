@@ -83,7 +83,7 @@ t_cmd	**get_commands(char *s)
 	t_cmd	*cmd;
 	t_list	*lst;
 
-	printf("\n%-8s%s\n", "in: ", s);//
+//	printf("\n%-8s%s\n", "in: ", s);//
 	lst = 0;
 	while (*s)
 	{
@@ -140,11 +140,11 @@ t_cmd	**get_commands(char *s)
 	ft_lstdestroy(&lst_tmp);
 
 	i = 0;
-	while (cmd_arr[i])
+/*	while (cmd_arr[i])
 	{
 		printf("%-6s%d %s\n", "cmd: ", cmd_arr[i]->type, cmd_arr[i]->exec_name);
 		printf("%-8s%s\npipe: %d\n", "args: ", cmd_arr[i]->args, cmd_arr[i]->pipe);
 		i++;
-	}
+	}*/
 	return (cmd_arr);
 }
