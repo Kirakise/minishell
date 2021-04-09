@@ -80,7 +80,9 @@ static void	**lst_to_arr(t_list *lst, void **arr, int data_type)
 
 	lst_tmp = lst;
 	size = ft_lst_getsize(lst);
-	arr = malloc(sizeof(t_list) * size + 1);//unprotected malloc!
+	arr = malloc(sizeof(t_list) * size + 1);
+	if (!arr)
+		exit(1);//malloc
 	i = 0;
 	while (lst)
 	{
@@ -99,7 +101,6 @@ static void	**lst_to_arr(t_list *lst, void **arr, int data_type)
 t_cmd	**get_commands(char *s)
 {
 	char	*str;
-	char	*tmp;
 	int		end;
 	t_cmd	*cmd;
 	t_list	*lst;
@@ -117,12 +118,10 @@ t_cmd	**get_commands(char *s)
 		str = parse_input(&s, &end);
 		cmd->type = get_typeof_cmd(str);
 		cmd->exec_name = ft_strdup(str);
-		free(str);
-		tmp = ft_strdup(cmd->exec_name);
-		if (!tmp)
-			exit (1);//malloc
-		ft_lstadd_back(&arg_list, ft_lstnew(tmp));
-		tmp = 0;
+		if (!cmd->exec_name)
+			exit(1);//malloc
+		ft_lstadd_back(&arg_list, ft_lstnew(str));
+		str = 0;
 		while (*s && !end)
 		{
 			str = parse_input(&s, &end);

@@ -15,7 +15,7 @@ int main(int argc, char **argv, char **envp)
 	g_shell.env = envcpy(envp);
 	while (1)
 	{
-		write(g_shell.fd_1, "minishell> ", 10);
+		write(g_shell.fd_1, "minishell> ", 11);
 		get_next_line(0, &s);
 		cmd = get_commands(s);
 		free(s);
