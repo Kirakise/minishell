@@ -103,22 +103,17 @@ t_cmd	**get_commands(char *s)
 		if (!tmp)
 			exit (1);//malloc
 		ft_lstadd_back(&arg_list, ft_lstnew(tmp));
-		tmp = 0; //???i dont know
-//		printf("%-6s%d %s\n", "cmd: ", cmd.type, cmd.exec_name);//
+		tmp = 0;
 		while (*s && !end)
 		{
 			str = parse_input(&s, &end);
-//			printf("%-8s%s\n", "arg ", str);//
 			if (ft_strcmp(str, "|") != 0)
-			{
 				ft_lstadd_back(&arg_list, ft_lstnew(str));
-			}
 			else
 			{
 				cmd->pipe = 1;
 				end = 1;
 			}
-			//free(str);
 			str = 0;
 		}
 		size = ft_lst_getsize(arg_list);
