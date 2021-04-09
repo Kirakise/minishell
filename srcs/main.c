@@ -4,8 +4,8 @@ t_shell	g_shell;
 
 int main(int argc, char **argv, char **envp)
 {
-	char **line;
-	char *s;
+	char	*s;
+	t_cmd	**cmd;
 
 	init_struct();
 	g_data.env = envcpy(envp);
@@ -13,7 +13,7 @@ int main(int argc, char **argv, char **envp)
 	{
 		write(g_shell.fd_1, "minishell>", 10);
 		get_next_line(0, &s);
-		line = get_commands(s);
+		cmd = get_commands(s);
 		free(s);
 	}
 }

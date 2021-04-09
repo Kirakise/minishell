@@ -1,9 +1,8 @@
 #ifndef MINISHELL_H
 # define MINISHELL_H
 # include <stdio.h>
-# include <unistd.h>
 # include <fcntl.h>
-# include <stdlib.h>
+# include "libft.h"
 
 typedef struct	s_shell{
 	char	**env;
@@ -13,30 +12,45 @@ typedef struct	s_shell{
 	int	tmp_fd_0;
 }		t_shell;
 
+//это не факт что пригодится, но пускай пока будет
+enum cmd_type
+{
+	c_echo,
+	c_cd,
+	c_pwd,
+	c_export,
+	c_unset,
+	c_env,
+	c_exit,
+	c_exec
+};
+
+/* структура с командами и аргументами
+** первое поле можно будет выкинуть
+** в exec_name имя команды, в args - аргументы
+** pipe может быть 0 или 1
+** 1 означает что в конце аргументов есть '|' - в саму строку аргументов этот слеш не включаю
+** редиректы и все более-менее умное пока не обрабатывал
+*/
+
+typedef struct	s_cmd
+{
+	int		type;
+	char	*exec_name;
+	char	*args;
+	int		pipe;
+}				t_cmd;
+
 /*Fonctions*/
 void		pwd(void);
 void		envprint(void);
 void		echo(char *s);
 
-char		**get_commands(char *str);
+/*Parser*/
+t_cmd		**get_commands(char *s);
 
 /*Utils*/
 int 		init_struct(void);
 char		**envcpy(char **line);
-char		*ft_strdup(const char *s1);
-size_t		ft_strlen(const char *s);
 
-
-/*Get_next_line*/
-typedef	struct	s_str{
-	int	fd;
-	int	pos;
-	char	buf[BUFFER_SIZE + 1];
-}		t_str;
-int		get_next_line(int fd, char **line);
-void		ft_bzero(char **s);
-int		ft_strlen(char *s);
-void		ft_strjoin(char **s1, char **s2);
-int		ft_getline(int fd, t_str *str, char **line, int i);
-void		ft_bzero2(char *s);
 #endif
