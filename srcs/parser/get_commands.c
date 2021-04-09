@@ -103,15 +103,17 @@ t_cmd	**get_commands(char *s)
 	char	*str;
 	int		end;
 	t_cmd	*cmd;
-	t_list	*lst;
+	t_list	*cmd_list;
 	t_list	*arg_list;
 
 //	printf("\n%-8s%s\n", "in: ", s);//
-	lst = 0;
+	cmd_list = 0;
 	while (*s)
 	{
 		arg_list = 0;
 		cmd = malloc(sizeof(t_cmd));
+		if (!cmd)
+			exit(1);//malloc
 		cmd->pipe = 0;
 		cmd->pipe_out = 0;
 		end = 0;
@@ -121,7 +123,6 @@ t_cmd	**get_commands(char *s)
 		if (!cmd->exec_name)
 			exit(1);//malloc
 		ft_lstadd_back(&arg_list, ft_lstnew(str));
-		str = 0;
 		while (*s && !end)
 		{
 			str = parse_input(&s, &end);
@@ -131,17 +132,17 @@ t_cmd	**get_commands(char *s)
 			{
 				cmd->pipe = 1;
 				end = 1;
+				free(str);
 			}
-			str = 0;
 		}
 		cmd->args = (char **)lst_to_arr(arg_list, (void **)cmd->args, 0);
-		ft_lstadd_back(&lst, ft_lstnew(cmd));
+		ft_lstadd_back(&cmd_list, ft_lstnew(cmd));
 	}
 
 	t_cmd	**cmd_arr;
 
 	cmd_arr = 0;
-	cmd_arr = (t_cmd **)lst_to_arr(lst, (void **)cmd_arr, 1);
+	cmd_arr = (t_cmd **)lst_to_arr(cmd_list, (void **)cmd_arr, 1);
 
 /*
 	int i = 0;
