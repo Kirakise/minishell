@@ -105,7 +105,7 @@ t_cmd	**get_commands(char *s)
 	t_list	*lst;
 	t_list	*arg_list;
 
-	printf("\n%-8s%s\n", "in: ", s);//
+//	printf("\n%-8s%s\n", "in: ", s);//
 	lst = 0;
 	while (*s)
 	{
@@ -144,6 +144,7 @@ t_cmd	**get_commands(char *s)
 	cmd_arr = 0;
 	cmd_arr = (t_cmd **)lst_to_arr(lst, (void **)cmd_arr, 1);
 
+/*
 	int i = 0;
 	int j = 0;
 	while (cmd_arr[i])
@@ -158,5 +159,6 @@ t_cmd	**get_commands(char *s)
 		printf("pipe: %d\n", cmd_arr[i]->pipe);
 		i++;
 	}
+*/
 	return (cmd_arr);
 }
