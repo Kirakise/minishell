@@ -42,7 +42,7 @@ typedef struct	s_cmd
 {
 	int		type;
 	char	*exec_name;
-	char	*args;
+	char	**args;
 	int		pipe;
 	int		pipe_out;
 }				t_cmd;
