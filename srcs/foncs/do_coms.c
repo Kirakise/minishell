@@ -33,6 +33,8 @@ void do_coms(t_cmd **cmd)
 			pwd();
 		else if (!g_shell.pidt && !ft_strcmp("env", cmd[i]->exec_name))
 			envprint();
+		else if (!ft_strcmp("cd", cmd[i]->exec_name))
+			cd(cmd[i]);
 		else if (!ft_strcmp("exit", cmd[i]->exec_name))
 			exit(0);
 		else if (!g_shell.pidt)

@@ -56,6 +56,7 @@ void		envprint(void);
 void		echo(t_cmd *cmd);
 void		do_coms(t_cmd **cmd);
 int			do_exec(t_cmd *cmd);
+void 		cd(t_cmd *cmd);
 
 /*Parser*/
 t_cmd		**get_commands(char *s);
@@ -63,5 +64,6 @@ t_cmd		**get_commands(char *s);
 /*Utils*/
 int 		init_struct(void);
 char		**envcpy(char **line);
+char 		*find_var(char *s1);
 
 #endif
