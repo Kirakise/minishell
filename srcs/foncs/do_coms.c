@@ -38,7 +38,7 @@ void do_coms(t_cmd **cmd)
 		if (g_shell.pipe0_open-- == 1)
 		{
 			close(g_shell.fd[0]);
-			dup2(0, g_shell.tmp_fd_0);
+			dup2(g_shell.tmp_fd_0, 0);
 		}
 		i++;
 	}

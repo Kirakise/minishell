@@ -3,7 +3,7 @@ OBJS = $(SRCS:%.c=%.o)
 NAME = minishell
 
 
-all: $(OBJS)
+$(NAME): $(OBJS)
 	gcc $^ -o $(NAME)
 
 %.o: %.c
