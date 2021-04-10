@@ -93,7 +93,7 @@ static void	**lst_to_arr(t_list *lst, void **arr, int data_type)
 		i++;
 		lst = lst->next;
 	}
-	arr[i] = 0;
+	arr[i] = (char*)0;//0;
 	ft_lstdestroy(&lst_tmp);
 	return (arr);
 }
