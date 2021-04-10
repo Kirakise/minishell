@@ -3,6 +3,27 @@
 
 extern t_shell g_shell;
 
+void free_cmd(t_cmd **cmd)
+{
+	int i;
+	int j;
+	
+	i = 0;
+	while (cmd[i] && !(j = 0))
+	{
+		while(cmd[i]->args[j])
+		{
+			free(cmd[i]->args[j]);
+			j++;
+		}
+		free(cmd[i]->args);
+		free(cmd[i]->exec_name);
+		i++;
+		free(cmd[i - 1]);
+	}
+	free(cmd);
+}
+
 void do_coms(t_cmd **cmd)
 {
 	int i;
@@ -46,4 +67,5 @@ void do_coms(t_cmd **cmd)
 		}
 		i++;
 	}
+	free_cmd(cmd);
 }

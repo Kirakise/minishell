@@ -12,7 +12,8 @@ void cd(t_cmd *cmd)
         exit(0);
     if (!cmd->args[1] || !ft_strcmp(cmd->args[1], "~"))
     {
-        error = chdir(find_var("HOME"));
+        error = chdir((s = find_var("HOME")));
+        free(s);
         if (error != 0)
         {
             s = strerror(errno);
@@ -32,6 +33,7 @@ void cd(t_cmd *cmd)
         {
             s = ft_strjoin(find_var("PWD"), cmd->args[1]);
             error = chdir(s);
+            free(s);
             if (error != 0)
             {
                 s = strerror(errno);
