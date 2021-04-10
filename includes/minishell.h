@@ -44,10 +44,12 @@ enum cmd_type
 typedef struct	s_cmd
 {
 	int		type;
+	char	*error;
 	char	*exec_name;
 	char	**args;
 	int		pipe;
 	int		pipe_out;
+	int		redirect; //0 == no redirect; 1 == '>'; 2 == '>>'
 }				t_cmd;
 
 /*Fonctions*/

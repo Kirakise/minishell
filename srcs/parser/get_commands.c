@@ -5,7 +5,7 @@
 //  вот эту функцию можно применить в той части программы, которая выполняет команды,
 //  заменив return на вызов соответствующих функций
 
-static int get_typeof_cmd(char *str)
+static int	get_typeof_cmd(char *str)
 {
 	if (!ft_strcmp(str, "echo"))
 		return (c_echo);
@@ -24,7 +24,7 @@ static int get_typeof_cmd(char *str)
 	return (c_exec);
 }
 
-static void handle_quotes(int *val)
+static void	handle_quotes(int *val)
 {
 	int quotes;
 
@@ -36,7 +36,7 @@ static void handle_quotes(int *val)
 	*val = quotes;
 }
 
-static char *parse_input(char **input, int *end)
+static char *parse_input(char **input, int *end, char **err)
 {
 	int		quotes[2];
 	char	*s;
@@ -69,6 +69,12 @@ static char *parse_input(char **input, int *end)
 	}
 	str[i] = 0;
 	*input = s;
+	if (quotes[0])
+		*err = "\'";
+	if (quotes[1])
+		*err = "\"";
+	if (*end && *s == ';')
+		*err = ";;";
 	return (str);
 }
 
@@ -98,7 +104,36 @@ static void	**lst_to_arr(t_list *lst, void **arr, int data_type)
 	return (arr);
 }
 
-t_cmd	**get_commands(char *s)
+static void	init_cmd_el(t_cmd *cmd, int *end)
+{
+	cmd->error = 0;
+	cmd->pipe = 0;
+	cmd->pipe_out = 0;
+	cmd->redirect = 0;
+	*end = 0;
+}
+
+static void	check_pipe_redirect(char *str, t_cmd *cmd, int *end)
+{
+	int ret;
+
+	ret = 1;
+	if (!ft_strcmp(str, "|"))
+		cmd->pipe = 1;
+	else if (!ft_strcmp(str, ">"))
+		cmd->redirect = 1;
+	else if (!ft_strcmp(str, ">>"))
+		cmd->redirect = 2;
+	else
+		ret = 0;
+	if (ret)
+	{
+		*end = 1;
+		free(str);
+	}
+}
+
+t_cmd		**get_commands(char *s)
 {
 	char	*str;
 	int		end;
@@ -114,10 +149,13 @@ t_cmd	**get_commands(char *s)
 		cmd = malloc(sizeof(t_cmd));
 		if (!cmd)
 			exit(1);//malloc
-		cmd->pipe = 0;
-		cmd->pipe_out = 0;
-		end = 0;
-		str = parse_input(&s, &end);
+		init_cmd_el(cmd, &end);
+		str = parse_input(&s, &end, &cmd->error);
+		if (cmd->error)
+		{
+			printf("Syntax error near %s\n", cmd->error);
+			exit(1);
+		}
 		cmd->type = get_typeof_cmd(str);
 		cmd->exec_name = ft_strdup(str);
 		if (!cmd->exec_name)
@@ -129,15 +167,15 @@ t_cmd	**get_commands(char *s)
 		ft_lstadd_back(&arg_list, ft_lstnew(str));
 		while (*s && !end)
 		{
-			str = parse_input(&s, &end);
-			if (ft_strcmp(str, "|") != 0)
-				ft_lstadd_back(&arg_list, ft_lstnew(str));
-			else
+			str = parse_input(&s, &end, &cmd->error);
+			if (cmd->error)
 			{
-				cmd->pipe = 1;
-				end = 1;
-				free(str);
+				printf("Syntax error near %s\n", cmd->error);
+				exit(1);
 			}
+			check_pipe_redirect(str, cmd, &end);
+			if (!end)
+				ft_lstadd_back(&arg_list, ft_lstnew(str));
 		}
 		cmd->args = (char **)lst_to_arr(arg_list, (void **)cmd->args, 0);
 		ft_lstadd_back(&cmd_list, ft_lstnew(cmd));
