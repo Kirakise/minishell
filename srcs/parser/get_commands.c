@@ -36,7 +36,44 @@ static void	handle_quotes(int *val)
 	*val = quotes;
 }
 
-static char *parse_input(char **input, int *end, char **err)
+static void handle_end_chars(char **s, t_cmd *cmd, int *end, int i)
+{
+	char *str;
+
+	str = *s;
+	if (*str == ';')
+	{
+		str++;
+		if (*str == ';')
+			cmd->error = ";;";
+	}
+	else if (*str == '|')
+	{
+		cmd->pipe = 1;
+		str++;
+		if (*str == '|')
+			cmd->error = "||";
+	}
+	else if (!ft_strncmp(str, ">>", 2))
+	{
+		cmd->redirect = 2;
+		str += 2;
+		if (*str == '>')
+			cmd->error = ">>>";
+	}
+	else if (*str == '>')
+	{
+		cmd->redirect = 1;
+		str++;
+	}
+	if (i == 0)
+		*end = 2;
+	else
+		*end = 1;
+	*s = str - 1;
+}
+
+static char *parse_input(char **input, int *end, t_cmd *cmd)
 {
 	int		quotes[2];
 	char	*s;
@@ -54,12 +91,16 @@ static char *parse_input(char **input, int *end, char **err)
 	quotes[1] = 0;
 	while (*s && !*end && (!ft_isspace(*s) || quotes[0] || quotes[1]))
 	{
-		if (*s == '\'' && !quotes[1])
+		if (!quotes[1] && *s == '\'')
 			handle_quotes(&quotes[0]);
-		else if (*s == '"' && !quotes[0])
+		else if (!quotes[0] && *s == '"')
 			handle_quotes(&quotes[1]);
-		else if (*s == ';' && !quotes[0] && !quotes[1])
-			*end = 1;
+		else if (!quotes[0] && !quotes[1] && ft_strchr(*s, ";|>"))
+		{
+			handle_end_chars(&s, cmd, end, i);
+			if (i == 0)
+				*end = 2;
+		}
 		else
 		{
 			str[i] = *s;
@@ -70,11 +111,9 @@ static char *parse_input(char **input, int *end, char **err)
 	str[i] = 0;
 	*input = s;
 	if (quotes[0])
-		*err = "\'";
+		cmd->error = "\'";
 	if (quotes[1])
-		*err = "\"";
-	if (*end && *s == ';')
-		*err = ";;";
+		cmd->error = "\"";
 	return (str);
 }
 
@@ -112,30 +151,25 @@ static void	init_cmd_el(t_cmd *cmd, int *end)
 	cmd->redirect = 0;
 	*end = 0;
 }
-
-static void	check_pipe_redirect(char *str, t_cmd *cmd, int *end)
+/*
+static void	check_pipe_redirect(char **str, t_cmd *cmd, int *end)
 {
-	int ret;
-
-	ret = 1;
-	if (!ft_strcmp(str, "|"))
+	if (!ft_strcmp(*str, "|"))
 		cmd->pipe = 1;
-	else if (!ft_strcmp(str, ">"))
+	else if (!ft_strcmp(*str, ">"))
 		cmd->redirect = 1;
-	else if (!ft_strcmp(str, ">>"))
+	else if (!ft_strcmp(*str, ">>"))
 		cmd->redirect = 2;
 	else
-		ret = 0;
-	if (ret)
-	{
-		*end = 1;
-		free(str);
-	}
-}
+		return ;
+	*end = 1;
+	free(*str);
+	*str = 0;
+}*/
 
 t_cmd		**get_commands(char *s)
 {
-	char	*str;
+	char	*str, *tmp;
 	int		end;
 	t_cmd	*cmd;
 	t_list	*cmd_list;
@@ -150,7 +184,7 @@ t_cmd		**get_commands(char *s)
 		if (!cmd)
 			exit(1);//malloc
 		init_cmd_el(cmd, &end);
-		str = parse_input(&s, &end, &cmd->error);
+		str = parse_input(&s, &end, cmd);
 		if (cmd->error)
 		{
 			printf("Syntax error near %s\n", cmd->error);
@@ -167,15 +201,20 @@ t_cmd		**get_commands(char *s)
 		ft_lstadd_back(&arg_list, ft_lstnew(str));
 		while (*s && !end)
 		{
-			str = parse_input(&s, &end, &cmd->error);
+			str = parse_input(&s, &end, cmd);
 			if (cmd->error)
 			{
-				printf("Syntax error near %s\n", cmd->error);
+				printf("Syntax error near '%s'\n", cmd->error);
 				exit(1);
 			}
-			check_pipe_redirect(str, cmd, &end);
-			if (!end)
-				ft_lstadd_back(&arg_list, ft_lstnew(str));
+			if (end != 2)
+			{
+				tmp = ft_strdup(str);
+				if (!tmp)
+					exit(1);//malloc
+				ft_lstadd_back(&arg_list, ft_lstnew(tmp));
+			}
+			free(str);
 		}
 		cmd->args = (char **)lst_to_arr(arg_list, (void **)cmd->args, 0);
 		ft_lstadd_back(&cmd_list, ft_lstnew(cmd));
@@ -191,14 +230,14 @@ t_cmd		**get_commands(char *s)
 	int j = 0;
 	while (cmd_arr[i])
 	{
-		printf("%-6s%d %s\n", "cmd: ", cmd_arr[i]->type, cmd_arr[i]->exec_name);
+		printf("\n%-6s%d %s\n", "cmd: ", cmd_arr[i]->type, cmd_arr[i]->exec_name);
 		j = 0;
 		while (cmd_arr[i]->args[j])
 		{
 			printf("arg[%d]: %s\n", j, cmd_arr[i]->args[j]);
 			j++;
 		}
-		printf("pipe: %d\n", cmd_arr[i]->pipe);
+		printf("pipe: %d\nredir: %d\n", cmd_arr[i]->pipe, cmd_arr[i]->redirect);
 		i++;
 	}
 */
