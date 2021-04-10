@@ -2,6 +2,7 @@ SRCS = $(wildcard srcs/*.c srcs/foncs/*.c srcs/libft/src/*.c srcs/parser/*.c src
 OBJS = $(SRCS:%.c=%.o)
 NAME = minishell
 
+all: $(NAME)
 
 $(NAME): $(OBJS)
 	gcc $^ -o $(NAME)

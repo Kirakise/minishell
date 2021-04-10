@@ -54,9 +54,9 @@ static char *parse_input(char **input, int *end)
 	quotes[1] = 0;
 	while (*s && !*end && (!ft_isspace(*s) || quotes[0] || quotes[1]))
 	{
-		if (*s == '\'')
+		if (*s == '\'' && !quotes[1])
 			handle_quotes(&quotes[0]);
-		else if (*s == '"')
+		else if (*s == '"' && !quotes[0])
 			handle_quotes(&quotes[1]);
 		else if (*s == ';' && !quotes[0] && !quotes[1])
 			*end = 1;
