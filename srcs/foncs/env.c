@@ -14,4 +14,5 @@ void envprint(void)
 		write(1, "\n", 1);
 		i++;
 	}
+	exit(0);
 }

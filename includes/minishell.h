@@ -15,6 +15,9 @@ typedef struct	s_shell{
 	int	tmp_fd_1;
 	int	tmp_fd_0;
 	int fd[2];
+	pid_t pidt;
+	int status;
+	int pipe0_open;
 }		t_shell;
 
 //это не факт что пригодится, но пускай пока будет
@@ -50,7 +53,7 @@ typedef struct	s_cmd
 /*Fonctions*/
 void		pwd(void);
 void		envprint(void);
-void		echo(char *s);
+void		echo(t_cmd *cmd);
 void		do_coms(t_cmd **cmd);
 int			do_exec(t_cmd *cmd);
 

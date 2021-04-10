@@ -7,15 +7,12 @@ extern t_shell g_shell;
 
 int do_exec(t_cmd *cmd)
 {
-	pid_t pid;
-
-	pid = fork();
-	if (pid == 0)
-	{
-		char **s = g_shell.env;
-		execve(cmd->exec_name, s, g_shell.env);
-		char *s1 = strerror(errno);
-		printf("%s\n", s1);
-	}
+	int i = 0;
+	while (cmd->args[i])
+		printf("%s\n", cmd->args[i++]);
+	execve(cmd->exec_name, cmd->args, g_shell.env);
+	char *s1 = strerror(errno);
+	printf("%s\n", s1);
+	exit(-1);
 	return (1);
 }

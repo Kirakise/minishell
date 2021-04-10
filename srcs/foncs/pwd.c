@@ -13,5 +13,7 @@ void	pwd(void)
 	{
 		write(g_shell.fd_1, s, ft_strlen(s));
 		write(g_shell.fd_1, "\n", 1);
+		exit(0);
 	}
+	exit(-1);
 }
