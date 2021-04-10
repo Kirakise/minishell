@@ -10,9 +10,11 @@ void cd(t_cmd *cmd)
 
     if (g_shell.pidt == 0)
         exit(0);
-    if (!cmd->args[1] || !ft_strcmp(cmd->args[1], "~"))
+    if (!(cmd->args[1]) || !ft_strcmp(cmd->args[1], "~"))
     {
-        error = chdir(find_var("HOME"));
+        error = chdir((s = find_var("HOME")));
+        if (s && s[0] != 0)
+            free(s);
         if (error != 0)
         {
             s = strerror(errno);
@@ -30,8 +32,7 @@ void cd(t_cmd *cmd)
     }
     else
         {
-            s = ft_strjoin(find_var("PWD"), cmd->args[1]);
-            error = chdir(s);
+            error = chdir(cmd->args[1]);
             if (error != 0)
             {
                 s = strerror(errno);

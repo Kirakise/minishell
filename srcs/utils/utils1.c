@@ -29,9 +29,10 @@ char *find_var(char *s1)
 				return (0);
 			while (j < size)
 			{
-				ret[ft_strlen(s1) + j] = g_shell.env[i][ft_strlen(s1) + j];
+				ret[j] = g_shell.env[i][ft_strlen(s1) + j + 1];
 				j++;
 			}
+			ret[j] = 0;
 			return ret;
 		}
 		i++;
