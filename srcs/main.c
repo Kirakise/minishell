@@ -10,8 +10,8 @@ int main(int argc, char **argv, char **envp)
 	t_cmd	**cmd;
 
 	init_struct();
-	argc = argc;
-	argv = argv;
+	(void)argc;
+	(void)argv;
 	g_shell.env = envcpy(envp);
 	while (1)
 	{
