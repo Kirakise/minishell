@@ -6,6 +6,7 @@ extern t_shell g_shell;
 void cd(t_cmd *cmd)
 {
     char *s;
+    char *s2;
     int error;
 
     if (g_shell.pidt == 0)
@@ -31,9 +32,10 @@ void cd(t_cmd *cmd)
     }
     else
         {
-            s = ft_strjoin(find_var("PWD"), cmd->args[1]);
+            s = ft_strjoin((s2 = find_var("PWD")), cmd->args[1]);
             error = chdir(s);
             free(s);
+            free(s2);
             if (error != 0)
             {
                 s = strerror(errno);
