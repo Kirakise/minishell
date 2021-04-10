@@ -21,7 +21,7 @@ char	**envcpy(char **line)
 	i = 0;
 	while (line[i])
 		i++;
-	if(!(res = malloc(sizeof(char *) * i)))
+	if(!(res = malloc(sizeof(char *) * (i + 1))))
 		return (0);
 	res[i] = 0;
 	i = 0;
