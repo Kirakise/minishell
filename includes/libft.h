@@ -13,6 +13,7 @@ typedef struct		s_list
 size_t				ft_strlen(const char *s);
 int					ft_isspace(char c);
 int					ft_strcmp(const char *s1, const char *s2);
+int					ft_strncmp(char *s1, char *s2, int n);
 void				*ft_memmove(void *dst, const void *src, size_t len);
 int					ft_strchr(char const c, char const *set);
 char				*ft_strdup(const char *s1);

@@ -122,6 +122,10 @@ t_cmd	**get_commands(char *s)
 		cmd->exec_name = ft_strdup(str);
 		if (!cmd->exec_name)
 			exit(1);//malloc
+		free(str);
+		str = ft_strdup(cmd->exec_name);
+		if (!str)
+			exit(1);//malloc
 		ft_lstadd_back(&arg_list, ft_lstnew(str));
 		while (*s && !end)
 		{
