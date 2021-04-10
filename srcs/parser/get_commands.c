@@ -96,11 +96,7 @@ static char *parse_input(char **input, int *end, t_cmd *cmd)
 		else if (!quotes[0] && *s == '"')
 			handle_quotes(&quotes[1]);
 		else if (!quotes[0] && !quotes[1] && ft_strchr(*s, ";|>"))
-		{
 			handle_end_chars(&s, cmd, end, i);
-			if (i == 0)
-				*end = 2;
-		}
 		else
 		{
 			str[i] = *s;
@@ -151,21 +147,6 @@ static void	init_cmd_el(t_cmd *cmd, int *end)
 	cmd->redirect = 0;
 	*end = 0;
 }
-/*
-static void	check_pipe_redirect(char **str, t_cmd *cmd, int *end)
-{
-	if (!ft_strcmp(*str, "|"))
-		cmd->pipe = 1;
-	else if (!ft_strcmp(*str, ">"))
-		cmd->redirect = 1;
-	else if (!ft_strcmp(*str, ">>"))
-		cmd->redirect = 2;
-	else
-		return ;
-	*end = 1;
-	free(*str);
-	*str = 0;
-}*/
 
 t_cmd		**get_commands(char *s)
 {
