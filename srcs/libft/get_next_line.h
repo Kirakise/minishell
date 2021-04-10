@@ -6,14 +6,14 @@
 /*   By: rgreater <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/22 17:19:52 by rgreater          #+#    #+#             */
-/*   Updated: 2021/03/05 16:35:06 by rgreater         ###   ########.fr       */
+/*   Updated: 2021/04/10 23:47:21 by rgreater         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef GET_NEXT_LINE_H
 # define GET_NEXT_LINE_H
 # ifndef BUFFER_SIZE
-#  define BUFFER_SIZE 16384
+#  define BUFFER_SIZE 4096
 # endif
 # include "../../includes/libft.h"
 

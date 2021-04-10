@@ -2,28 +2,6 @@
 #include "../../includes/minishell.h"
 #include "../../includes/libft.h"
 
-//  вот эту функцию можно применить в той части программы, которая выполняет команды,
-//  заменив return на вызов соответствующих функций
-
-static int	get_typeof_cmd(char *str)
-{
-	if (!ft_strcmp(str, "echo"))
-		return (c_echo);
-	else if (!ft_strcmp(str, "cd"))
-		return (c_cd);
-	else if (!ft_strcmp(str, "pwd"))
-		return (c_pwd);
-	else if (!ft_strcmp(str, "export"))
-		return (c_export);
-	else if (!ft_strcmp(str, "unset"))
-		return (c_unset);
-	else if (!ft_strcmp(str, "env"))
-		return (c_env);
-	else if (!ft_strcmp(str, "exit"))
-		return (c_exit);
-	return (c_exec);
-}
-
 static void	handle_quotes(int *val)
 {
 	int quotes;
@@ -171,7 +149,6 @@ t_cmd		**get_commands(char *s)
 			printf("Syntax error near %s\n", cmd->error);
 			exit(1);
 		}
-		cmd->type = get_typeof_cmd(str);
 		cmd->exec_name = ft_strdup(str);
 		if (!cmd->exec_name)
 			exit(1);//malloc
