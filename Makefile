@@ -10,7 +10,7 @@ $(NAME): $(OBJS)
 	$(CC) $(CFLAGS) $^ -o $(NAME)
 
 %.o: %.c Makefile
-	$(CC) $(CFLAGS) -c $< -o $@
+	$(CC) $(CFLAGS) -c -g $< -o $@
 
 clean:
 	rm $(OBJS)

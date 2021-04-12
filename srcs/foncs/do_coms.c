@@ -1,5 +1,6 @@
 #include "../../includes/minishell.h"
 #include "../../includes/libft.h"
+#include <fcntl.h>
 
 extern t_shell g_shell;
 
@@ -33,8 +34,16 @@ void do_coms(t_cmd **cmd)
 	{
 		if (cmd[i]->pipe && (g_shell.pipe0_open = 2))
 			pipe(g_shell.fd);
+		if (cmd[i]->redirect)
+		{
+			if (cmd[i]->redirect == 1)
+				g_shell.fd_file = open(cmd[i + 1]->exec_name, O_WRONLY | O_CREAT | O_TRUNC, 0644);
+			else
+				g_shell.fd_file = open(cmd[i + 1]->exec_name, O_WRONLY | O_CREAT | O_APPEND, 0644);
+			dup2(g_shell.fd_file, 1);
+		}
 		g_shell.pidt = fork();
-		if (!g_shell.pidt)
+		if (!g_shell.pidt && cmd[i]->pipe)
 		{
 			dup2(g_shell.fd[1], 1);
 			close(g_shell.fd[0]);
@@ -54,7 +63,7 @@ void do_coms(t_cmd **cmd)
 			pwd();
 		else if (!g_shell.pidt && !ft_strcmp("env", cmd[i]->exec_name))
 			envprint();
-		else if (!ft_strcmp("cd", cmd[i]->exec_name))
+		else if (!cmd[i]->pipe && !ft_strcmp("cd", cmd[i]->exec_name))
 			cd(cmd[i]);
 		else if (!ft_strcmp("exit", cmd[i]->exec_name))
 			exit(0);
@@ -64,6 +73,12 @@ void do_coms(t_cmd **cmd)
 		{
 			close(g_shell.fd[0]);
 			dup2(g_shell.tmp_fd_0, 0);
+		}
+		if (g_shell.fd_file)
+		{
+			close(g_shell.fd_file);
+			dup2(g_shell.tmp_fd_1, 1);
+			i++;
 		}
 		i++;
 	}

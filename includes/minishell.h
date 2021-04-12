@@ -14,6 +14,7 @@ typedef struct	s_shell{
 	int	fd_0;
 	int	tmp_fd_1;
 	int	tmp_fd_0;
+	int fd_file;
 	int fd[2];
 	pid_t pidt;
 	int status;
