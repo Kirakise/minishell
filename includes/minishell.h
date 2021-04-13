@@ -44,7 +44,7 @@ typedef struct	s_cmd
 void		pwd(void);
 void		envprint(void);
 void		echo(t_cmd *cmd);
-void		do_coms(t_cmd **cmd);
+void 		do_coms(int i, t_cmd **cmd, int fd_in, int fd_out);
 int			do_exec(t_cmd *cmd);
 void 		cd(t_cmd *cmd);
 
