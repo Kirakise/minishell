@@ -19,7 +19,7 @@ int main(int argc, char **argv, char **envp)
 		get_next_line(0, &s);
 		cmd = get_commands(s);
 		free(s);
-		do_coms(0, cmd, 0, 1);
+		do_coms(0, cmd, dup(0), dup(1));
 	}
 }
 

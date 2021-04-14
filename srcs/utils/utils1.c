@@ -10,6 +10,7 @@ int	init_struct(void)
 	g_shell.fd_0 = STDIN_FILENO;
 	g_shell.tmp_fd_1 = dup(g_shell.fd_1);
 	g_shell.tmp_fd_0 = dup(g_shell.fd_0);
+	g_shell.pidt = -1;
 	return (1);
 }
 
