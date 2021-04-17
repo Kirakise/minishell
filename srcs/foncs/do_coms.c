@@ -28,55 +28,62 @@ void free_cmd(t_cmd **cmd)
 	free(cmd);
 }
 
+void execute(t_cmd *cmd, int fd_in, int fd_out)
+{
+		dup2(fd_in, 0);
+		dup2(fd_out, 1);
+		if (!ft_strcmp("echo", cmd->exec_name))
+	        echo(cmd);
+	    else if (!ft_strcmp("pwd", cmd->exec_name))
+		    pwd();
+	    else if (!ft_strcmp("env", cmd->exec_name))
+		    envprint();
+	    else if (!ft_strcmp("cd", cmd->exec_name))
+		    cd(cmd);
+	    else if (!ft_strcmp("exit", cmd->exec_name))
+		    exit(0);
+		else
+			do_exec(cmd);
+		exit(-1);
+}
+
+void restore_fd()
+{
+	dup2(g_shell.tmp_fd_0, 0);
+	dup2(g_shell.tmp_fd_1, 1);
+}
+
 void do_coms(int i, t_cmd **cmd, int fd_in, int fd_out)
 {
-    pid_t pid;
-	int file_fd;
-    int fd[2];
+	pid_t pid;
+	pid_t pid2;
+	int fd[2];
 
-    if (cmd[i + 1])
-    {
-        if (cmd[i]->pipe)
-        {
-            pipe(fd);
-            dup2(fd[1], fd_out);
-            do_coms(i + 1, cmd, fd[0], dup(g_shell.tmp_fd_1));
-        }
-		else if (cmd[i]->redirect)
+	pid = 0;
+	pid2 = 0;
+	if (i > 0)
+	{
+		if (cmd[i - 1]->pipe)
 		{
-			if (cmd[i]->redirect == 1)
-				file_fd = open(cmd[i + 1]->exec_name, O_WRONLY | O_CREAT | O_TRUNC, 0664);
-			else if (cmd[i]->redirect == 2)
-				file_fd = open(cmd[i + 1]->exec_name, O_WRONLY | O_CREAT | O_APPEND, 0664);
-			dup2(file_fd, fd_out);
-			do_coms(i + 2, cmd, dup(g_shell.tmp_fd_0), dup(g_shell.tmp_fd_1));
+			pipe(fd);
+			fd_in = fd[0];
+			if (!(pid = fork()))
+			{
+				close(fd[0]);
+				do_coms(i - 1, cmd, dup(g_shell.tmp_fd_0), fd[1]);
+				exit(0);
+			}
+			close(fd[1]);
 		}
-    }
-    pid = fork();
-	if (g_shell.pidt == -1)
-		g_shell.pidt = pid;
-    if (!pid)
-    {
-		dup2(fd_in, 0);
-    	dup2(fd_out, 1);
-        if (!ft_strcmp("echo", cmd[i]->exec_name))
-	        echo(cmd[i]);
-	    else if (!ft_strcmp("pwd", cmd[i]->exec_name))
-		    pwd();
-	    else if (!ft_strcmp("env", cmd[i]->exec_name))
-		    envprint();
-	    else if (!ft_strcmp("cd", cmd[i]->exec_name))
-		    cd(cmd[i]);
-	    else if (!ft_strcmp("exit", cmd[i]->exec_name))
-		    exit(0);
-	    else
-		    do_exec(cmd[i]);
-    }
-    else if (i == 0 && g_shell.pidt)
-    {
-        waitpid(-1, &g_shell.status, 0);
-        dup2(g_shell.tmp_fd_0, 0);
-        dup2(g_shell.tmp_fd_1, 1);
-		g_shell.pidt = -1;
-    }
+	}
+	if(!(pid2 = fork()))
+		execute(cmd[i], fd_in, fd_out);
+	waitpid(pid2, &g_shell.status, 0);
+	if (pid)
+		waitpid(pid, &g_shell.status, WNOHANG);
+	if (g_shell.pidt == i)
+	{
+		restore_fd();
+		free_cmd(cmd);
+	}
 }
