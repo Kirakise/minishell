@@ -8,8 +8,6 @@ void cd(t_cmd *cmd)
     char *s;
     int error;
 
-    if (g_shell.pidt == 0)
-        exit(0);
     if (!(cmd->args[1]) || !ft_strcmp(cmd->args[1], "~"))
     {
         error = chdir((s = find_var("HOME")));

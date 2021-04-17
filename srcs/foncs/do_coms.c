@@ -39,7 +39,7 @@ void execute(t_cmd *cmd, int fd_in, int fd_out)
 	    else if (!ft_strcmp("env", cmd->exec_name))
 		    envprint();
 	    else if (!ft_strcmp("cd", cmd->exec_name))
-		    cd(cmd);
+		    exit(0);
 	    else if (!ft_strcmp("exit", cmd->exec_name))
 		    exit(0);
 		else
@@ -75,6 +75,10 @@ void do_coms(int i, t_cmd **cmd, int fd_in, int fd_out)
 			}
 			close(fd[1]);
 		}
+		else
+		{
+			do_coms(i - 1, cmd, dup(g_shell.tmp_fd_0), dup(g_shell.tmp_fd_1));
+		}
 	}
 	if(!(pid2 = fork()))
 		execute(cmd[i], fd_in, fd_out);
@@ -83,6 +87,10 @@ void do_coms(int i, t_cmd **cmd, int fd_in, int fd_out)
 		waitpid(pid, &g_shell.status, WNOHANG);
 	if (g_shell.pidt == i)
 	{
+		if (!ft_strcmp("cd", cmd[i]->exec_name))
+		    cd(cmd[i]);
+	    if (!ft_strcmp("exit", cmd[i]->exec_name))
+		    exit(0);
 		restore_fd();
 		free_cmd(cmd);
 	}
