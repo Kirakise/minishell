@@ -38,6 +38,7 @@ typedef struct	s_cmd
 	int		pipe;
 	int		pipe_out;
 	int		redirect; //0 == no redirect; 1 == '>'; 2 == '>>'
+	char	*redirect_filename;
 }				t_cmd;
 
 /*Fonctions*/

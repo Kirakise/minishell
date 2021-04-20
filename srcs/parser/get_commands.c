@@ -112,7 +112,7 @@ static void	**lst_to_arr(t_list *lst, void **arr, int data_type)
 		i++;
 		lst = lst->next;
 	}
-	arr[i] = (char*)0;//0;
+	arr[i] = 0;
 	ft_lstdestroy(&lst_tmp);
 	return (arr);
 }
@@ -174,6 +174,20 @@ t_cmd		**get_commands(char *s)
 			}
 			free(str);
 		}
+		if (cmd->redirect)
+		{
+			end = 0;
+			str = parse_input(&s, &end, cmd);
+			if (cmd->error)
+			{
+				printf("Syntax error near '%s'\n", cmd->error);
+				exit(1);
+			}
+			cmd->redirect_filename = ft_strdup(str);
+			if (!cmd->redirect_filename)
+				exit (1);//malloc
+			free(str);
+		}
 		cmd->args = (char **)lst_to_arr(arg_list, (void **)cmd->args, 0);
 		ft_lstadd_back(&cmd_list, ft_lstnew(cmd));
 	}
@@ -188,7 +202,7 @@ t_cmd		**get_commands(char *s)
 	int j = 0;
 	while (cmd_arr[i])
 	{
-		printf("\n%-6s%d %s\n", "cmd: ", cmd_arr[i]->type, cmd_arr[i]->exec_name);
+		printf("\n%-6s %s\n", "cmd: ", cmd_arr[i]->exec_name);
 		j = 0;
 		while (cmd_arr[i]->args[j])
 		{
@@ -196,6 +210,8 @@ t_cmd		**get_commands(char *s)
 			j++;
 		}
 		printf("pipe: %d\nredir: %d\n", cmd_arr[i]->pipe, cmd_arr[i]->redirect);
+		if (cmd_arr[i]->redirect)
+			printf("redir: %s\n", cmd_arr[i]->redirect_filename);
 		i++;
 	}
 */
