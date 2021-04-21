@@ -18,6 +18,7 @@ int do_exec(t_cmd *cmd)
 		execve(s, cmd->args, g_shell.env);
 	execve(s2, cmd->args, g_shell.env);
 	char *s1 = strerror(errno);
+	dup2(g_shell.tmp_fd_1, 1);
 	printf("%s\n", s1);
 	exit(-1);
 	return (1);

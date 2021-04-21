@@ -76,15 +76,30 @@ void do_coms(int i, t_cmd **cmd, int fd_in, int fd_out)
 			close(fd[1]);
 		}
 		else
-		{
 			do_coms(i - 1, cmd, dup(g_shell.tmp_fd_0), dup(g_shell.tmp_fd_1));
-		}
 	}
 	if(!(pid2 = fork()))
+	{
+		if (cmd[i]->redirect)
+		{
+			if (cmd[i]->pipe)
+			{
+				write(fd_out, "", 1);
+				close(fd_out);
+			}
+			if (cmd[i]->redirect == 1)
+				fd_out = open(cmd[i]->redirect_filename, O_WRONLY | O_CREAT | O_TRUNC, 0664);
+			else if (cmd[i]->redirect == 2)
+				fd_out = open(cmd[i]->redirect_filename, O_WRONLY | O_CREAT | O_APPEND, 0664);
+		}
 		execute(cmd[i], fd_in, fd_out);
+	}
 	waitpid(pid2, &g_shell.status, 0);
 	if (pid)
-		waitpid(pid, &g_shell.status, WNOHANG);
+	{
+		kill(pid, SIGTERM);
+		waitpid(pid, 0, 0);
+	}
 	if (g_shell.pidt == i)
 	{
 		if (!ft_strcmp("cd", cmd[i]->exec_name))
