@@ -1,11 +1,11 @@
 #include "../../includes/minishell.h"
 #include "../../includes/libft.h"
 
-extern t_shell g_shell;
+extern t_shell	g_shell;
 
-void envprint(void)
+void	envprint(void)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (g_shell.env[i])

@@ -21,10 +21,13 @@ int main(int argc, char **argv, char **envp)
 		get_next_line(0, &s);
 		cmd = get_commands(s);
 		free(s);
-		while(cmd[i])
-			i++;
-		g_shell.pidt = i - 1;	
-		do_coms(i - 1, cmd, dup(0), dup(1));
+		if (cmd [i])
+		{
+			while(cmd[i])
+				i++;
+			g_shell.pidt = i - 1;	
+			do_coms(i - 1, cmd, dup(0), dup(1));
+		}
 	}
 }
 

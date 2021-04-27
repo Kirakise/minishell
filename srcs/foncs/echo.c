@@ -1,13 +1,11 @@
 #include "../../includes/minishell.h"
 #include "../../includes/libft.h"
 
-extern t_shell g_shell;
-
-/* исправил сегу - теперь echo без аргументов нормально обрабатывается */
+extern t_shell	g_shell;
 
 void	echo(t_cmd *cmd)
 {
-	int i;
+	int	i;
 
 	i = 1;
 	while (cmd->args[i] && cmd->args[i + 1])
@@ -21,5 +19,3 @@ void	echo(t_cmd *cmd)
 	write(g_shell.fd_1, "\n", 1);
 	exit(0);
 }
-
-

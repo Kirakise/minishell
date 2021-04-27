@@ -48,6 +48,8 @@ void		echo(t_cmd *cmd);
 void 		do_coms(int i, t_cmd **cmd, int fd_in, int fd_out);
 int			do_exec(t_cmd *cmd);
 void 		cd(t_cmd *cmd);
+void		free_cmd(t_cmd **cmd);
+void		parentproc(t_cmd **cmd, int i);
 
 /*Parser*/
 t_cmd		**get_commands(char *s);

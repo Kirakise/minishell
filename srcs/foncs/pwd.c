@@ -1,11 +1,11 @@
 #include "../../includes/minishell.h"
 #include "../../includes/libft.h"
 
-extern t_shell g_shell;
+extern t_shell	g_shell;
 
 void	pwd(void)
 {
-	char *s;
+	char	*s;
 
 	s = malloc(256);
 	getcwd(s, 255);

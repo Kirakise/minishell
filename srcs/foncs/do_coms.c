@@ -5,108 +5,91 @@
 #include <sys/wait.h>
 #include <signal.h>
 
-extern t_shell g_shell;
+extern t_shell	g_shell;
 
-void free_cmd(t_cmd **cmd)
+void	execute(t_cmd *cmd, int fd_in, int fd_out)
 {
-	int i;
-	int j;
-	
-	i = 0;
-	while (cmd[i] && !(j = 0))
-	{
-		while(cmd[i]->args[j])
-		{
-			free(cmd[i]->args[j]);
-			j++;
-		}
-		free(cmd[i]->args);
-		free(cmd[i]->exec_name);
-		i++;
-		free(cmd[i - 1]);
-	}
-	free(cmd);
+	dup2(fd_in, 0);
+	dup2(fd_out, 1);
+	if (!ft_strcmp("echo", cmd->exec_name))
+		echo(cmd);
+	else if (!ft_strcmp("pwd", cmd->exec_name))
+		pwd();
+	else if (!ft_strcmp("env", cmd->exec_name))
+		envprint();
+	else if (!ft_strcmp("cd", cmd->exec_name))
+		exit(0);
+	else if (!ft_strcmp("exit", cmd->exec_name))
+		exit(0);
+	else
+		do_exec(cmd);
+	exit(-1);
 }
 
-void execute(t_cmd *cmd, int fd_in, int fd_out)
+void	do_redirect(t_cmd *cmd, int *fd_out)
 {
-		dup2(fd_in, 0);
-		dup2(fd_out, 1);
-		if (!ft_strcmp("echo", cmd->exec_name))
-	        echo(cmd);
-	    else if (!ft_strcmp("pwd", cmd->exec_name))
-		    pwd();
-	    else if (!ft_strcmp("env", cmd->exec_name))
-		    envprint();
-	    else if (!ft_strcmp("cd", cmd->exec_name))
-		    exit(0);
-	    else if (!ft_strcmp("exit", cmd->exec_name))
-		    exit(0);
-		else
-			do_exec(cmd);
-		exit(-1);
+	if (cmd->pipe)
+	{
+		write(*fd_out, "", 1);
+		close(*fd_out);
+	}
+	if (cmd->redirect == 1)
+		*fd_out = open(cmd->redirect_filename,
+				O_WRONLY | O_CREAT | O_TRUNC, 0664);
+	else if (cmd->redirect == 2)
+		*fd_out = open(cmd->redirect_filename,
+				O_WRONLY | O_CREAT | O_APPEND, 0664);
+	free(cmd->redirect_filename);
 }
 
-void restore_fd()
+void	tmp(t_cmd **cmd, int i, pid_t pid)
 {
-	dup2(g_shell.tmp_fd_0, 0);
-	dup2(g_shell.tmp_fd_1, 1);
-}
-
-void do_coms(int i, t_cmd **cmd, int fd_in, int fd_out)
-{
-	pid_t pid;
-	pid_t pid2;
-	int fd[2];
-
-	pid = 0;
-	pid2 = 0;
-	if (i > 0)
-	{
-		if (cmd[i - 1]->pipe)
-		{
-			pipe(fd);
-			fd_in = fd[0];
-			if (!(pid = fork()))
-			{
-				close(fd[0]);
-				do_coms(i - 1, cmd, dup(g_shell.tmp_fd_0), fd[1]);
-				exit(0);
-			}
-			close(fd[1]);
-		}
-		else
-			do_coms(i - 1, cmd, dup(g_shell.tmp_fd_0), dup(g_shell.tmp_fd_1));
-	}
-	if(!(pid2 = fork()))
-	{
-		if (cmd[i]->redirect)
-		{
-			if (cmd[i]->pipe)
-			{
-				write(fd_out, "", 1);
-				close(fd_out);
-			}
-			if (cmd[i]->redirect == 1)
-				fd_out = open(cmd[i]->redirect_filename, O_WRONLY | O_CREAT | O_TRUNC, 0664);
-			else if (cmd[i]->redirect == 2)
-				fd_out = open(cmd[i]->redirect_filename, O_WRONLY | O_CREAT | O_APPEND, 0664);
-		}
-		execute(cmd[i], fd_in, fd_out);
-	}
-	waitpid(pid2, &g_shell.status, 0);
 	if (pid)
 	{
 		kill(pid, SIGTERM);
 		waitpid(pid, 0, 0);
 	}
 	if (g_shell.pidt == i)
+		parentproc(cmd, i);
+}
+
+void	do_pipe(int i, t_cmd **cmd, int *fd_in, pid_t *pid)
+{
+	int	fd[2];
+
+	pipe(fd);
+	*fd_in = fd[0];
+	*pid = fork();
+	if (!(*pid))
 	{
-		if (!ft_strcmp("cd", cmd[i]->exec_name))
-		    cd(cmd[i]);
-	    if (!ft_strcmp("exit", cmd[i]->exec_name))
-		    exit(0);
-		restore_fd();
-		free_cmd(cmd);
+		close(fd[0]);
+		do_coms(i - 1, cmd, dup(g_shell.tmp_fd_0), fd[1]);
+		exit(0);
 	}
+	close(fd[1]);
+}
+
+void	do_coms(int i, t_cmd **cmd, int fd_in, int fd_out)
+{
+	pid_t	pid;
+	pid_t	pid2;
+
+	pid = 0;
+	pid2 = 0;
+	if (i > 0)
+	{
+		if (cmd[i - 1]->pipe)
+			do_pipe(i, cmd, &fd_in, &pid);
+		else
+			do_coms(i - 1, cmd, dup(g_shell.tmp_fd_0), dup(g_shell.tmp_fd_1));
+	}
+	pid2 = fork();
+	if (!pid2)
+	{
+		if (cmd[i]->redirect)
+			do_redirect(cmd[i], &fd_out);
+		execute(cmd[i], fd_in, fd_out);
+	}
+	waitpid(pid2, &g_shell.status, 0);
+	tmp(cmd, i, pid);
 }

@@ -2,7 +2,7 @@
 #include <stdio.h>
 #include <unistd.h>
 
-extern t_shell g_shell;
+extern t_shell	g_shell;
 
 int	init_struct(void)
 {
@@ -14,27 +14,26 @@ int	init_struct(void)
 	return (1);
 }
 
-char *find_var(char *s1)
+char	*find_var(char *s1)
 {
-	int i = 0;
-	int j = 0;
-	char *ret;
-	int size;
+	int		i;
+	int		j;
+	char	*ret;
+	int		size;
 
-	while(g_shell.env[i])
+	i = 0;
+	j = 0;
+	while (g_shell.env[i])
 	{
-		if (!ft_strncmp(s1, g_shell.env[i], ft_strlen(s1)) && g_shell.env[i][ft_strlen(s1)] == '=')
+		if (!ft_strncmp(s1, g_shell.env[i], ft_strlen(s1))
+			&& g_shell.env[i][ft_strlen(s1)] == '=')
 		{
 			size = ft_strlen(g_shell.env[i]) - ft_strlen(s1) - 1;
-			if (!(ret = malloc(size + 1)))
+			ret = malloc(size + 1);
+			if (!ret)
 				return (0);
-			while (j < size)
-			{
-				ret[j] = g_shell.env[i][ft_strlen(s1) + j + 1];
-				j++;
-			}
-			ret[j] = 0;
-			return ret;
+			ret = ft_strdup(g_shell.env[i] + ft_strlen(s1) + j + 1	);
+			return (ret);
 		}
 		i++;
 	}
@@ -44,12 +43,13 @@ char *find_var(char *s1)
 char	**envcpy(char **line)
 {
 	char	**res;
-	int	i;
+	int		i;
 
 	i = 0;
 	while (line[i])
 		i++;
-	if(!(res = malloc(sizeof(char *) * (i + 1))))
+	res = malloc(sizeof(char *) * (i + 1));
+	if (!res)
 		return (0);
 	res[i] = 0;
 	i = 0;

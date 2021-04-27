@@ -3,12 +3,12 @@
 #include <string.h>
 #include <unistd.h>
 
-extern t_shell g_shell;
+extern t_shell	g_shell;
 
-int do_exec(t_cmd *cmd)
+int	do_exec(t_cmd *cmd)
 {
-	char *s;
-	char *s2;
+	char	*s;
+	char	*s2;
 
 	s = ft_strjoin("/bin/", cmd->exec_name);
 	s2 = ft_strjoin("/usr/bin/", cmd->exec_name);
@@ -17,9 +17,8 @@ int do_exec(t_cmd *cmd)
 	if (open(s, O_RDONLY) != -1)
 		execve(s, cmd->args, g_shell.env);
 	execve(s2, cmd->args, g_shell.env);
-	char *s1 = strerror(errno);
 	dup2(g_shell.tmp_fd_1, 1);
-	printf("%s\n", s1);
+	printf("minishell: command not found: %s\n", cmd->exec_name);
 	exit(-1);
 	return (1);
 }
