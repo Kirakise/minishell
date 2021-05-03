@@ -188,6 +188,17 @@ t_cmd		**get_commands(char *s)
 				exit (1);//malloc
 			free(str);
 		}
+		//
+		while (ft_isspace(*s))
+			s++;
+		if (*s == '|')
+		{
+			cmd->pipe = 1;
+			s++;
+			if (*s == '|')
+				cmd->error = "||";
+		}
+		//
 		cmd->args = (char **)lst_to_arr(arg_list, (void **)cmd->args, 0);
 		ft_lstadd_back(&cmd_list, ft_lstnew(cmd));
 	}
