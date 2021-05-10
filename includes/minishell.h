@@ -10,17 +10,18 @@
 # include <curses.h>
 # include <term.h>
 
-typedef struct	s_shell{
+typedef struct s_shell
+{
 	char	**env;
-	int	fd_1;
-	int	fd_0;
-	int	tmp_fd_1;
-	int	tmp_fd_0;
-	int fd_file;
-	int fd[2];
-	pid_t pidt;
-	int status;
-	int pipe0_open;
+	int		fd_1;
+	int		fd_0;
+	int		tmp_fd_1;
+	int		tmp_fd_0;
+	int		fd_file;
+	int		fd[2];
+	pid_t	pidt;
+	int		status;
+	int		pipe0_open;
 }		t_shell;
 
 /* структура с командами и аргументами
@@ -31,7 +32,7 @@ typedef struct	s_shell{
 ** редиректы и все более-менее умное пока не обрабатывал
 */
 
-typedef struct	s_cmd
+typedef struct s_cmd
 {
 	int		type;
 	char	*error;
@@ -49,7 +50,7 @@ void		envprint(void);
 void		ft_echo(t_cmd *cmd);
 void 		do_coms(int i, t_cmd **cmd, int fd_in, int fd_out);
 int			do_exec(t_cmd *cmd);
-void 		cd(t_cmd *cmd);
+void		cd(t_cmd *cmd);
 void		free_cmd(t_cmd **cmd);
 void		parentproc(t_cmd **cmd, int i);
 
