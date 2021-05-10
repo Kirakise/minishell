@@ -21,16 +21,16 @@ void history_update(t_2list **hist, char *s)
 	}
 }
 
-char *get_history_line(t_2list **lst, int dir, int *krab)
+char *get_history_line(t_2list **lst, int dir, int *end)
 {
 	t_2list *el;
 
 	if (!lst || !*lst)
 		return (0);
 	el = *lst;
-	if (*krab == 0 && dir == 1)
+	if (*end == 0 && dir == 1)
 	{
-		*krab = 1;
+		*end = 1;
 		return (el->content);
 	}
 	if (dir == 1 && el->next)
@@ -39,7 +39,7 @@ char *get_history_line(t_2list **lst, int dir, int *krab)
 	{
 		if (!el->prev)
 		{
-			*krab = 0;
+			*end = 0;
 			return ("");
 			//return (0);
 		}

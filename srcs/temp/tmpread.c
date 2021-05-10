@@ -27,7 +27,7 @@ int delete_last(char *s)
 char *tmpread()
 {
 	int l;
-	int krab = 0;
+	int end = 0;
 	char *str;
 	char *s;
 	char *tmp;
@@ -44,9 +44,9 @@ char *tmpread()
 				tputs(restore_cursor, g_shell.tmp_fd_1, ft_putchar);
 				tputs(tigetstr("ed"), 1, ft_putchar);
 				if (!ft_strcmp(str, "\e[A"))
-					tmp = get_history_line(&g_shell.hist, 1, &krab);
+					tmp = get_history_line(&g_shell.hist, 1, &end);
 				else
-					tmp = get_history_line(&g_shell.hist, -1, &krab);
+					tmp = get_history_line(&g_shell.hist, -1, &end);
 				if (tmp)
 				{
 					s = tmp;
