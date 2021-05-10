@@ -1,3 +1,5 @@
+#include "../../../includes/libft.h"
+
 char *ft_realloc(char *s1, char *s2)
 {
     int i;
