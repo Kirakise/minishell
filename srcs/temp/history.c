@@ -48,34 +48,3 @@ char *get_history_line(t_2list **lst, int dir, int *end)
 	el = *lst;//
 	return (el->content);
 }
-
-/*
-int history_init(t_history *hist)
-{
-	hist->arr = ft_calloc(HISTORY_SIZE, sizeof(char *));
-	if (!hist->arr)
-		return (1);
-	hist->i = 0;
-	hist->last = 0;
-	return (0);
-}
-
-char *get_history_line(int direction)
-{
-	static char **hist = 0;
-	static int	i = 0;
-	int			last;
-
-	last = get_history_len();
-	if ((i + direction) >= 0 && (i + direction) <= last)
-		i += direction;
-	return (hist[i]);
-}
-
-int history_update(t_history *hist, char *s)
-{
-	if (hist->last == HISTORY_SIZE)
-
-	return (0);
-}
-*/
