@@ -63,4 +63,8 @@ char		**envcpy(char **line);
 char 		*find_var(char *s1);
 char *tmpread();
 
+/*termcaps*/
+void setc(struct termios *term);
+void setic(struct termios *term);
+int setinit(struct termios *term);
 #endif

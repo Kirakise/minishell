@@ -72,14 +72,12 @@ char *tmpread()
                 tputs(restore_cursor, g_shell.tmp_fd_1, ft_putchar);
                 tputs(tigetstr("ed"), 1, ft_putchar); //Тут тебе надо напечатать в stdout предыдущий элемент истории и также поместить его в s
                 write(g_shell.tmp_fd_1, "previous", 8);
-                ft_bzero(str, l);
             }
             else if (!strcmp(str, "\e[B"))
             {
                 tputs(restore_cursor, g_shell.tmp_fd_1, ft_putchar);
                 tputs(tigetstr("ed"), 1, ft_putchar);
                 write(g_shell.tmp_fd_1, "next", 4); //Тут тебе надо напечатать в stdout следующий элемент истории и также поместить его в s
-                ft_bzero(str, l);
             }
             else if (!strcmp(str, "\x7f"))
             {
@@ -87,17 +85,22 @@ char *tmpread()
                 {
                     tputs(cursor_left, 1, ft_putchar);
                     tputs(delete_character, 1, ft_putchar);
-                    ft_bzero(str, l);
                 }
             }
-            else if (strcmp(str, "\e[C") && strcmp(str, "\e[D") && strcmp(str, "\n") && strcmp(str, "\4"))
+            else if (!strcmp(str, "\3"))
+            {
+                free(str);
+                break;
+            }
+            else if (!strcmp(str, "\4") && s[0] == 0)
+                exit(0);
+            else if (str[0] >= 20 && str[0] <= 126)
             {
                 write(1, str, l);
                 s = ft_realloc(s, str);
-                ft_bzero(str, l);
             }
             free(str);
-        } while (strcmp(str, "\n") && strcmp(str, "\4"));
+        } while (strcmp(str, "\n"));
     write(1, "\n", 1);
     return s;
 }
