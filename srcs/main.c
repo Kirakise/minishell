@@ -22,9 +22,10 @@ int main(int argc, char **argv, char **envp)
 		write(g_shell.fd_1, "minishell> ", 11);
 		setic(&term);
 		s = tmpread();
+		history_update(&g_shell.hist, s);
 		setc(&term);
 		cmd = get_commands(s);
-		free(s);
+	//	free(s);
 		if (cmd[i])
 		{
 			while(cmd[i])

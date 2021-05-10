@@ -19,6 +19,7 @@ typedef struct s_2list
 
 t_2list	*tlist_new(void *content);
 void	tlist_add_front(t_2list **lst, t_2list *new);
+int		tlist_getsize(t_2list *lst);
 
 
 size_t				ft_strlen(const char *s);
