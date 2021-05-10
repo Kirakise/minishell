@@ -4,6 +4,9 @@ CFLAGS	=	-Wall -Wextra -Werror -I./ -I$(HDRPATH)
 HEADER	=	$(HDRPATH)libft.h get_next_line.h
 NAME	=	libft.a
 SRCS	=	src/ft_memmove.c\
+			src/ft_bzero.c\
+			src/ft_calloc.c\
+			src/ft_realloc.c\
 			src/ft_strjoin.c\
 			src/get_next_line.c\
 			src/get_next_line_utils.c\

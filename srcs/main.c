@@ -1,6 +1,5 @@
 #include "../includes/libft.h"
 #include "../includes/minishell.h"
-#include <fcntl.h>
 
 t_shell	g_shell;
 
@@ -26,7 +25,7 @@ int main(int argc, char **argv, char **envp)
 		setc(&term);
 		cmd = get_commands(s);
 		free(s);
-		if (cmd [i])
+		if (cmd[i])
 		{
 			while(cmd[i])
 				i++;

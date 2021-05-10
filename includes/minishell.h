@@ -1,9 +1,9 @@
 #ifndef MINISHELL_H
 # define MINISHELL_H
+# include "libft.h"
 # include <stdio.h>
 # include <fcntl.h>
-# include "libft.h"
-# include "sys/types.h"
+# include <sys/types.h>
 # include <string.h>
 # include <errno.h>
 # include <sys/wait.h>
