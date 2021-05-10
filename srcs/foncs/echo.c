@@ -3,7 +3,7 @@
 
 extern t_shell	g_shell;
 
-void	echo(t_cmd *cmd)
+void	ft_echo(t_cmd *cmd)
 {
 	int	i;
 

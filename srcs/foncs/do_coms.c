@@ -12,7 +12,7 @@ void	execute(t_cmd *cmd, int fd_in, int fd_out)
 	dup2(fd_in, 0);
 	dup2(fd_out, 1);
 	if (!ft_strcmp("echo", cmd->exec_name))
-		echo(cmd);
+		ft_echo(cmd);
 	else if (!ft_strcmp("pwd", cmd->exec_name))
 		pwd();
 	else if (!ft_strcmp("env", cmd->exec_name))

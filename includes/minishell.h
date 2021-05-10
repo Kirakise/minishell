@@ -7,6 +7,8 @@
 # include <string.h>
 # include <errno.h>
 # include <sys/wait.h>
+# include <curses.h>
+# include <term.h>
 
 typedef struct	s_shell{
 	char	**env;
@@ -44,7 +46,7 @@ typedef struct	s_cmd
 /*Fonctions*/
 void		pwd(void);
 void		envprint(void);
-void		echo(t_cmd *cmd);
+void		ft_echo(t_cmd *cmd);
 void 		do_coms(int i, t_cmd **cmd, int fd_in, int fd_out);
 int			do_exec(t_cmd *cmd);
 void 		cd(t_cmd *cmd);
@@ -58,5 +60,6 @@ t_cmd		**get_commands(char *s);
 int 		init_struct(void);
 char		**envcpy(char **line);
 char 		*find_var(char *s1);
+char *tmpread();
 
 #endif
