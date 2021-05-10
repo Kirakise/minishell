@@ -10,6 +10,17 @@ typedef struct s_list
 	struct s_list	*next;
 }					t_list;
 
+typedef struct s_2list
+{
+	void			*content;
+	struct s_2list	*prev;
+	struct s_2list	*next;
+}				t_2list;
+
+t_2list	*tlist_new(void *content);
+void	tlist_add_front(t_2list **lst, t_2list *new);
+
+
 size_t				ft_strlen(const char *s);
 void				ft_putstr(const char *s);
 void				ft_putstr_nl(const char *s);

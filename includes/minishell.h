@@ -13,6 +13,7 @@
 typedef struct s_shell
 {
 	char	**env;
+	t_2list	*hist;
 	int		fd_1;
 	int		fd_0;
 	int		tmp_fd_1;
@@ -62,6 +63,7 @@ int 		init_struct(void);
 char		**envcpy(char **line);
 char 		*find_var(char *s1);
 char *tmpread();
+char *get_history_line(t_2list **lst, int dir);
 
 /*termcaps*/
 void setc(struct termios *term);
