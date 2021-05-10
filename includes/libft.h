@@ -11,6 +11,8 @@ typedef struct s_list
 }					t_list;
 
 size_t				ft_strlen(const char *s);
+void				ft_putstr(const char *s);
+void				ft_putstr_nl(const char *s);
 int					ft_isspace(char c);
 int					ft_strcmp(const char *s1, const char *s2);
 int					ft_strncmp(char *s1, char *s2, int n);
