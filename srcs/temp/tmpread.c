@@ -68,5 +68,5 @@ char *tmpread()
             free(str);
         } while (strcmp(str, "\n") && strcmp(str, "\4"));
     write(1, "\n", 1);
-    return s;
+    return (s);
 }
