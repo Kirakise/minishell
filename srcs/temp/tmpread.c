@@ -72,9 +72,9 @@ char *tmpread()
 			else if (str[0] >= 20 && str[0] <= 126)
 			{
 				write(1, str, l);
-				s = ft_realloc(s, str);
+				s = ft_realloc(s, str);//а вот тут все очень любит крашиться, это прям топ место
 			}
-			//free(str);
+			//free(str); вот с этим все адски крашилось при fsanitize=address
 		} while (ft_strcmp(str, "\n"));
 	write(1, "\n", 1);
 	return (s);
