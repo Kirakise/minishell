@@ -11,7 +11,8 @@ SRCS	=	src/ft_memmove.c\
 			src/get_next_line.c\
 			src/get_next_line_utils.c\
 			src/string.c\
-			src/list.c
+			src/list.c\
+			src/ft_putstr.c
 
 OBJS	=	$(SRCS:.c=.o)
 

@@ -18,7 +18,8 @@ int	do_exec(t_cmd *cmd)
 		execve(s, cmd->args, g_shell.env);
 	execve(s2, cmd->args, g_shell.env);
 	dup2(g_shell.tmp_fd_1, 1);
-	printf("minishell: command not found: %s\n", cmd->exec_name);
+	ft_putstr("minishell: command not found: ");
+	ft_putstr_nl(cmd->exec_name);
 	exit(-1);
 	return (1);
 }

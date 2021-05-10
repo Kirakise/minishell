@@ -14,7 +14,7 @@ void	tmp1(void)
 	if (error != 0)
 	{
 		s = strerror(errno);
-		printf("%s\n", s);
+		ft_putstr_nl(s);
 	}
 }
 
@@ -27,7 +27,7 @@ void	tmp2(t_cmd *cmd)
 	if (error != 0)
 	{
 		s = strerror(errno);
-		printf("%s\n", s);
+		ft_putstr_nl(s);
 	}
 }
 
@@ -40,7 +40,7 @@ void	tmp3(t_cmd *cmd)
 	if (error != 0)
 	{
 		s = strerror(errno);
-		printf("%s\n", s);
+		ft_putstr_nl(s);
 	}
 }
 
