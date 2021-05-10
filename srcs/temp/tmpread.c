@@ -30,11 +30,11 @@ char *tmpread()
     char *str;
     char *s;
 
-    s = calloc(1, 1);
+    s = ft_calloc(1, 1);
     tputs(save_cursor, 1, ft_putchar);
     do
         {
-            str = calloc(100, 1);
+            str = ft_calloc(100, 1);
             l = read(g_shell.tmp_fd_0, str, 5);
             if (!strcmp(str, "\e[A"))
             {
