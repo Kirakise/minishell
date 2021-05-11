@@ -48,3 +48,16 @@ char *get_history_line(t_2list **lst, int dir, int *end)
 	el = *lst;//
 	return (el->content);
 }
+
+void history_free(t_2list **hist)
+{
+	t_2list *el;
+
+	if (!hist || !*hist)
+		return ;
+	el = *hist;
+	while (el->prev)
+		el = el->prev;
+	*hist = el;
+	tlist_destroy(hist);
+}

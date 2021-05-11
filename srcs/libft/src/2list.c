@@ -26,21 +26,25 @@ void	tlist_add_front(t_2list **lst, t_2list *new)
 	*lst = el;
 }
 
-int		tlist_getsize(t_2list *lst)
+int		tlist_destroy(t_2list **lst)
 {
 	t_2list	*el;
-	int		i;
+	t_2list	*tmp;
 
-	if (!lst)
-		return (0);
-	el = lst;
-	i = 1;
-	while (el->next)
+	if (!lst || !*lst)
+		return (-1);
+	el = *lst;
+	while (el)
 	{
-		el = el->next;
-		i++;
+		tmp = el->next;
+		el->content = 0;
+		free(el->content);
+		el->next = 0;
+		el->prev = 0;
+		free(el);
+		el = tmp;
 	}
-	return (i);
+	return (0);
 }
 
 /*
@@ -69,25 +73,6 @@ int		tlist_add_back(t_2list **lst, t_2list *new)
 	}
 	el = ft_lstlast(*lst);
 	el->next = new;
-	return (0);
-}
-
-int		tlist_destroy(t_2list **lst)
-{
-	t_2list	*el;
-	t_2list	*tmp;
-
-	if (!lst || !*lst)
-		return (-1);
-	el = *lst;
-	while (el)
-	{
-		tmp = el->next;
-		el->content = 0;
-		el->next = 0;
-		free(el);
-		el = tmp;
-	}
 	return (0);
 }
 */

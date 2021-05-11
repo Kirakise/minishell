@@ -74,7 +74,8 @@ char *tmpread()
 				write(1, str, l);
 				s = ft_realloc(s, str);//а вот тут все очень любит крашиться, это прям топ место
 			}
-			//free(str); вот с этим все адски крашилось при fsanitize=address
+			//free(str);
+			//вот с этим все адски крашилось при fsanitize=address, т.к. в следующей строке используется str
 		} while (ft_strcmp(str, "\n"));
 	write(1, "\n", 1);
 	return (s);

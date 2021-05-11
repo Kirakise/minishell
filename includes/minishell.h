@@ -65,6 +65,7 @@ char 		*find_var(char *s1);
 char *tmpread();
 void history_update(t_2list **hist, char *s);
 char *get_history_line(t_2list **lst, int dir, int *end);
+void history_free(t_2list **hist);
 
 /*termcaps*/
 void setc(struct termios *term);
