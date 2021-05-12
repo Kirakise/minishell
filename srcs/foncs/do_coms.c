@@ -29,7 +29,7 @@ void	do_redirect(t_cmd *cmd, int *fd_out)
 {
 	if (cmd->pipe)
 	{
-		write(*fd_out, "", 1);
+		write(*fd_out, 0, 1);
 		close(*fd_out);
 	}
 	if (cmd->redirect == 1)
@@ -38,6 +38,7 @@ void	do_redirect(t_cmd *cmd, int *fd_out)
 	else if (cmd->redirect == 2)
 		*fd_out = open(cmd->redirect_filename,
 				O_WRONLY | O_CREAT | O_APPEND, 0664);
+	
 	free(cmd->redirect_filename);
 }
 
