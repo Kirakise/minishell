@@ -32,7 +32,7 @@ void				ft_bzero(char *s, int size);
 void				*ft_calloc(size_t count, size_t size);
 void				*ft_memmove(void *dst, const void *src, size_t len);
 int					ft_strchr(char const c, char const *set);
-char				*ft_realloc(char *s1, char *s2);
+void				ft_realloc(char **s1, char *s2);
 char				*ft_strdup(const char *s1);
 char				*ft_strjoin(char const *s1, char const *s2);
 char				*ft_strjoin_space(char const *s1, char const *s2);

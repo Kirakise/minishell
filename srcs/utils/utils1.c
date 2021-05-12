@@ -11,6 +11,7 @@ int	init_struct(void)
 	g_shell.tmp_fd_1 = dup(g_shell.fd_1);
 	g_shell.tmp_fd_0 = dup(g_shell.fd_0);
 	g_shell.pidt = -1;
+	g_shell.hist = 0;
 	return (1);
 }
 
@@ -29,15 +30,15 @@ char	*find_var(char *s1)
 			&& g_shell.env[i][ft_strlen(s1)] == '=')
 		{
 			size = ft_strlen(g_shell.env[i]) - ft_strlen(s1) - 1;
-			ret = malloc(size + 1);
-			if (!ret)
-				return (0);
-			ret = ft_strdup(g_shell.env[i] + ft_strlen(s1) + j + 1	);
+			// ret = malloc(size + 1);
+			// if (!ret)
+			// 	return (0);
+			ret = ft_strdup(g_shell.env[i] + ft_strlen(s1) + j + 1);
 			return (ret);
 		}
 		i++;
 	}
-	return ("");
+	return (ft_strdup(""));
 }
 
 char	**envcpy(char **line)

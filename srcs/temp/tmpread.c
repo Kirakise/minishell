@@ -33,11 +33,13 @@ char *tmpread()
 	char *tmp;
 
 	s = ft_calloc(1, 1);
+	str = malloc(0);
 	tputs(save_cursor, 1, ft_putchar);
 	do
 		{
+			free(str);
 			tmp = 0;
-			str = ft_calloc(100, 1);
+			str = ft_calloc(5, 1);
 			l = read(g_shell.tmp_fd_0, str, 5);
 			if (!ft_strcmp(str, "\e[A") || !ft_strcmp(str, "\e[B"))
 			{
@@ -49,6 +51,7 @@ char *tmpread()
 					tmp = get_history_line(&g_shell.hist, -1, &end);
 				if (tmp)
 				{
+					free(s);
 					s = tmp;
 					tmp = 0;
 					write(g_shell.tmp_fd_1, s, ft_strlen(s));
@@ -72,11 +75,10 @@ char *tmpread()
 			else if (str[0] >= 20 && str[0] <= 126)
 			{
 				write(1, str, l);
-				s = ft_realloc(s, str);//а вот тут все очень любит крашиться, это прям топ место
+				ft_realloc(&s, str);//а вот тут все очень любит крашиться, это прям топ место
 			}
-			//free(str);
-			//вот с этим все адски крашилось при fsanitize=address, т.к. в следующей строке используется str
 		} while (ft_strcmp(str, "\n"));
+	free(str);
 	write(1, "\n", 1);
 	return (s);
 }

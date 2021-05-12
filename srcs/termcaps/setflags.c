@@ -22,6 +22,7 @@ int setinit(struct termios *term)
     // signal(SIGINT, handlesigint);
 	if (tgetent(0, term_name) == -1 || tcsetattr(0, TCSANOW, term) == -1)
         return (-1);
+    free(term_name);
     return (0);
 }
 
