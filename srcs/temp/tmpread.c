@@ -39,7 +39,7 @@ char *tmpread()
 		{
 			free(str);
 			tmp = 0;
-			str = ft_calloc(10, 1);
+			str = ft_calloc(5, 1);
 			l = read(g_shell.tmp_fd_0, str, 10);
 			if (!ft_strcmp(str, "\e[A") || !ft_strcmp(str, "\e[B"))
 			{
@@ -57,6 +57,8 @@ char *tmpread()
 					write(g_shell.tmp_fd_1, s, ft_strlen(s));
 				}
 			}
+			else if (!ft_strcmp(str, "\e[C") || !ft_strcmp(str, "\e[D"))
+				tmp = 0;
 			else if (!ft_strcmp(str, "\x7f"))
 			{
 				if (delete_last(s) == 1)
