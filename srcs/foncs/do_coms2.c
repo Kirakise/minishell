@@ -41,6 +41,10 @@ void	parentproc(t_cmd **cmd, int i)
 		cd(cmd[i]);
 	if (!ft_strcmp("exit", cmd[i]->exec_name))
 		exit(0);
+	if (!ft_strcmp("export", cmd[i]->exec_name))
+		export(cmd[i]);
+	if (!ft_strcmp("unset", cmd[i]->exec_name))
+		unset(cmd[i]);
 	restore_fd();
 	free_cmd(cmd);
 }

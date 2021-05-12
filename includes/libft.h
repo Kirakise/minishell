@@ -42,5 +42,7 @@ int					ft_lst_getsize(t_list *lst);
 int					ft_lstadd_back(t_list **lst, t_list *new1);
 int					ft_lstdestroy(t_list **lst);
 int					get_next_line(int fd, char **line);
+char				**ft_split(char const *str, char c);
+char				*ft_substr(char const *s, unsigned int start, size_t len);
 
 #endif

@@ -17,9 +17,8 @@ void	execute(t_cmd *cmd, int fd_in, int fd_out)
 		pwd();
 	else if (!ft_strcmp("env", cmd->exec_name))
 		envprint();
-	else if (!ft_strcmp("cd", cmd->exec_name))
-		exit(0);
-	else if (!ft_strcmp("exit", cmd->exec_name))
+	else if (!ft_strcmp("cd", cmd->exec_name) || !ft_strcmp("exit", cmd->exec_name) ||
+	!ft_strcmp("export", cmd->exec_name) || !ft_strcmp("unset", cmd->exec_name))
 		exit(0);
 	else
 		do_exec(cmd);
@@ -90,10 +89,7 @@ void	do_coms(int i, t_cmd **cmd, int fd_in, int fd_out)
 			do_redirect(cmd[i], &fd_out);
 		execute(cmd[i], fd_in, fd_out);
 	}
-	if (!ft_strcmp(cmd[i]->exec_name, "cd"))
-		cd(cmd[i]);
-	if (!ft_strcmp(cmd[i]->exec_name, "exit"))
-		exit(0);
+	parentproc(cmd, i);
 	waitpid(pid2, &g_shell.status, 0);
 	tmp(cmd, i, pid);
 }

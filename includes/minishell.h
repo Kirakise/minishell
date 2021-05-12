@@ -54,6 +54,9 @@ int			do_exec(t_cmd *cmd);
 void		cd(t_cmd *cmd);
 void		free_cmd(t_cmd **cmd);
 void		parentproc(t_cmd **cmd, int i);
+void		export(t_cmd *cmd);
+char		*get_name(char *s);
+void		unset(t_cmd *cmd);
 
 /*Parser*/
 t_cmd		**get_commands(char *s);

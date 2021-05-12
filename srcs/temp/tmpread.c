@@ -39,8 +39,8 @@ char *tmpread()
 		{
 			free(str);
 			tmp = 0;
-			str = ft_calloc(5, 1);
-			l = read(g_shell.tmp_fd_0, str, 5);
+			str = ft_calloc(10, 1);
+			l = read(g_shell.tmp_fd_0, str, 10);
 			if (!ft_strcmp(str, "\e[A") || !ft_strcmp(str, "\e[B"))
 			{
 				tputs(restore_cursor, g_shell.tmp_fd_1, ft_putchar);

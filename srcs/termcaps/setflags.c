@@ -17,8 +17,8 @@ int setinit(struct termios *term)
         return (1);
 	term->c_lflag &= !(ECHO);
 	term->c_lflag &= !(ICANON);
-	// term->c_cc[VMIN] = 1;
-	// term->c_cc[VTIME] = 0;
+	term->c_cc[VMIN] = 1;
+	term->c_cc[VTIME] = 0;
     // signal(SIGINT, handlesigint);
 	if (tgetent(0, term_name) == -1 || tcsetattr(0, TCSANOW, term) == -1)
         return (-1);
