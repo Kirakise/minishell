@@ -30,9 +30,6 @@ char	*find_var(char *s1)
 			&& g_shell.env[i][ft_strlen(s1)] == '=')
 		{
 			size = ft_strlen(g_shell.env[i]) - ft_strlen(s1) - 1;
-			// ret = malloc(size + 1);
-			// if (!ret)
-			// 	return (0);
 			ret = ft_strdup(g_shell.env[i] + ft_strlen(s1) + j + 1);
 			return (ret);
 		}

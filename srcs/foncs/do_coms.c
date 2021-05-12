@@ -90,6 +90,10 @@ void	do_coms(int i, t_cmd **cmd, int fd_in, int fd_out)
 			do_redirect(cmd[i], &fd_out);
 		execute(cmd[i], fd_in, fd_out);
 	}
+	if (!ft_strcmp(cmd[i]->exec_name, "cd"))
+		cd(cmd[i]);
+	if (!ft_strcmp(cmd[i]->exec_name, "exit"))
+		exit(0);
 	waitpid(pid2, &g_shell.status, 0);
 	tmp(cmd, i, pid);
 }
