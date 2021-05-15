@@ -25,7 +25,6 @@ int main(int argc, char **argv, char **envp)
 		history_update(&g_shell.hist, s);
 		setc(&term);
 		cmd = get_commands(s);
-		free(s);
 		if (cmd[i])
 		{
 			while(cmd[i])

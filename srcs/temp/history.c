@@ -4,8 +4,13 @@ void history_update(t_2list **hist, char *s)
 {
 	t_2list	*el;
 
-	if (s && *s)
+	if (!s)
+		return ;
+	if (!*s)
 	{
+		free(s);
+		return ;
+	}
 /*
 		if (!ft_strcmp(el->content, s))
 			return ;
@@ -18,7 +23,6 @@ void history_update(t_2list **hist, char *s)
 			*hist = el;
 		}
 		tlist_add_front(hist, tlist_new(s));
-	}
 }
 
 char *get_history_line(t_2list **lst, int dir, int *end)
@@ -31,7 +35,7 @@ char *get_history_line(t_2list **lst, int dir, int *end)
 	if (*end == 0 && dir == 1)
 	{
 		*end = 1;
-		return (el->content);
+		return (ft_strdup(el->content));
 	}
 	if (dir == 1 && el->next)
 		*lst = el->next;
@@ -46,7 +50,7 @@ char *get_history_line(t_2list **lst, int dir, int *end)
 		*lst = el->prev;
 	}
 	el = *lst;//
-	return (el->content);
+	return (ft_strdup(el->content));
 }
 
 void history_free(t_2list **hist)

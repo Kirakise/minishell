@@ -33,7 +33,7 @@ char *tmpread()
 	char *tmp;
 
 	s = ft_calloc(1, 1);
-	str = malloc(0);
+	str = 0;
 	tputs(save_cursor, 1, ft_putchar);
 	do
 		{
@@ -45,16 +45,20 @@ char *tmpread()
 			{
 				tputs(restore_cursor, g_shell.tmp_fd_1, ft_putchar);
 				tputs(tigetstr("ed"), 1, ft_putchar);
+				free(s);
 				if (!ft_strcmp(str, "\e[A"))
-					tmp = get_history_line(&g_shell.hist, 1, &end);
+					s = get_history_line(&g_shell.hist, 1, &end);
 				else
-					tmp = get_history_line(&g_shell.hist, -1, &end);
-				if (tmp)
+					s = get_history_line(&g_shell.hist, -1, &end);
+				if (s)
 				{
-					free(s);
-					s = tmp;
-					tmp = 0;
-					write(g_shell.tmp_fd_1, s, ft_strlen(s));
+				//	free(s);
+					//s = tmp;
+					//tmp = 0;
+					//printf("\n%s\n%s\n", tmp, s); fflush(stdout);
+					ft_putstr(s);
+					//free(s);
+					//write(g_shell.tmp_fd_1, s, ft_strlen(s));
 				}
 			}
 			else if (!ft_strcmp(str, "\e[C") || !ft_strcmp(str, "\e[D"))
@@ -77,7 +81,7 @@ char *tmpread()
 			else if (str[0] >= 20 && str[0] <= 126)
 			{
 				write(1, str, l);
-				ft_realloc(&s, str);//а вот тут все очень любит крашиться, это прям топ место
+				ft_realloc(&s, str);
 			}
 		} while (ft_strcmp(str, "\n"));
 	free(str);
