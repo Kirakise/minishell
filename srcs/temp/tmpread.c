@@ -44,7 +44,6 @@ char *tmpread()
 	int end;
 	char *str;
 	char *s;
-	char *tmp;
 
 	s = ft_calloc(1, 1);
 	str = ft_calloc(1, 1);
@@ -58,7 +57,7 @@ char *tmpread()
 		if (!ft_strcmp(str, "\e[A") || !ft_strcmp(str, "\e[B"))
 			access_history(str, &s, &end);
 		else if (!ft_strcmp(str, "\e[C") || !ft_strcmp(str, "\e[D"))
-			tmp = 0;
+			;
 		else if (!ft_strcmp(str, "\x7f") && delete_last(s) == 1)
 		{
 			tputs(cursor_left, 1, ft_putchar);
