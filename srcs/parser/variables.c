@@ -2,13 +2,13 @@
 
 static char	*get_var_value(char *s, int i)
 {
-	char	*var_name;
-	char	*var_value;
+	char	*name;
+	char	*value;
 
-	var_name = ft_substr(s + 1, 0, i);//malloc
-	var_value = find_var(var_name);//malloc
-	free(var_name);
-	return (var_value);
+	name = ft_substr(s + 1, 0, i);//malloc
+	value = find_var(name);//malloc
+	free(name);
+	return (value);
 }
 
 static void	str_iterate(char *s, char **res)
