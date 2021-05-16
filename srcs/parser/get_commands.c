@@ -135,6 +135,8 @@ t_cmd		**get_commands(char *s)
 	t_list	*arg_list;
 
 //	printf("\n%-8s%s\n", "in: ", s);//
+	if (!s || !*s)
+		return (0);
 	cmd_list = 0;
 	while (*s)
 	{

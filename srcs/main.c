@@ -18,14 +18,14 @@ int main(int argc, char **argv, char **envp)
 		return (0);
 	while (1)
 	{
-		i = 0;
 		write(g_shell.fd_1, "minishell> ", 11);
 		setic(&term);
 		s = tmpread();
-		history_update(&g_shell.hist, s);
 		setc(&term);
 		cmd = get_commands(s);
-		if (cmd[i])
+		history_update(&g_shell.hist, s);
+		i = 0;
+		if (cmd)
 		{
 			while(cmd[i])
 				i++;

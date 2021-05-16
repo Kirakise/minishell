@@ -44,12 +44,11 @@ char *get_history_line(t_2list **lst, int dir, int *end)
 		if (!el->prev)
 		{
 			*end = 0;
-			return (ft_strdup(""));
-			//return (0);
+			return (0);
 		}
 		*lst = el->prev;
 	}
-	el = *lst;//
+	el = *lst;
 	return (ft_strdup(el->content));
 }
 
