@@ -1,6 +1,5 @@
 #include <stdio.h>
 #include "../../includes/minishell.h"
-#include "../../includes/libft.h"
 
 static void	handle_quotes(int *val)
 {

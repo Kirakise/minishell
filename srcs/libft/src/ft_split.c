@@ -1,15 +1,3 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   ft_split.c                                         :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: rcaraway <marvin@42.fr>                    +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/11/06 17:44:33 by rcaraway          #+#    #+#             */
-/*   Updated: 2020/11/07 15:49:15 by rcaraway         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "../../../includes/libft.h"
 
 static size_t	get_num_words(char const *s, char c)
@@ -36,7 +24,7 @@ static size_t	get_num_words(char const *s, char c)
 	return (ret);
 }
 
-static char		*get_new_word(char **s, char c)
+static char	*get_new_word(char **s, char c)
 {
 	size_t	i;
 	char	*tmp;
@@ -53,7 +41,7 @@ static char		*get_new_word(char **s, char c)
 	return (tmp);
 }
 
-static void		clean_all(char **s)
+static void	clean_all(char **s)
 {
 	size_t	i;
 
@@ -67,7 +55,7 @@ static void		clean_all(char **s)
 	free(s);
 }
 
-static char		**ft_split2(char const *str, char **ret, char c, long i)
+static char	**ft_split2(char const *str, char **ret, char c, long i)
 {
 	long	j;
 	char	*s;
@@ -88,7 +76,7 @@ static char		**ft_split2(char const *str, char **ret, char c, long i)
 	return (ret);
 }
 
-char			**ft_split(char const *str, char c)
+char	**ft_split(char const *str, char c)
 {
 	char	**ret;
 	long	i;
@@ -96,7 +84,7 @@ char			**ft_split(char const *str, char c)
 	if (str == 0)
 		return (0);
 	i = get_num_words(str, c);
-	ret = ft_calloc(i + 1, sizeof(char**));
+	ret = ft_calloc(i + 1, sizeof(char **));
 	if (ret == 0)
 		return (0);
 	return (ft_split2(str, ret, c, i));

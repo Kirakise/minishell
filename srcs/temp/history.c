@@ -1,6 +1,6 @@
 #include "../../includes/minishell.h"
 
-void history_update(t_2list **hist, char *s)
+void	history_update(t_2list **hist, char *s)
 {
 	t_2list	*el;
 
@@ -21,9 +21,9 @@ void history_update(t_2list **hist, char *s)
 	tlist_add_front(hist, tlist_new(s));
 }
 
-char *get_history_line(t_2list **lst, int dir, int *end)
+char	*get_history_line(t_2list **lst, int dir, int *end)
 {
-	t_2list *el;
+	t_2list	*el;
 
 	if (!lst || !*lst)
 		return (0);
@@ -48,9 +48,9 @@ char *get_history_line(t_2list **lst, int dir, int *end)
 	return (ft_strdup(el->content));
 }
 
-void history_free(t_2list **hist)
+void	history_free(t_2list **hist)
 {
-	t_2list *el;
+	t_2list	*el;
 
 	if (!hist || !*hist)
 		return ;

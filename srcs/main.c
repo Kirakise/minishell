@@ -1,14 +1,13 @@
-#include "../includes/libft.h"
 #include "../includes/minishell.h"
 
 t_shell	g_shell;
 
-int main(int argc, char **argv, char **envp)
+int	main(int argc, char **argv, char **envp)
 {
-	char	*s;
-	t_cmd	**cmd;
-	int 	i;
-	struct termios term;
+	char			*s;
+	t_cmd			**cmd;
+	int				i;
+	struct termios	term;
 
 	init_struct();
 	(void)argc;
@@ -27,7 +26,7 @@ int main(int argc, char **argv, char **envp)
 		i = 0;
 		if (cmd)
 		{
-			while(cmd[i])
+			while (cmd[i])
 				i++;
 			do_coms(i - 1, cmd, dup(0), dup(1));
 		}

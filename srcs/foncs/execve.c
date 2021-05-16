@@ -1,5 +1,4 @@
 #include "../../includes/minishell.h"
-#include "../../includes/libft.h"
 #include <string.h>
 #include <unistd.h>
 

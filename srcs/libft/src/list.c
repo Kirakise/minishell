@@ -4,7 +4,8 @@ t_list	*ft_lstnew(void *content)
 {
 	t_list	*el;
 
-	if (!(el = malloc(sizeof(t_list))))
+	el = malloc(sizeof(t_list));
+	if (!el)
 		return (0);
 	el->content = content;
 	el->next = 0;
@@ -40,7 +41,7 @@ int	ft_lst_getsize(t_list *lst)
 	return (i);
 }
 
-int		ft_lstadd_back(t_list **lst, t_list *new)
+int	ft_lstadd_back(t_list **lst, t_list *new)
 {
 	t_list	*el;
 
@@ -56,7 +57,7 @@ int		ft_lstadd_back(t_list **lst, t_list *new)
 	return (0);
 }
 
-int		ft_lstdestroy(t_list **lst)
+int	ft_lstdestroy(t_list **lst)
 {
 	t_list	*el;
 	t_list	*tmp;

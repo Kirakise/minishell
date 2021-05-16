@@ -2,7 +2,7 @@
 
 char	*ft_strdup(const char *s1)
 {
-	int	size;
+	int		size;
 	char	*ret;
 	char	*tmp2;
 

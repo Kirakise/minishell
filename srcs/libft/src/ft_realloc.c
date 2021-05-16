@@ -1,9 +1,9 @@
 #include "../../../includes/libft.h"
 
-void ft_realloc(char **s1, char *s2)
+void	ft_realloc(char **s1, char *s2)
 {
-	char *ret;
-	int i;
+	char	*ret;
+	int		i;
 
 	i = ft_strlen(*s1);
 	ret = calloc(i + 2, 1);

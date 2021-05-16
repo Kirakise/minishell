@@ -1,5 +1,4 @@
 #include "../../includes/minishell.h"
-#include "../../includes/libft.h"
 #include <fcntl.h>
 #include <sys/types.h>
 #include <sys/wait.h>

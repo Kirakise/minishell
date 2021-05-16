@@ -1,5 +1,4 @@
 #include "../../includes/minishell.h"
-#include "../../includes/libft.h"
 #include <fcntl.h>
 #include <sys/types.h>
 #include <sys/wait.h>
@@ -17,8 +16,9 @@ void	execute(t_cmd *cmd, int fd_in, int fd_out)
 		pwd();
 	else if (!ft_strcmp("env", cmd->exec_name))
 		envprint();
-	else if (!ft_strcmp("cd", cmd->exec_name) || !ft_strcmp("exit", cmd->exec_name) ||
-	!ft_strcmp("export", cmd->exec_name) || !ft_strcmp("unset", cmd->exec_name))
+	else if (!ft_strcmp("cd", cmd->exec_name) || !ft_strcmp("exit",
+			cmd->exec_name) || !ft_strcmp("export", cmd->exec_name)
+		|| !ft_strcmp("unset", cmd->exec_name))
 		exit(0);
 	else
 		do_exec(cmd);
@@ -38,7 +38,6 @@ void	do_redirect(t_cmd *cmd, int *fd_out)
 	else if (cmd->redirect == 2)
 		*fd_out = open(cmd->redirect_filename,
 				O_WRONLY | O_CREAT | O_APPEND, 0664);
-	
 	free(cmd->redirect_filename);
 }
 

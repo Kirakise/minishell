@@ -4,7 +4,8 @@ t_2list	*tlist_new(void *content)
 {
 	t_2list	*el;
 
-	if (!(el = malloc(sizeof(t_2list))))
+	el = malloc(sizeof(t_2list));
+	if (!el)
 		return (0);
 	el->content = content;
 	el->next = 0;
@@ -26,7 +27,7 @@ void	tlist_add_front(t_2list **lst, t_2list *new)
 	*lst = el;
 }
 
-int		tlist_destroy(t_2list **lst)
+int	tlist_destroy(t_2list **lst)
 {
 	t_2list	*el;
 	t_2list	*tmp;

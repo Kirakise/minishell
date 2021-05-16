@@ -1,19 +1,20 @@
 #include "../../includes/minishell.h"
-#include "../../includes/libft.h"
-extern t_shell g_shell;
 
-int ft_putchar(int s)
+extern t_shell	g_shell;
+
+int	ft_putchar(int s)
 {
 	return (write(g_shell.fd_1, &s, 1));
 }
-int ft_putint(int a)
+
+int	ft_putint(int a)
 {
 	return (write(g_shell.fd_1, &a, 4));
 }
 
-int delete_last(char *s)
+int	delete_last(char *s)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	if (!s || !s[i])
@@ -24,7 +25,7 @@ int delete_last(char *s)
 	return (1);
 }
 
-static void access_history(char *str, char **s, int *end)
+static void	access_history(char *str, char **s, int *end)
 {
 	tputs(restore_cursor, g_shell.tmp_fd_1, ft_putchar);
 	tputs(tigetstr("ed"), 1, ft_putchar);
@@ -38,12 +39,12 @@ static void access_history(char *str, char **s, int *end)
 		//write(g_shell.tmp_fd_1, s, ft_strlen(s));
 }
 
-char *tmpread()
+char	*tmpread(void)
 {
-	int l;
-	int end;
-	char *str;
-	char *s;
+	int		l;
+	int		end;
+	char	*str;
+	char	*s;
 
 	s = ft_calloc(1, 1);
 	str = ft_calloc(1, 1);

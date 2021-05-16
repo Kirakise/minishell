@@ -1,5 +1,4 @@
 #include "../../includes/minishell.h"
-#include "../../includes/libft.h"
 
 extern t_shell	g_shell;
 

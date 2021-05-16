@@ -49,7 +49,7 @@ typedef struct s_cmd
 void		pwd(void);
 void		envprint(void);
 void		ft_echo(t_cmd *cmd);
-void 		do_coms(int i, t_cmd **cmd, int fd_in, int fd_out);
+void		do_coms(int i, t_cmd **cmd, int fd_in, int fd_out);
 int			do_exec(t_cmd *cmd);
 void		cd(t_cmd *cmd);
 void		free_cmd(t_cmd **cmd);
@@ -62,16 +62,16 @@ void		unset(t_cmd *cmd);
 t_cmd		**get_commands(char *s);
 
 /*Utils*/
-int 		init_struct(void);
+int			init_struct(void);
 char		**envcpy(char **line);
-char 		*find_var(char *s1);
-char *tmpread();
-void history_update(t_2list **hist, char *s);
-char *get_history_line(t_2list **lst, int dir, int *end);
-void history_free(t_2list **hist);
+char		*find_var(char *s1);
+char		*tmpread(void);
+void		history_update(t_2list **hist, char *s);
+char		*get_history_line(t_2list **lst, int dir, int *end);
+void		history_free(t_2list **hist);
 
 /*termcaps*/
-void setc(struct termios *term);
-void setic(struct termios *term);
-int setinit(struct termios *term);
+void		setc(struct termios *term);
+void		setic(struct termios *term);
+int			setinit(struct termios *term);
 #endif

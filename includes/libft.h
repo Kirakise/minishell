@@ -17,11 +17,6 @@ typedef struct s_2list
 	struct s_2list	*next;
 }				t_2list;
 
-t_2list	*tlist_new(void *content);
-void	tlist_add_front(t_2list **lst, t_2list *new);
-int		tlist_destroy(t_2list **lst);
-
-
 size_t				ft_strlen(const char *s);
 void				ft_putstr(const char *s);
 void				ft_putstr_nl(const char *s);
@@ -41,8 +36,10 @@ t_list				*ft_lstlast(t_list *lst);
 int					ft_lst_getsize(t_list *lst);
 int					ft_lstadd_back(t_list **lst, t_list *new1);
 int					ft_lstdestroy(t_list **lst);
-int					get_next_line(int fd, char **line);
 char				**ft_split(char const *str, char c);
 char				*ft_substr(char const *s, unsigned int start, size_t len);
+t_2list				*tlist_new(void *content);
+void				tlist_add_front(t_2list **lst, t_2list *new);
+int					tlist_destroy(t_2list **lst);
 
 #endif
