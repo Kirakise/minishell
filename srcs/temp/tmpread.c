@@ -34,8 +34,9 @@ static void	access_history(char *str, char **s, int *end)
 		*s = get_history_line(&g_shell.hist, 1, end);
 	else
 		*s = get_history_line(&g_shell.hist, -1, end);
-	if (*s)
-		ft_putstr(*s);
+	if (!*s)
+		*s = ft_strdup("");
+	ft_putstr(*s);
 		//write(g_shell.tmp_fd_1, s, ft_strlen(s));
 }
 

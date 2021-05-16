@@ -5,6 +5,8 @@ void	ft_realloc(char **s1, char *s2)
 	char	*ret;
 	int		i;
 
+	if (!*s1)
+		return ;
 	i = ft_strlen(*s1);
 	ret = calloc(i + 2, 1);
 	ft_memmove(ret, *s1, i);

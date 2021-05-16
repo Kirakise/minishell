@@ -1,6 +1,4 @@
 #include "../../includes/minishell.h"
-#include <stdio.h>
-#include <unistd.h>
 
 extern t_shell	g_shell;
 

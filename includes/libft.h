@@ -30,14 +30,17 @@ int					ft_strchr(char const c, char const *set);
 void				ft_realloc(char **s1, char *s2);
 char				*ft_strdup(const char *s1);
 char				*ft_strjoin(char const *s1, char const *s2);
+char				*ft_strjoin_3(char const *s1, char const *s2, char const *s3);
 char				*ft_strjoin_space(char const *s1, char const *s2);
+char				**ft_split(char const *str, char c);
+char				*ft_substr(char const *s, unsigned int start, size_t len);
+
+/* Lists */
 t_list				*ft_lstnew(void *content);
 t_list				*ft_lstlast(t_list *lst);
 int					ft_lst_getsize(t_list *lst);
 int					ft_lstadd_back(t_list **lst, t_list *new1);
 int					ft_lstdestroy(t_list **lst);
-char				**ft_split(char const *str, char c);
-char				*ft_substr(char const *s, unsigned int start, size_t len);
 t_2list				*tlist_new(void *content);
 void				tlist_add_front(t_2list **lst, t_2list *new);
 int					tlist_destroy(t_2list **lst);

@@ -1,9 +1,8 @@
-#include <stdio.h>
 #include "../../includes/minishell.h"
 
 static void	handle_quotes(int *val)
 {
-	int quotes;
+	int	quotes;
 
 	quotes = *val;
 	if (quotes == 0)
@@ -13,9 +12,9 @@ static void	handle_quotes(int *val)
 	*val = quotes;
 }
 
-static void handle_end_chars(char **s, t_cmd *cmd, int *end, int i)
+static void	handle_end_chars(char **s, t_cmd *cmd, int *end, int i)
 {
-	char *str;
+	char	*str;
 
 	str = *s;
 	if (*str == ';')
@@ -50,7 +49,7 @@ static void handle_end_chars(char **s, t_cmd *cmd, int *end, int i)
 	*s = str - 1;
 }
 
-static char *parse_input(char **input, int *end, t_cmd *cmd)
+static char	*parse_input(char **input, int *end, t_cmd *cmd)
 {
 	int		quotes[2];
 	char	*s;
@@ -87,6 +86,7 @@ static char *parse_input(char **input, int *end, t_cmd *cmd)
 		cmd->error = "\'";
 	if (quotes[1])
 		cmd->error = "\"";
+	subst_vars(&str);
 	return (str);
 }
 
@@ -125,18 +125,20 @@ static void	init_cmd_el(t_cmd *cmd, int *end)
 	*end = 0;
 }
 
-t_cmd		**get_commands(char *s)
+static int	syntax_err(char *err)
 {
-	char	*str, *tmp;
+	printf("Syntax error near '%s'\n", err);
+	return (1);
+}
+
+int	str_to_commands(char *s, t_list **cmd_list)
+{
+	char	*str;
+	char	*tmp;
 	int		end;
 	t_cmd	*cmd;
-	t_list	*cmd_list;
 	t_list	*arg_list;
 
-//	printf("\n%-8s%s\n", "in: ", s);//
-	if (!s || !*s)
-		return (0);
-	cmd_list = 0;
 	while (*s)
 	{
 		arg_list = 0;
@@ -146,10 +148,7 @@ t_cmd		**get_commands(char *s)
 		init_cmd_el(cmd, &end);
 		str = parse_input(&s, &end, cmd);
 		if (cmd->error)
-		{
-			printf("Syntax error near %s\n", cmd->error);
-			exit(1);
-		}
+			return (syntax_err(cmd->error));
 		cmd->exec_name = ft_strdup(str);
 		if (!cmd->exec_name)
 			exit(1);//malloc
@@ -162,10 +161,7 @@ t_cmd		**get_commands(char *s)
 		{
 			str = parse_input(&s, &end, cmd);
 			if (cmd->error)
-			{
-				printf("Syntax error near '%s'\n", cmd->error);
-				exit(1);
-			}
+				return (syntax_err(cmd->error));
 			if (end != 2)
 			{
 				tmp = ft_strdup(str);
@@ -180,16 +176,12 @@ t_cmd		**get_commands(char *s)
 			end = 0;
 			str = parse_input(&s, &end, cmd);
 			if (cmd->error)
-			{
-				printf("Syntax error near '%s'\n", cmd->error);
-				exit(1);
-			}
+				return (syntax_err(cmd->error));
 			cmd->redirect_filename = ft_strdup(str);
 			if (!cmd->redirect_filename)
 				exit (1);//malloc
 			free(str);
 		}
-		//
 		while (ft_isspace(*s))
 			s++;
 		if (*s == '|')
@@ -199,16 +191,24 @@ t_cmd		**get_commands(char *s)
 			if (*s == '|')
 				cmd->error = "||";
 		}
-		//
 		cmd->args = (char **)lst_to_arr(arg_list, (void **)cmd->args, 0);
-		ft_lstadd_back(&cmd_list, ft_lstnew(cmd));
+		ft_lstadd_back(cmd_list, ft_lstnew(cmd));
 	}
+	return (0);
+}
 
+t_cmd	**get_commands(char *s)
+{
+	t_list	*cmd_list;
 	t_cmd	**cmd_arr;
 
+	if (!s || !*s)
+		return (0);
+	cmd_list = 0;
+	if (str_to_commands(s, &cmd_list) != 0)
+		return (0);
 	cmd_arr = 0;
 	cmd_arr = (t_cmd **)lst_to_arr(cmd_list, (void **)cmd_arr, 1);
-
 /*
 	int i = 0;
 	int j = 0;
