@@ -52,12 +52,7 @@ char *tmpread()
 					s = get_history_line(&g_shell.hist, -1, &end);
 				if (s)
 				{
-				//	free(s);
-					//s = tmp;
-					//tmp = 0;
-					//printf("\n%s\n%s\n", tmp, s); fflush(stdout);
 					ft_putstr(s);
-					//free(s);
 					//write(g_shell.tmp_fd_1, s, ft_strlen(s));
 				}
 			}
@@ -77,7 +72,7 @@ char *tmpread()
 				break ;
 			}
 			else if (!ft_strcmp(str, "\4") && s[0] == 0)
-				exit(0);
+				exit (0);
 			else if (str[0] >= 20 && str[0] <= 126)
 			{
 				write(1, str, l);

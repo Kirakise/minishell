@@ -11,18 +11,14 @@ void history_update(t_2list **hist, char *s)
 		free(s);
 		return ;
 	}
-/*
-		if (!ft_strcmp(el->content, s))
-			return ;
-*/
-		if (hist && *hist)
-		{
-			el = *hist;
-			while (el->prev)
-				el = el->prev;
-			*hist = el;
-		}
-		tlist_add_front(hist, tlist_new(s));
+	if (hist && *hist)
+	{
+		el = *hist;
+		while (el->prev)
+			el = el->prev;
+		*hist = el;
+	}
+	tlist_add_front(hist, tlist_new(s));
 }
 
 char *get_history_line(t_2list **lst, int dir, int *end)
