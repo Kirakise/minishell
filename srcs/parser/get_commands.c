@@ -49,19 +49,11 @@ static void	handle_end_chars(char **s, t_cmd *cmd, int *end, int i)
 	*s = str - 1;
 }
 
-static char	*parse_input(char **input, int *end, t_cmd *cmd)
+static char	*str_iter(char *s, int *end, t_cmd *cmd, char *str)
 {
-	int		quotes[2];
-	char	*s;
-	char	*str;
-	int		i;
+	int	i;
+	int	quotes[2];
 
-	s = *input;
-	while (ft_isspace(*s))
-		s++;
-	str = malloc(sizeof(char) * (ft_strlen(s) + 1));
-	if (!str)
-		exit(1); // malloc protection....
 	i = 0;
 	quotes[0] = 0;
 	quotes[1] = 0;
@@ -74,18 +66,29 @@ static char	*parse_input(char **input, int *end, t_cmd *cmd)
 		else if (!quotes[0] && !quotes[1] && ft_strchr(*s, ";|>"))
 			handle_end_chars(&s, cmd, end, i);
 		else
-		{
-			str[i] = *s;
-			i++;
-		}
+			str[i++] = *s;
 		s++;
 	}
 	str[i] = 0;
-	*input = s;
 	if (quotes[0])
 		cmd->error = "\'";
 	if (quotes[1])
 		cmd->error = "\"";
+	return (s);
+}
+
+static char	*parse_input(char **input, int *end, t_cmd *cmd)
+{
+	char	*s;
+	char	*str;
+
+	s = *input;
+	while (ft_isspace(*s))
+		s++;
+	str = malloc(sizeof(char) * (ft_strlen(s) + 1));
+	if (!str)
+		exit(1); // malloc protection....
+	*input = str_iter(s, end, cmd, str);
 	subst_vars(&str);
 	return (str);
 }

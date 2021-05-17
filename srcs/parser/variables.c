@@ -5,7 +5,7 @@ static char	*get_var_value(char *s, int i)
 	char	*name;
 	char	*value;
 
-	name = ft_substr(s + 1, 0, i);//malloc
+	name = ft_substr(s, 0, i);//malloc
 	value = find_var(name);//malloc
 	free(name);
 	return (value);
@@ -25,16 +25,21 @@ static void	str_iterate(char *s, char **res)
 			s++;
 		if (!*s)
 			return ;
-		i = 0;//we should be in '$' now...
-		while (s[i + 1] && !ft_isspace(s[i + 1]))
+		while (*s == '$')
+			s++;
+		i = 0;
+		while (s[i] && s[i] != '$' && !ft_isspace(s[i]))
 			i++;
-		var_value = get_var_value(s, i);
+		if (i == 0)
+			var_value = ft_strdup("$");
+		else
+			var_value = get_var_value(s, i);
+		s--;
 		*s = 0;// 0 instead of $
 		tmp = ft_strjoin_3(*res, start, var_value);//malloc
 		free(*res);
 		free(var_value);
 		*res = tmp;
-		tmp = 0;
 		s += i + 1;
 	}
 }
