@@ -8,6 +8,13 @@ extern t_shell	g_shell;
 
 void	execute(t_cmd *cmd, int fd_in, int fd_out)
 {
+	int	i;
+
+	i = 0;
+	while (cmd->args && cmd->args[i])
+		subst_vars(&cmd->args[i++]);
+	subst_vars(&cmd->exec_name);
+	subst_vars(&cmd->redirect_filename);
 	dup2(fd_in, 0);
 	dup2(fd_out, 1);
 	if (!ft_strcmp("echo", cmd->exec_name))
