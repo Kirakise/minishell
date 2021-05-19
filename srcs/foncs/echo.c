@@ -17,7 +17,7 @@ void	ft_echo(t_cmd *cmd)
 	}
 	if (cmd->args[i])
 		write(g_shell.fd_1, cmd->args[i], ft_strlen(cmd->args[i]));
-	if (cmd->args[1] && ft_strcmp(cmd->args[1], "-n"))
+	if (!cmd->args[1] || (cmd->args[1] && ft_strcmp(cmd->args[1], "-n")))
 		write(g_shell.fd_1, "\n", 1);
 	exit(0);
 }
