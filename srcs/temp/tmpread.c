@@ -54,7 +54,7 @@ char	*tmpread(void)
 	while (ft_strcmp(str, "\n"))
 	{
 		free(str);
-		str = ft_calloc(5, 1);
+		str = ft_calloc(10, 1);
 		l = read(g_shell.tmp_fd_0, str, 10);
 		if (!ft_strcmp(str, "\e[A") || !ft_strcmp(str, "\e[B"))
 			access_history(str, &s, &end);

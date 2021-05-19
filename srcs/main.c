@@ -30,8 +30,8 @@ int	main(int argc, char **argv, char **envp)
 			while (cmd[i])
 				i++;
 			do_coms(i - 1, cmd, dup(0), dup(1));
+			free_cmd(cmd);
 		}
-		free_cmd(cmd);
 	}
 	history_free(&g_shell.hist);
 }
