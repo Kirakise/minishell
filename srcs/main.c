@@ -9,9 +9,7 @@ int	main(int argc, char **argv, char **envp)
 	int				i;
 	struct termios	term;
 
-	init_struct();
-	(void)argc;
-	(void)argv;
+	init_struct(argc, argv);
 	g_shell.env = envcpy(envp);
 	if (setinit(&term))
 		return (0);

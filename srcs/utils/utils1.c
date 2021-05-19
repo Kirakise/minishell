@@ -2,8 +2,10 @@
 
 extern t_shell	g_shell;
 
-int	init_struct(void)
+int	init_struct(int argc, char **argv)
 {
+	(void)argc;
+	(void)argv;
 	g_shell.fd_1 = STDOUT_FILENO;
 	g_shell.fd_0 = STDIN_FILENO;
 	g_shell.tmp_fd_1 = dup(g_shell.fd_1);

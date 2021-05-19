@@ -25,13 +25,11 @@ typedef struct s_shell
 	int		pipe0_open;
 }		t_shell;
 
-/* структура с командами и аргументами
-** первое поле можно будет выкинуть
-** в exec_name имя команды, в args - аргументы
-** pipe может быть 0 или 1
-** 1 означает что в конце аргументов есть '|' - в саму строку аргументов этот слеш не включаю
-** редиректы и все более-менее умное пока не обрабатывал
-*/
+typedef struct	s_redir
+{
+	int		type;
+	char	*filename;
+}				t_redir;
 
 typedef struct s_cmd
 {
@@ -43,6 +41,9 @@ typedef struct s_cmd
 	int		pipe_out;
 	int		redirect; //0 == no redirect; 1 == '>'; 2 == '>>'
 	char	*redirect_filename;
+
+	t_redir	**redir_in;
+	t_redir	**redir_out;
 }				t_cmd;
 
 /*Fonctions*/
@@ -64,7 +65,7 @@ void		subst_vars(char **str);
 void		parsevars(char **s);
 
 /*Utils*/
-int			init_struct(void);
+int			init_struct(int argc, char **argv);
 char		**envcpy(char **line);
 char		*find_var(char *s1);
 char		*tmpread(void);
