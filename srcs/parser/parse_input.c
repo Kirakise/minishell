@@ -1,17 +1,5 @@
 #include "../../includes/minishell.h"
 
-static void	handle_quotes(int *val)
-{
-	int	quotes;
-
-	quotes = *val;
-	if (quotes == 0)
-		quotes++;
-	else
-		quotes--;
-	*val = quotes;
-}
-
 static void	handle_end_chars(char **s, t_cmd *cmd, int *end, int i)
 {
 	char	*str;
@@ -49,7 +37,19 @@ static void	handle_end_chars(char **s, t_cmd *cmd, int *end, int i)
 	*s = str - 1;
 }
 
-static char *check_close_quotes(int single, int dbl)
+static void	handle_quotes(int *val)
+{
+	int	quotes;
+
+	quotes = *val;
+	if (quotes == 0)
+		quotes++;
+	else
+		quotes--;
+	*val = quotes;
+}
+
+static char	*check_close_quotes(int single, int dbl)
 {
 	if (single)
 		return (ft_strdup("\'"));
@@ -74,6 +74,13 @@ static char	*str_iter(char *s, int *end, t_cmd *cmd, char *str)
 			handle_quotes(&quotes[1]);
 		else if (!quotes[0] && !quotes[1] && ft_strchr(*s, ";|>"))
 			handle_end_chars(&s, cmd, end, i);
+		else if (!quotes[0] && !quotes[1] && *s == '\\')
+		{
+			s++;
+			if (!*s)
+				break ;
+			str[i++] = *s;
+		}
 		else
 			str[i++] = *s;
 		s++;
