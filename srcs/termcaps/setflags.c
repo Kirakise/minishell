@@ -31,6 +31,7 @@ void	setic(struct termios *term)
 {
 	term->c_lflag &= ~(ECHO);
 	term->c_lflag &= ~(ICANON);
+	term->c_lflag &= ~(ISIG);
 	tcsetattr(0, TCSANOW, term);
 }
 
@@ -38,5 +39,6 @@ void	setc(struct termios *term)
 {
 	term->c_lflag |= (ECHO);
 	term->c_lflag |= (ICANON);
+	term->c_lflag |= (ISIG);
 	tcsetattr(0, TCSANOW, term);
 }
