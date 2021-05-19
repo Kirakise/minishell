@@ -61,8 +61,8 @@ void		unset(t_cmd *cmd);
 
 /*Parser*/
 t_cmd		**get_commands(char *s);
+char		*parse_input(char **input, int *end, t_cmd *cmd);
 void		subst_vars(char **str);
-void		parsevars(char **s);
 
 /*Utils*/
 int			init_struct(int argc, char **argv);
