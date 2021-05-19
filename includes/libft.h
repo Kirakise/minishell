@@ -42,7 +42,7 @@ char				*ft_itoa(int n);
 t_list				*ft_lstnew(void *content);
 t_list				*ft_lstlast(t_list *lst);
 int					ft_lst_getsize(t_list *lst);
-int					ft_lstadd_back(t_list **lst, t_list *new1);
+int					ft_lstadd_back(t_list **lst, t_list *new);
 int					ft_lstdestroy(t_list **lst);
 t_2list				*tlist_new(void *content);
 void				tlist_add_front(t_2list **lst, t_2list *new);
