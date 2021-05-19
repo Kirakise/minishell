@@ -25,7 +25,7 @@ typedef struct s_shell
 	int		pipe0_open;
 }		t_shell;
 
-typedef struct	s_redir
+typedef struct s_redir
 {
 	int		type;
 	char	*filename;

@@ -5,8 +5,8 @@ extern t_shell	g_shell;
 
 void	handlesigint(int a)
 {
-    if (a == SIGINT)
-    	waitpid(-1, &g_shell.status, WNOHANG);
+	if (a == SIGINT)
+		waitpid(-1, &g_shell.status, WNOHANG);
 }
 
 int	setinit(struct termios *term)

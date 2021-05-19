@@ -21,21 +21,21 @@ static void	handle_end_chars(char **s, t_cmd *cmd, int *end, int i)
 	{
 		str++;
 		if (*str == ';')
-			cmd->error = ";;";
+			cmd->error = ft_strdup(";;");
 	}
 	else if (*str == '|')
 	{
 		cmd->pipe = 1;
 		str++;
 		if (*str == '|')
-			cmd->error = "||";
+			cmd->error = ft_strdup("||");
 	}
 	else if (!ft_strncmp(str, ">>", 2))
 	{
 		cmd->redirect = 2;
 		str += 2;
 		if (*str == '>')
-			cmd->error = ">>>";
+			cmd->error = ft_strdup(">>>");
 	}
 	else if (*str == '>')
 	{
@@ -47,6 +47,15 @@ static void	handle_end_chars(char **s, t_cmd *cmd, int *end, int i)
 	else
 		*end = 1;
 	*s = str - 1;
+}
+
+static char *check_close_quotes(int single, int dbl)
+{
+	if (single)
+		return (ft_strdup("\'"));
+	if (dbl)
+		return (ft_strdup("\""));
+	return (0);
 }
 
 static char	*str_iter(char *s, int *end, t_cmd *cmd, char *str)
@@ -70,10 +79,7 @@ static char	*str_iter(char *s, int *end, t_cmd *cmd, char *str)
 		s++;
 	}
 	str[i] = 0;
-	if (quotes[0])
-		cmd->error = "\'";
-	if (quotes[1])
-		cmd->error = "\"";
+	cmd->error = check_close_quotes(quotes[0], quotes[1]);
 	return (s);
 }
 
@@ -125,12 +131,21 @@ static void	init_cmd_el(t_cmd *cmd, int *end)
 	cmd->pipe = 0;
 	cmd->pipe_out = 0;
 	cmd->redirect = 0;
+	cmd->redir_in = 0;
+	cmd->redir_out = 0;
 	*end = 0;
 }
 
 static int	syntax_err(char *err)
 {
-	printf("Syntax error near '%s'\n", err);
+	if (!err)
+	{
+		ft_putstr_nl("Syntax error");
+		return (1);
+	}
+	ft_putstr("Syntax error near ");
+	ft_putstr_nl(err);
+	free(err);
 	return (1);
 }
 
@@ -192,7 +207,7 @@ int	str_to_commands(char *s, t_list **cmd_list)
 			cmd->pipe = 1;
 			s++;
 			if (*s == '|')
-				cmd->error = "||";
+				cmd->error = ft_strdup("||");
 		}
 		cmd->args = (char **)lst_to_arr(arg_list, (void **)cmd->args, 0);
 		ft_lstadd_back(cmd_list, ft_lstnew(cmd));

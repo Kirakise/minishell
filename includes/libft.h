@@ -30,7 +30,8 @@ int					ft_strchr(char const c, char const *set);
 void				ft_realloc(char **s1, char *s2);
 char				*ft_strdup(const char *s1);
 char				*ft_strjoin(char const *s1, char const *s2);
-char				*ft_strjoin_3(char const *s1, char const *s2, char const *s3);
+char				*ft_strjoin_3(char const *s1, char const *s2,
+						char const *s3);
 char				*ft_strjoin_space(char const *s1, char const *s2);
 char				**ft_split(char const *str, char c);
 char				*ft_substr(char const *s, unsigned int start, size_t len);
