@@ -36,7 +36,8 @@ char	*ft_itoa(int n)
 		sign = 1;
 	num = ft_abs(n);
 	len = ft_getlen(num) + sign;
-	if (!(str = (char *)malloc(sizeof(char) * (len + 1))))
+	str = (char *)malloc(sizeof(char) * (len + 1));
+	if (!str)
 		return (0);
 	str[len--] = 0;
 	while (len >= 0 + sign)
