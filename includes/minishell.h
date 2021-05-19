@@ -53,7 +53,7 @@ void		do_coms(int i, t_cmd **cmd, int fd_in, int fd_out);
 int			do_exec(t_cmd *cmd);
 void		cd(t_cmd *cmd);
 void		free_cmd(t_cmd **cmd);
-void		parentproc(t_cmd **cmd, int i);
+void		parentproc(t_cmd **cmd, int i, int fd_in, int fd_out);
 void		export(t_cmd *cmd);
 char		*get_name(char *s);
 void		unset(t_cmd *cmd);
@@ -75,4 +75,5 @@ void		history_free(t_2list **hist);
 void		setc(struct termios *term);
 void		setic(struct termios *term);
 int			setinit(struct termios *term);
+void		handlesigint(int a);
 #endif

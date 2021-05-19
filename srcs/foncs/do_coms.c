@@ -41,16 +41,16 @@ void	do_redirect(t_cmd *cmd, int *fd_out)
 	free(cmd->redirect_filename);
 }
 
-void	tmp(t_cmd **cmd, int i, pid_t pid)
-{
-	if (pid)
-	{
-		kill(pid, SIGTERM);
-		waitpid(pid, 0, 0);
-	}
-	if (g_shell.pidt == i)
-		parentproc(cmd, i);
-}
+// void	tmp(t_cmd **cmd, int i, pid_t pid)
+// {
+// 	if (pid)
+// 	{
+// 		kill(pid, SIGTERM);
+// 		waitpid(pid, 0, 0);
+// 	}
+// 	if (g_shell.pidt == i)
+// 		parentproc(cmd, i);
+// }
 
 void	do_pipe(int i, t_cmd **cmd, int *fd_in, pid_t *pid)
 {
@@ -89,7 +89,7 @@ void	do_coms(int i, t_cmd **cmd, int fd_in, int fd_out)
 			do_redirect(cmd[i], &fd_out);
 		execute(cmd[i], fd_in, fd_out);
 	}
-	parentproc(cmd, i);
+	parentproc(cmd, i, fd_in, fd_out);
+	waitpid(pid, &g_shell.status, 0);
 	waitpid(pid2, &g_shell.status, 0);
-	tmp(cmd, i, pid);
 }

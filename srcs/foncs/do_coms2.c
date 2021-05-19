@@ -34,8 +34,10 @@ void	free_cmd(t_cmd **cmd)
 	free(cmd);
 }
 
-void	parentproc(t_cmd **cmd, int i)
+void	parentproc(t_cmd **cmd, int i, int fd_in, int fd_out)
 {
+	close(fd_in);
+	close(fd_out);
 	if (!ft_strcmp("cd", cmd[i]->exec_name))
 		cd(cmd[i]);
 	if (!ft_strcmp("exit", cmd[i]->exec_name))
