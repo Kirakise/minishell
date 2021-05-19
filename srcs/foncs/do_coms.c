@@ -41,17 +41,6 @@ void	do_redirect(t_cmd *cmd, int *fd_out)
 	free(cmd->redirect_filename);
 }
 
-// void	tmp(t_cmd **cmd, int i, pid_t pid)
-// {
-// 	if (pid)
-// 	{
-// 		kill(pid, SIGTERM);
-// 		waitpid(pid, 0, 0);
-// 	}
-// 	if (g_shell.pidt == i)
-// 		parentproc(cmd, i);
-// }
-
 void	do_pipe(int i, t_cmd **cmd, int *fd_in, pid_t *pid)
 {
 	int	fd[2];

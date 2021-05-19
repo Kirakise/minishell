@@ -20,7 +20,7 @@ int	main(int argc, char **argv, char **envp)
 		write(g_shell.fd_1, "minishell> ", 11);
 		setic(&term);
 		s = tmpread();
-		parsevars(&s);
+		//parsevars(&s);
 		setc(&term);
 		cmd = get_commands(s);
 		history_update(&g_shell.hist, s);
@@ -31,6 +31,7 @@ int	main(int argc, char **argv, char **envp)
 				i++;
 			do_coms(i - 1, cmd, dup(0), dup(1));
 		}
+		free_cmd(cmd);
 	}
 	history_free(&g_shell.hist);
 }

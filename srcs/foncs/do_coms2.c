@@ -47,5 +47,4 @@ void	parentproc(t_cmd **cmd, int i, int fd_in, int fd_out)
 	if (!ft_strcmp("unset", cmd[i]->exec_name))
 		unset(cmd[i]);
 	restore_fd();
-	free_cmd(cmd);
 }
