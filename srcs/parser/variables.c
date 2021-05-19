@@ -10,17 +10,19 @@ static char	*get_var_value(char *s, int *i)
 	if (*i == 0)
 	{
 		if (s[*i] != '?')
-			return (ft_strdup("$"));//malloc
+			return (ft_strdup("$"));
 		*i += 1;
-		return (ft_itoa(g_shell.status));//malloc
+		return (ft_itoa(g_shell.status));
 	}
-	name = ft_substr(s, 0, *i);//malloc
-	value = find_var(name);//malloc
+	name = ft_substr(s, 0, *i);
+	if (!name)
+		return (0);
+	value = find_var(name);
 	free(name);
 	return (value);
 }
 
-static char *var_subst(char **str, char *start, char **res)
+static char	*var_subst(char **str, char *start, char **res)
 {
 	int		i;
 	char	*s;

@@ -39,14 +39,10 @@ static void	handle_end_chars(char **s, t_cmd *cmd, int *end, int i)
 
 static void	handle_quotes(int *val)
 {
-	int	quotes;
-
-	quotes = *val;
-	if (quotes == 0)
-		quotes++;
+	if (*val == 0)
+		*val = 1;
 	else
-		quotes--;
-	*val = quotes;
+		*val = 0;
 }
 
 static char	*check_close_quotes(int single, int dbl)
@@ -61,32 +57,29 @@ static char	*check_close_quotes(int single, int dbl)
 static char	*str_iter(char *s, int *end, t_cmd *cmd, char *str)
 {
 	int	i;
-	int	quotes[2];
+	int	q[2];
 
 	i = 0;
-	quotes[0] = 0;
-	quotes[1] = 0;
-	while (*s && !*end && (!ft_isspace(*s) || quotes[0] || quotes[1]))
+	q[0] = 0;
+	q[1] = 0;
+	while (*s && !*end && (!ft_isspace(*s) || q[0] || q[1]))
 	{
-		if (!quotes[1] && *s == '\'')
-			handle_quotes(&quotes[0]);
-		else if (!quotes[0] && *s == '"')
-			handle_quotes(&quotes[1]);
-		else if (!quotes[0] && !quotes[1] && ft_strchr(*s, ";|>"))
+		if (!q[1] && *s == '\'')
+			handle_quotes(&q[0]);
+		else if (!q[0] && *s == '"')
+			handle_quotes(&q[1]);
+		else if (!q[0] && !q[1] && ft_strchr(*s, ";|>"))
 			handle_end_chars(&s, cmd, end, i);
-		else if (!quotes[0] && !quotes[1] && *s == '\\')
+		else
 		{
-			s++;
-			if (!*s)
-				break ;
+			if (!q[0] && *s == '\\' && *(s + 1))
+				s++;
 			str[i++] = *s;
 		}
-		else
-			str[i++] = *s;
 		s++;
 	}
 	str[i] = 0;
-	cmd->error = check_close_quotes(quotes[0], quotes[1]);
+	cmd->error = check_close_quotes(q[0], q[1]);
 	return (s);
 }
 
@@ -102,6 +95,9 @@ char	*parse_input(char **input, int *end, t_cmd *cmd)
 	if (!str)
 		exit(1); // malloc protection....
 	*input = str_iter(s, end, cmd, str);
-	subst_vars(&str);
+	//add ft_strdup here
+	//free here
+
+	//subst_vars(&str);
 	return (str);
 }

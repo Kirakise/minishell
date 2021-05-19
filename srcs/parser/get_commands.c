@@ -34,6 +34,9 @@ static void	init_cmd_el(t_cmd *cmd, int *end)
 	cmd->redirect = 0;
 	cmd->redir_in = 0;
 	cmd->redir_out = 0;
+	cmd->exec_name = 0;
+	cmd->redirect_filename = 0;
+	cmd->args = 0;
 	*end = 0;
 }
 
@@ -50,10 +53,43 @@ static int	syntax_err(char *err)
 	return (1);
 }
 
-int	str_to_commands(char *s, t_list **cmd_list)
+static int parse_command(char **s, t_cmd *cmd, int *end, t_list **arg_list)
+{
+	char	*str;
+
+	str = parse_input(s, end, cmd);//malloc
+	if (cmd->error)
+		return (syntax_err(cmd->error));//return err
+	cmd->exec_name = ft_strdup(str);//malloc
+	free(str);
+	str = ft_strdup(cmd->exec_name);//malloc
+	ft_lstadd_back(arg_list, ft_lstnew(str));
+	return (0);
+}
+
+static int	parse_arguments(char **s, t_cmd *cmd, int *end, t_list **arg_list)
 {
 	char	*str;
 	char	*tmp;
+
+	while (**s && !*end)
+	{
+		str = parse_input(s, end, cmd);//malloc
+		if (cmd->error)
+			return (syntax_err(cmd->error));
+		if (*end != 2)
+		{
+			tmp = ft_strdup(str);//malloc
+			ft_lstadd_back(arg_list, ft_lstnew(tmp));
+		}
+		free(str);
+	}
+	return (0);
+}
+
+int	str_to_commands(char *s, t_list **cmd_list)
+{
+	char	*str;
 	int		end;
 	t_cmd	*cmd;
 	t_list	*arg_list;
@@ -61,44 +97,17 @@ int	str_to_commands(char *s, t_list **cmd_list)
 	while (*s)
 	{
 		arg_list = 0;
-		cmd = malloc(sizeof(t_cmd));
-		if (!cmd)
-			exit(1);//malloc
+		cmd = malloc(sizeof(t_cmd));//malloc
 		init_cmd_el(cmd, &end);
-		str = parse_input(&s, &end, cmd);
-		if (cmd->error)
-			return (syntax_err(cmd->error));
-		cmd->exec_name = ft_strdup(str);
-		if (!cmd->exec_name)
-			exit(1);//malloc
-		free(str);
-		str = ft_strdup(cmd->exec_name);
-		if (!str)
-			exit(1);//malloc
-		ft_lstadd_back(&arg_list, ft_lstnew(str));
-		while (*s && !end)
-		{
-			str = parse_input(&s, &end, cmd);
-			if (cmd->error)
-				return (syntax_err(cmd->error));
-			if (end != 2)
-			{
-				tmp = ft_strdup(str);
-				if (!tmp)
-					exit(1);//malloc
-				ft_lstadd_back(&arg_list, ft_lstnew(tmp));
-			}
-			free(str);
-		}
+		parse_command(&s, cmd, &end, &arg_list);
+		parse_arguments(&s, cmd, &end, &arg_list);
 		if (cmd->redirect)
 		{
 			end = 0;
-			str = parse_input(&s, &end, cmd);
+			str = parse_input(&s, &end, cmd);//malloc
 			if (cmd->error)
 				return (syntax_err(cmd->error));
-			cmd->redirect_filename = ft_strdup(str);
-			if (!cmd->redirect_filename)
-				exit (1);//malloc
+			cmd->redirect_filename = ft_strdup(str);//malloc
 			free(str);
 		}
 		while (ft_isspace(*s))
