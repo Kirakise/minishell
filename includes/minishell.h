@@ -27,42 +27,45 @@ typedef struct s_shell
 
 typedef struct s_redir
 {
-	int		type;
+	int		type; //type == 0 : '>', type == 1 : '>>'
 	char	*filename;
 }				t_redir;
 
 typedef struct s_cmd
 {
-	int		type;
 	char	*error;
 	char	*exec_name;
 	char	**args;
 	int		pipe;
 	int		pipe_out;
-	int		redirect; //0 == no redirect; 1 == '>'; 2 == '>>'
-	char	*redirect_filename;
-
-	t_redir	**redir_in;
+	char	*redir_in;
 	t_redir	**redir_out;
 }				t_cmd;
+/* Хай! Как видишь, структуру чуть поменял, поэтому в мейне и do_coms закомментил всякое.
+В redir_in имя последнего файла из '<'.
+В redir_out нулл-терминейтед массив (см структурку выше) из редиректов >/>>
 
 /*Fonctions*/
+void		do_coms(int i, t_cmd **cmd, int fd_in, int fd_out);
+int			do_exec(t_cmd *cmd);
+void		free_cmd(t_cmd **cmd);
+void		parentproc(t_cmd **cmd, int i, int fd_in, int fd_out);
 void		pwd(void);
 void		envprint(void);
 void		ft_echo(t_cmd *cmd);
-void		do_coms(int i, t_cmd **cmd, int fd_in, int fd_out);
-int			do_exec(t_cmd *cmd);
 void		cd(t_cmd *cmd);
-void		free_cmd(t_cmd **cmd);
-void		parentproc(t_cmd **cmd, int i, int fd_in, int fd_out);
 void		export(t_cmd *cmd);
 char		*get_name(char *s);
 void		unset(t_cmd *cmd);
 
 /*Parser*/
 t_cmd		**get_commands(char *s);
-char		*parse_input(char **input, int *end, t_cmd *cmd);
 void		subst_vars(char **str);
+/*Parser backend*/
+char		*parse_input(char **input, char **err);
+int			parse_command(char **s, t_cmd *cmd, t_list **arg_list);
+int			parse_arguments(char **s, t_cmd *cmd, t_list **arg_list);
+int			parse_redir_pipe(char **s, t_cmd *cmd);
 
 /*Utils*/
 int			init_struct(int argc, char **argv);

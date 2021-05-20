@@ -12,7 +12,8 @@ SRCS	=	src/ft_memmove.c\
 			src/list.c\
 			src/ft_putstr.c\
 			src/ft_isalnum.c\
-			src/ft_itoa.c
+			src/ft_itoa.c\
+			src/lst_to_arr.c
 
 OBJS	=	$(SRCS:.c=.o)
 

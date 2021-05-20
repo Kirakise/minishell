@@ -44,6 +44,7 @@ t_list				*ft_lstlast(t_list *lst);
 int					ft_lst_getsize(t_list *lst);
 int					ft_lstadd_back(t_list **lst, t_list *new);
 int					ft_lstdestroy(t_list **lst);
+void				**lst_to_arr(t_list *lst);
 t_2list				*tlist_new(void *content);
 void				tlist_add_front(t_2list **lst, t_2list *new);
 int					tlist_destroy(t_2list **lst);
