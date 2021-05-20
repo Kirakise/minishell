@@ -48,8 +48,9 @@ int	ft_strncmp(char *s1, char *s2, int n)
 
 int	ft_strchr(char const c, char const *set)
 {
-	while (*set)
-		if (c == *set++)
-			return (1);
+	while (*set && *set != c)
+		set++;
+	if (*set)
+		return (1);
 	return (0);
 }
