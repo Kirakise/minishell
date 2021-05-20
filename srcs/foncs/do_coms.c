@@ -6,7 +6,7 @@
 
 extern t_shell	g_shell;
 
-void	execute(t_cmd *cmd, int fd_in, int fd_out)
+/*void	execute(t_cmd *cmd, int fd_in, int fd_out)
 {
 	int	i;
 
@@ -89,3 +89,4 @@ void	do_coms(int i, t_cmd **cmd, int fd_in, int fd_out)
 	waitpid(pid, &g_shell.status, 0);
 	waitpid(pid2, &g_shell.status, 0);
 }
+*/
