@@ -61,12 +61,13 @@ void		unset(t_cmd *cmd);
 
 /*Parser*/
 t_cmd		**get_commands(char *s);
-void		subst_vars(char **str);
+void		subst_quotes_vars(t_cmd *cmd);
 /*Parser backend*/
 char		*parse_input(char **input, char **err);
 int			parse_command(char **s, t_cmd *cmd, t_list **arg_list);
 int			parse_arguments(char **s, t_cmd *cmd, t_list **arg_list);
 int			parse_redir_pipe(char **s, t_cmd *cmd);
+int			parse_str_chunk(char **input, char **res);
 
 /*Utils*/
 int			init_struct(int argc, char **argv);

@@ -21,28 +21,38 @@ static char	*str_iter(char *s, char **err, char *str)
 {
 	int	i;
 	int	q[2];
+	int	bslash;
 
 	i = 0;
 	q[0] = 0;
 	q[1] = 0;
-	while (*s && (!ft_isspace(*s) || q[0] || q[1]) && !ft_strchr(*s, ";|><"))
+	while (*s && (!ft_isspace(*s) || q[0] || q[1])
+		&& (!ft_strchr(*s, ";|><") || bslash || q[0] || q[1]))
 	{
-		if (!q[1] && *s == '\'')
+		bslash = 0;
+		if (*s == '\'' && !q[1] && !bslash)
 			handle_quotes(&q[0]);
-		else if (!q[0] && *s == '"')
+		else if (*s == '"' && !q[0] && !bslash)
 			handle_quotes(&q[1]);
-		else
-		{
-			if (!q[0] && *s == '\\' && *(s + 1))
-				s++;
-			str[i++] = *s;
-		}
+		else if (*s == '\\' && !q[0] && !q[1])
+			bslash = 1;
+		str[i] = *s;
+		i++;
 		s++;
 	}
 	str[i] = 0;
 	*err = check_close_quotes(q[0], q[1]);
 	return (s);
 }
+
+/*		else if (*s == '\\' && !q[0] && !q[1] && *(s + 1))
+		{
+			s++;
+			str[i++] = *s;
+		}*/
+//		else if (*s == '$' && !q[0])
+//			str[i++] = 6;//ACK
+	//	else
 
 char	*parse_input(char **input, char **err)
 {
