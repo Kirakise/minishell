@@ -2,17 +2,17 @@
 
 extern t_shell	g_shell;
 
-int	ft_putchar(int s)
+static int	ft_putchar(int s)
 {
 	return (write(g_shell.fd_1, &s, 1));
 }
 
-int	ft_putint(int a)
-{
-	return (write(g_shell.fd_1, &a, 4));
-}
+// static int	ft_putint(int a)
+// {
+// 	return (write(g_shell.fd_1, &a, 4));
+// }
 
-int	delete_last(char *s)
+static int	delete_last(char *s)
 {
 	int	i;
 
