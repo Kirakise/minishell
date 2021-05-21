@@ -45,15 +45,6 @@ static char	*str_iter(char *s, char **err, char *str)
 	return (s);
 }
 
-/*		else if (*s == '\\' && !q[0] && !q[1] && *(s + 1))
-		{
-			s++;
-			str[i++] = *s;
-		}*/
-//		else if (*s == '$' && !q[0])
-//			str[i++] = 6;//ACK
-	//	else
-
 char	*parse_input(char **input, char **err)
 {
 	char	*str;
