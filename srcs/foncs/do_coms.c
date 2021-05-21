@@ -8,7 +8,6 @@ extern t_shell	g_shell;
 
 /*void	execute(t_cmd *cmd, int fd_in, int fd_out)
 {
-	subst_quotes_vars(cmd);
 	dup2(fd_in, 0);
 	dup2(fd_out, 1);
 	if (!ft_strcmp("echo", cmd->exec_name))
@@ -63,6 +62,11 @@ void	do_coms(int i, t_cmd **cmd, int fd_in, int fd_out)
 	pid_t	pid;
 	pid_t	pid2;
 
+	// Не оч воткнул куда это вставить, в общем, перед выполнением команд надло вызвать:
+	// subst_quotes_vars(cmd[i]);
+	// Функция окончательно распарсит все что есть в текущем элементе cmd
+	// В parser/get_commands.c на 100 строке пример вызова.
+	
 	pid = 0;
 	pid2 = 0;
 	if (i > 0)
