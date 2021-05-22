@@ -71,9 +71,7 @@ void	subst_quotes_vars(t_cmd *cmd)
 	i = 0;
 	while (cmd->args[i])
 		final_parse(&cmd->args[i++]);
-	if (cmd->redir_in)
-		final_parse(&cmd->redir_in);
 	i = 0;
-	while (cmd->redir_out && cmd->redir_out[i])
-		final_parse(&cmd->redir_out[i++]->filename);
+	while (cmd->redir && cmd->redir[i])
+		final_parse(&cmd->redir[i++]->filename);
 }

@@ -22,17 +22,14 @@ static void	check_syntax(char **s, char **err)
 	*s = str;
 }
 
-static void	parse_redirect(char **s, char **err, t_list **lst)
+static void	parse_redirect(char **s, char **err, t_list **lst, int type)
 {
 	t_redir	*el;
 
 	el = malloc(sizeof(t_redir));//malloc
-	el->type = 0;
 	if (!ft_strncmp(*s, ">>", 2))
-	{
-		el->type = 1;
 		*s += 1;
-	}
+	el->type = type;
 	check_syntax(s, err);
 	if (*err)
 		return ;
@@ -48,14 +45,6 @@ static void	parse_redirect(char **s, char **err, t_list **lst)
 	}
 }
 
-static void	parse_redirect_in(char **s, t_cmd *cmd)
-{
-	check_syntax(s, &cmd->error);
-	if (cmd->redir_in)
-		free(cmd->redir_in);
-	cmd->redir_in = parse_input(s, &cmd->error);//malloc
-}
-
 int	parse_redir_pipe(char **s, t_cmd *cmd)
 {
 	t_list	*lst_redir;
@@ -63,13 +52,15 @@ int	parse_redir_pipe(char **s, t_cmd *cmd)
 	lst_redir = 0;
 	while (**s && !ft_strchr(**s, ";|") && !cmd->error)
 	{
-		if (**s == '>')
-			parse_redirect(s, &cmd->error, &lst_redir);
-		else if (**s == '<')
-			parse_redirect_in(s, cmd);
+		if (**s == '<')
+			parse_redirect(s, &cmd->error, &lst_redir, 2);
+		else if (!ft_strncmp(*s, ">>", 2))
+			parse_redirect(s, &cmd->error, &lst_redir, 1);
+		else if (**s == '>')
+			parse_redirect(s, &cmd->error, &lst_redir, 0);
 	}
 	if (!cmd->error && lst_redir)
-		cmd->redir_out = (t_redir **)lst_to_arr(lst_redir);
+		cmd->redir = (t_redir **)lst_to_arr(lst_redir);
 	if (!cmd->error && **s == '|')
 	{
 		check_syntax(s, &cmd->error);

@@ -7,8 +7,7 @@ static void	init_cmd_el(t_cmd *cmd)
 	cmd->pipe_out = 0;
 	cmd->exec_name = 0;
 	cmd->args = 0;
-	cmd->redir_in = 0;
-	cmd->redir_out = 0;
+	cmd->redir = 0;
 }
 
 static int	syntax_err(char *err)
@@ -66,17 +65,17 @@ int	str_to_commands(char *s, t_list **cmd_list)
 			j++;
 		}
 		printf("pipe  :    %d\n", cmd_arr[i]->pipe);
-		if (cmd_arr[i]->redir_in)
-			printf("redir :  < %s|\n", cmd_arr[i]->redir_in);
 		j = 0;
-		while (cmd_arr[i]->redir_out && cmd_arr[i]->redir_out[j])
+		while (cmd_arr[i]->redir && cmd_arr[i]->redir[j])
 		{
 			printf("redir : ");
-			if (cmd_arr[i]->redir_out[j]->type == 0)
+			if (cmd_arr[i]->redir[j]->type == 0)
 				printf(" > ");
-			else
+			else if (cmd_arr[i]->redir[j]->type == 1)
 				printf(">> ");
-			printf("%s|\n", cmd_arr[i]->redir_out[j]->filename);
+			else
+				printf(" < ");
+			printf("%s|\n", cmd_arr[i]->redir[j]->filename);
 			j++;
 		}
 		i++;
