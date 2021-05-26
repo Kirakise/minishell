@@ -9,7 +9,7 @@ void	sh_exit(t_cmd *cmd)
 	if (cmd->args[1] && cmd->args[2])
 	{
 		ft_putstr_nl("exit: too many arguments");
-		g_shell.status = 1;//потом видимо обнуляется, с этим надо что-то решить
+		g_shell.status = 1;
 	}
 	else if (cmd->args[1])
 	{
@@ -21,7 +21,7 @@ void	sh_exit(t_cmd *cmd)
 			ft_putstr("exit: ");
 			ft_putstr(cmd->args[1]);
 			ft_putstr_nl(": numeric argument required");
-			g_shell.status = 255;//потом видимо обнуляется, с этим надо что-то решить
+			g_shell.status = 255;
 		}
 		else
 			exit(ft_atoi(cmd->args[1]));
