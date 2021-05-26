@@ -80,7 +80,7 @@ void	export(t_cmd *cmd)
 	int		i;
 
 	i = 0;
-	if (!cmd->args[1])
+	if (!cmd->args[1] && !fork())
 		envprint(1);
 	else while (cmd->args[++i])
 	{
@@ -97,4 +97,5 @@ void	export(t_cmd *cmd)
 				free(s2);
 		}
 	}
+	wait(&g_shell.status);
 }
