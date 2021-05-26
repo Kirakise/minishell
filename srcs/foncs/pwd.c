@@ -2,7 +2,7 @@
 
 extern t_shell	g_shell;
 
-void	pwd(t_cmd *cmd)
+void	pwd(void)
 {
 	char	*s;
 
