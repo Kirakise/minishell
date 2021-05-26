@@ -3,7 +3,8 @@ HDRPATH =	../../includes/
 CFLAGS	=	-Wall -Wextra -Werror -I./ -I$(HDRPATH)
 HEADER	=	$(HDRPATH)libft.h
 NAME	=	libft.a
-SRCS	=	src/ft_memmove.c\
+SRCS	=	src/ft_atoi.c\
+			src/ft_memmove.c\
 			src/ft_bzero.c\
 			src/ft_calloc.c\
 			src/ft_realloc.c\
