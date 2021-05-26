@@ -59,6 +59,7 @@ char		*get_name(char *s);
 void		unset(t_cmd *cmd);
 void		add_var_exist(char *s);
 void		add_var(char *s);
+void		sh_exit(t_cmd *cmd);
 
 /*Parser*/
 t_cmd		**get_commands(char *s);
