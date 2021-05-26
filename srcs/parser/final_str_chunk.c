@@ -8,7 +8,7 @@ static void	handle_quotes(int *q, int type)
 		*q = 0;
 }
 
-static int str_iterate(char **s, char *str, int var)
+static int	str_iterate(char **s, char *str, int var)
 {
 	int	i;
 	int	q;

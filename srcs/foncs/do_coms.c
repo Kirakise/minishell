@@ -27,9 +27,9 @@ void	execute(t_cmd *cmd, int fd_in, int fd_out)
 
 void	do_redirect(t_cmd *cmd, int *fd_out, int *fd_in)
 {
-	int i;
-	int tmp_fd;
-	int fd;
+	int	i;
+	int	tmp_fd;
+	int	fd;
 
 	i = 0;
 	tmp_fd = 1;
@@ -41,10 +41,10 @@ void	do_redirect(t_cmd *cmd, int *fd_out, int *fd_in)
 				close(*fd_out);
 			if (cmd->redir[i]->type == 0)
 				*fd_out = open(cmd->redir[i]->filename,
-					O_WRONLY | O_CREAT | O_TRUNC, 0664);
+						O_WRONLY | O_CREAT | O_TRUNC, 0664);
 			else if (cmd->redir[i]->type == 1)
 				*fd_out = open(cmd->redir[i]->filename,
-					O_WRONLY | O_CREAT | O_APPEND, 0664);
+						O_WRONLY | O_CREAT | O_APPEND, 0664);
 		}
 		else
 		{
@@ -76,7 +76,7 @@ void	do_coms(int i, t_cmd **cmd, int fd_in, int fd_out)
 	pid_t	pid;
 	pid_t	pid2;
 	int		tmp_status;
-	
+
 	pid = 0;
 	pid2 = 0;
 	if (i > 0)

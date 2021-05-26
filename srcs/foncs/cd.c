@@ -39,7 +39,7 @@ void	tmp2(t_cmd *cmd)
 	}
 }
 
-void tmp4(void)
+void	tmp4(void)
 {
 	int		error;
 	char	*s;

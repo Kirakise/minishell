@@ -59,10 +59,10 @@ char	**envcpy(char **line)
 	return (res);
 }
 
-void changeold(void)
+void	changeold(void)
 {
-	char *s;
-	char *s2;
+	char	*s;
+	char	*s2;
 
 	s = malloc(256);
 	getcwd(s, 255);

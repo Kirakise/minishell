@@ -79,10 +79,8 @@ void	export(t_cmd *cmd)
 	char	*s2;
 	int		i;
 
-	i = 0;
-	if (!cmd->args[1] && !fork())
-		envprint(1);
-	else while (cmd->args[++i])
+	i = 1;
+	while (cmd->args[i])
 	{
 		s = get_name(cmd->args[i]);
 		if (s)
@@ -96,6 +94,9 @@ void	export(t_cmd *cmd)
 			if (s2)
 				free(s2);
 		}
+		i++;
 	}
+	if (!cmd->args[1] && !fork())
+		envprint(1);
 	wait(&g_shell.status);
 }

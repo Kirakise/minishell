@@ -93,8 +93,8 @@ t_cmd	**get_commands(char *s)
 	if (str_to_commands(s, &cmd_list) != 0)
 		return (0);
 	cmd_arr = (t_cmd **)lst_to_arr(cmd_list);
-/*	test_print(cmd_arr);
-	int i = 0;
+//	test_print(cmd_arr);
+/*	int i = 0;
 	while (cmd_arr[i])
 		subst_quotes_vars(cmd_arr[i++]);
 	test_print(cmd_arr);*/
