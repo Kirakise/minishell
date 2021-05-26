@@ -26,7 +26,8 @@ static char	*get_var_value(char **input)
 	if (!name)
 		return (0);
 	value = find_var(name);//malloc
-	free(name);
+	if (name)
+		free(name);
 	return (value);
 }
 

@@ -16,15 +16,16 @@ void	del_var(char *s)
 	i = 0;
 	while (g_shell.env[i + found])
 	{
-		if (!ft_strncmp(s, g_shell.env[i], ft_strlen(s)))
+		if (!ft_strncmp(s, g_shell.env[i], ft_strlen(s)) && write(1, "asd\n", 4))
 		{
-			found = 1;
 			free(g_shell.env[i]);
+			found = 1;
 		}
 		ret[i] = g_shell.env[i + found];
 		i++;
 	}
 	i = 0;
+	free(s);
 	free(g_shell.env);
 	g_shell.env = ret;
 }
@@ -38,9 +39,10 @@ void	unset(t_cmd *cmd)
 	while (cmd->args[i])
 	{
 		s = find_var(cmd->args[i]);
-		if (s[0])
-			del_var(cmd->args[i]);
-		free(s);
+		if (s)
+			del_var(ft_strjoin(cmd->args[i], "="));
+		if (s)
+			free(s);
 		i++;
 	}
 }
