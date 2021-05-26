@@ -12,24 +12,42 @@ void	restore_fd(void)
 	dup2(g_shell.tmp_fd_1, 1);
 }
 
+static void	free_cmd_el(t_cmd *cmd)
+{
+	int	j;
+
+	j = 0;
+	while (cmd->args[j])
+	{
+		free(cmd->args[j]);
+		j++;
+	}
+	free(cmd->args);
+	free(cmd->exec_name);
+	free(cmd->error);
+	if (cmd->redir)
+	{
+		j = 0;
+		while (cmd->redir[j])
+		{
+			free(cmd->redir[j]->filename);
+			free(cmd->redir[j]);
+			j++;
+		}
+		free(cmd->redir);
+	}
+	free(cmd);
+}
+
 void	free_cmd(t_cmd **cmd)
 {
 	int	i;
-	int	j;
 
 	i = 0;
 	while (cmd[i])
 	{
-		j = 0;
-		while (cmd[i]->args[j])
-		{
-			free(cmd[i]->args[j]);
-			j++;
-		}
-		free(cmd[i]->args);
-		free(cmd[i]->exec_name);
+		free_cmd_el(cmd[i]);
 		i++;
-		free(cmd[i - 1]);
 	}
 	free(cmd);
 }
