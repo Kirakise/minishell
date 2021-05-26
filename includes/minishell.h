@@ -57,6 +57,8 @@ void		cd(t_cmd *cmd);
 void		export(t_cmd *cmd);
 char		*get_name(char *s);
 void		unset(t_cmd *cmd);
+void		add_var_exist(char *s);
+void		add_var(char *s);
 
 /*Parser*/
 t_cmd		**get_commands(char *s);
@@ -76,6 +78,7 @@ char		*tmpread(void);
 void		history_update(t_2list **hist, char *s);
 char		*get_history_line(t_2list **lst, int dir, int *end);
 void		history_free(t_2list **hist);
+void		changeold(void);
 
 /*termcaps*/
 void		setc(struct termios *term);

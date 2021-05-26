@@ -58,3 +58,20 @@ char	**envcpy(char **line)
 	}
 	return (res);
 }
+
+void changeold(void)
+{
+	char *s;
+	char *s2;
+
+	s = malloc(256);
+	getcwd(s, 255);
+	s2 = ft_strjoin("OLDPWD=", s);
+	free(s);
+	s = find_var("OLDPWD");
+	if (s)
+		add_var_exist(s2);
+	else
+		add_var(s2);
+	free(s2);
+}
