@@ -45,22 +45,19 @@ static void	parse_redirect(char **s, char **err, t_list **lst, int type)
 	}
 }
 
-int	parse_redir_pipe(char **s, t_cmd *cmd)
+int	parse_redir_pipe(char **s, t_cmd *cmd, t_list **lst_redir)
 {
-	t_list	*lst_redir;
-
-	lst_redir = 0;
 	while (**s && !ft_strchr(**s, ";|") && !cmd->error)
 	{
 		if (**s == '<')
-			parse_redirect(s, &cmd->error, &lst_redir, 2);
+			parse_redirect(s, &cmd->error, lst_redir, 2);
 		else if (!ft_strncmp(*s, ">>", 2))
-			parse_redirect(s, &cmd->error, &lst_redir, 1);
+			parse_redirect(s, &cmd->error, lst_redir, 1);
 		else if (**s == '>')
-			parse_redirect(s, &cmd->error, &lst_redir, 0);
+			parse_redirect(s, &cmd->error, lst_redir, 0);
 	}
-	if (!cmd->error && lst_redir)
-		cmd->redir = (t_redir **)lst_to_arr(lst_redir);
+	if (!cmd->error && *lst_redir)
+		cmd->redir = (t_redir **)lst_to_arr(*lst_redir);
 	if (!cmd->error && **s == '|')
 	{
 		check_syntax(s, &cmd->error);
@@ -68,6 +65,29 @@ int	parse_redir_pipe(char **s, t_cmd *cmd)
 	}
 	if (!cmd->error && **s == ';')
 		check_syntax(s, &cmd->error);
+	if (cmd->error)
+		return (1);
+	return (0);
+}
+
+
+int	parse_redir_before(char **s, t_cmd *cmd, t_list **lst_redir)
+{
+	while (ft_isspace(**s))
+		*s += 1;
+	while ((**s == '<' || **s == '>') && !cmd->error)
+	{
+		while (ft_isspace(**s))
+			*s += 1;
+		if (**s == '<')
+			parse_redirect(s, &cmd->error, lst_redir, 2);
+		else if (!ft_strncmp(*s, ">>", 2))
+			parse_redirect(s, &cmd->error, lst_redir, 1);
+		else if (**s == '>')
+			parse_redirect(s, &cmd->error, lst_redir, 0);
+		while (ft_isspace(**s))
+			*s += 1;
+	}
 	if (cmd->error)
 		return (1);
 	return (0);

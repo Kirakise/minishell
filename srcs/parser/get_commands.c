@@ -28,19 +28,21 @@ int	str_to_commands(char *s, t_list **cmd_list)
 {
 	t_cmd	*cmd;
 	t_list	*arg_list;
+	t_list	*redir_list;
 
 	while (*s)
 	{
 		cmd = malloc(sizeof(t_cmd));//malloc
 		init_cmd_el(cmd);
 		arg_list = 0;
-		parse_command(&s, cmd, &arg_list);
-		if (cmd->error)
-			return (syntax_err(cmd->error));
-		parse_arguments(&s, cmd, &arg_list);
-		if (cmd->error)
-			return (syntax_err(cmd->error));
-		parse_redir_pipe(&s, cmd);
+		redir_list = 0;
+		parse_redir_before(&s, cmd, &redir_list);
+		if (!cmd->error)
+			parse_command(&s, cmd, &arg_list);
+		if (!cmd->error)
+			parse_arguments(&s, cmd, &arg_list);
+		if (!cmd->error)
+			parse_redir_pipe(&s, cmd, &redir_list);
 		if (cmd->error)
 			return (syntax_err(cmd->error));
 		cmd->args = (char **)lst_to_arr(arg_list);

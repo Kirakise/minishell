@@ -68,7 +68,8 @@ void		subst_quotes_vars(t_cmd *cmd);
 char		*parse_input(char **input, char **err);
 int			parse_command(char **s, t_cmd *cmd, t_list **arg_list);
 int			parse_arguments(char **s, t_cmd *cmd, t_list **arg_list);
-int			parse_redir_pipe(char **s, t_cmd *cmd);
+int			parse_redir_before(char **s, t_cmd *cmd, t_list **lst_redir);
+int			parse_redir_pipe(char **s, t_cmd *cmd, t_list **lst_redir);
 int			parse_str_chunk(char **input, char **res);
 
 /*Utils*/
