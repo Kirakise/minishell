@@ -53,7 +53,6 @@ void	do_redirect(t_cmd *cmd, int *fd_out, int *fd_in)
 		}
 		i++;
 	}
-	//free(cmd->redirect_filename);
 }
 
 void	do_pipe(int i, t_cmd **cmd, int *fd_in, pid_t *pid)
@@ -76,11 +75,7 @@ void	do_coms(int i, t_cmd **cmd, int fd_in, int fd_out)
 {
 	pid_t	pid;
 	pid_t	pid2;
-
-	// Не оч воткнул куда это вставить, в общем, перед выполнением команд надло вызвать:
-	// subst_quotes_vars(cmd[i]);
-	// Функция окончательно распарсит все что есть в текущем элементе cmd
-	// В parser/get_commands.c на 100 строке пример вызова.
+	int		tmp_status;
 	
 	pid = 0;
 	pid2 = 0;
@@ -100,6 +95,9 @@ void	do_coms(int i, t_cmd **cmd, int fd_in, int fd_out)
 		execute(cmd[i], fd_in, fd_out);
 	}
 	parentproc(cmd, i, fd_in, fd_out);
+	tmp_status = g_shell.status;
 	waitpid(pid, &g_shell.status, 0);
 	waitpid(pid2, &g_shell.status, 0);
+	if (g_shell.status == 0)
+		g_shell.status = tmp_status;
 }

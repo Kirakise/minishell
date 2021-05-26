@@ -6,7 +6,7 @@
 
 extern t_shell	g_shell;
 
-void	restore_fd(void)
+static void	restore_fd(void)
 {
 	dup2(g_shell.tmp_fd_0, 0);
 	dup2(g_shell.tmp_fd_1, 1);
