@@ -82,11 +82,12 @@ void	export(t_cmd *cmd)
 	{
 		s = get_name(cmd->args[i]);
 		s2 = find_var(s);
-		if (s2[0] == 0)
+		if (!s2)
 			add_var(cmd->args[i]);
 		else
 			add_var_exist(cmd->args[i]);
 		free(s);
-		free(s2);
+		if (s2)
+			free(s2);
 	}
 }

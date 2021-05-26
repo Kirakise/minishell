@@ -35,7 +35,7 @@ char	*find_var(char *s1)
 		}
 		i++;
 	}
-	return (ft_strdup(""));
+	return (0);
 }
 
 char	**envcpy(char **line)

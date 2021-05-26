@@ -39,9 +39,10 @@ void	unset(t_cmd *cmd)
 	while (cmd->args[i])
 	{
 		s = find_var(cmd->args[i]);
-		if (s[0])
+		if (s)
 			del_var(ft_strjoin(cmd->args[i], "="));
-		free(s);
+		if (s)
+			free(s);
 		i++;
 	}
 }

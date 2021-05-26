@@ -14,7 +14,7 @@ int	setinit(struct termios *term)
 	char	*term_name;
 
 	term_name = find_var("TERM");
-	if (tcgetattr(0, term) == -1)
+	if (!term_name || tcgetattr(0, term) == -1)
 		return (1);
 	term->c_lflag &= ~(ECHO);
 	term->c_lflag &= ~(ICANON);
@@ -23,7 +23,8 @@ int	setinit(struct termios *term)
 	signal(SIGINT, handlesigint);
 	if (tgetent(0, term_name) == -1 || tcsetattr(0, TCSANOW, term) == -1)
 		return (-1);
-	free(term_name);
+	if (term_name)
+		free(term_name);
 	return (0);
 }
 

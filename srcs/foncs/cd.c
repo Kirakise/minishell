@@ -8,14 +8,14 @@ void	tmp1(void)
 	char	*s;
 
 	s = find_var("HOME");
-	if (!s || !s[0])
+	if (!s)
 	{
 		write(g_shell.tmp_fd_1, "HOME not set\n", 14);
 		return ;
 	}
-	error = chdir((s));
-	if (s && s[0] != 0)
-		free(s);
+	else if (s[0] != 0)
+		error = chdir((s));
+	free(s);
 	if (error != 0)
 	{
 		s = strerror(errno);
