@@ -7,7 +7,13 @@ void	tmp1(void)
 	int		error;
 	char	*s;
 
-	error = chdir((s = find_var("HOME")));
+	s = find_var("HOME");
+	if (!s || !s[0])
+	{
+		write(g_shell.tmp_fd_1, "HOME not set\n", 14);
+		return ;
+	}
+	error = chdir((s));
 	if (s && s[0] != 0)
 		free(s);
 	if (error != 0)
