@@ -8,6 +8,7 @@ void	tmp1(void)
 	char	*s;
 
 	s = find_var("HOME");
+	error = 0;
 	if (!s)
 	{
 		write(g_shell.tmp_fd_1, "HOME not set\n", 14);
