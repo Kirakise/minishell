@@ -6,11 +6,6 @@ void	pwd(t_cmd *cmd)
 {
 	char	*s;
 
-	if (cmd->args[1])
-	{
-		write(g_shell.tmp_fd_1, "too many arguments\n", 20);
-		exit(1);
-	}
 	s = malloc(256);
 	getcwd(s, 255);
 	if (s)
