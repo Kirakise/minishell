@@ -2,7 +2,7 @@
 
 t_shell	g_shell;
 
-/*static void	exec_commands(t_cmd **cmd)
+static void	exec_commands(t_cmd **cmd)
 {
 	int	i;
 
@@ -13,7 +13,7 @@ t_shell	g_shell;
 		i++;
 	do_coms(i - 1, cmd, dup(0), dup(1));
 	free_cmd(cmd);
-}*/
+}
 
 int	main(int argc, char **argv, char **envp)
 {
@@ -33,7 +33,7 @@ int	main(int argc, char **argv, char **envp)
 		setc(&term);
 		cmd = get_commands(s);
 		history_update(&g_shell.hist, s);
-		//exec_commands(cmd);
+		exec_commands(cmd);
 	}
 	history_free(&g_shell.hist);
 }

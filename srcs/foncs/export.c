@@ -76,7 +76,9 @@ void	export(t_cmd *cmd)
 	int		i;
 
 	i = 0;
-	while (cmd->args[++i])
+	if (!cmd->args[1])
+		envprint(1);
+	else while (cmd->args[++i])
 	{
 		s = get_name(cmd->args[i]);
 		s2 = find_var(s);

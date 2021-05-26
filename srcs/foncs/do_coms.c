@@ -6,7 +6,7 @@
 
 extern t_shell	g_shell;
 
-/*void	execute(t_cmd *cmd, int fd_in, int fd_out)
+void	execute(t_cmd *cmd, int fd_in, int fd_out)
 {
 	dup2(fd_in, 0);
 	dup2(fd_out, 1);
@@ -15,7 +15,7 @@ extern t_shell	g_shell;
 	else if (!ft_strcmp("pwd", cmd->exec_name))
 		pwd();
 	else if (!ft_strcmp("env", cmd->exec_name))
-		envprint();
+		envprint(0);
 	else if (!ft_strcmp("cd", cmd->exec_name) || !ft_strcmp("exit",
 			cmd->exec_name) || !ft_strcmp("export", cmd->exec_name)
 		|| !ft_strcmp("unset", cmd->exec_name))
@@ -25,20 +25,35 @@ extern t_shell	g_shell;
 	exit(-1);
 }
 
-void	do_redirect(t_cmd *cmd, int *fd_out)
+void	do_redirect(t_cmd *cmd, int *fd_out, int *fd_in)
 {
-	if (cmd->pipe)
+	int i;
+	int tmp_fd;
+	int fd;
+
+	i = 0;
+	tmp_fd = 1;
+	while (cmd->redir[i])
 	{
-		write(*fd_out, 0, 1);
-		close(*fd_out);
+		if (cmd->redir[i]->type == 0 || cmd->redir[i]->type == 1)
+		{
+			if (cmd->pipe && tmp_fd && write(*fd_out, "\0", 1))
+				close(*fd_out);
+			if (cmd->redir[i]->type == 0)
+				*fd_out = open(cmd->redir[i]->filename,
+					O_WRONLY | O_CREAT | O_TRUNC, 0664);
+			else if (cmd->redir[i]->type == 1)
+				*fd_out = open(cmd->redir[i]->filename,
+					O_WRONLY | O_CREAT | O_APPEND, 0664);
+		}
+		else
+		{
+			fd = open(cmd->redir[i]->filename, O_RDONLY);
+			dup2(fd, *fd_in);
+		}
+		i++;
 	}
-	if (cmd->redirect == 1)
-		*fd_out = open(cmd->redirect_filename,
-				O_WRONLY | O_CREAT | O_TRUNC, 0664);
-	else if (cmd->redirect == 2)
-		*fd_out = open(cmd->redirect_filename,
-				O_WRONLY | O_CREAT | O_APPEND, 0664);
-	free(cmd->redirect_filename);
+	//free(cmd->redirect_filename);
 }
 
 void	do_pipe(int i, t_cmd **cmd, int *fd_in, pid_t *pid)
@@ -79,12 +94,12 @@ void	do_coms(int i, t_cmd **cmd, int fd_in, int fd_out)
 	pid2 = fork();
 	if (!pid2)
 	{
-		if (cmd[i]->redirect)
-			do_redirect(cmd[i], &fd_out);
+		subst_quotes_vars(cmd[i]);
+		if (cmd[i]->redir)
+			do_redirect(cmd[i], &fd_out, &fd_in);
 		execute(cmd[i], fd_in, fd_out);
 	}
 	parentproc(cmd, i, fd_in, fd_out);
 	waitpid(pid, &g_shell.status, 0);
 	waitpid(pid2, &g_shell.status, 0);
 }
-*/
