@@ -59,7 +59,12 @@ void	parentproc(t_cmd **cmd, int i, int fd_in, int fd_out)
 	if (!ft_strcmp("cd", cmd[i]->exec_name))
 		cd(cmd[i]);
 	if (!ft_strcmp("exit", cmd[i]->exec_name))
-		exit(ft_atoi(cmd[i]->args[1]));
+	{
+		if (cmd[i]->args[1] && cmd[i]->args[2])
+			ft_putstr_nl("Exit: too many arguements");
+		else
+			exit(ft_atoi(cmd[i]->args[1]));
+	}
 	if (!ft_strcmp("export", cmd[i]->exec_name))
 		export(cmd[i]);
 	if (!ft_strcmp("unset", cmd[i]->exec_name))
