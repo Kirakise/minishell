@@ -8,11 +8,15 @@ char	*get_name(char *s)
 	int		i;
 
 	i = 0;
-	while (s[i] != '=')
+	if (!s)
+		return (0);
+	while (s[i] && s[i] != '=')
 		i++;
+	if (!s[i])
+		return (0);
 	ret = calloc(i + 1, 1);
 	i = 0;
-	while (s[i] != '=')
+	while (s[i] && s[i] != '=')
 	{
 		ret[i] = s[i];
 		i++;
@@ -81,13 +85,16 @@ void	export(t_cmd *cmd)
 	else while (cmd->args[++i])
 	{
 		s = get_name(cmd->args[i]);
-		s2 = find_var(s);
-		if (!s2)
-			add_var(cmd->args[i]);
-		else
-			add_var_exist(cmd->args[i]);
-		free(s);
-		if (s2)
-			free(s2);
+		if (s)
+		{
+			s2 = find_var(s);
+			if (!s2)
+				add_var(cmd->args[i]);
+			else
+				add_var_exist(cmd->args[i]);
+			free(s);
+			if (s2)
+				free(s2);
+		}
 	}
 }
