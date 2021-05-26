@@ -21,10 +21,9 @@ void	sh_exit(t_cmd *cmd)
 			ft_putstr("exit: ");
 			ft_putstr(cmd->args[1]);
 			ft_putstr_nl(": numeric argument required");
-			g_shell.status = 255;
+			exit(255);
 		}
-		else
-			exit(ft_atoi(cmd->args[1]));
+		exit(ft_atoi(cmd->args[1]));
 	}
 	else
 		exit(0);
