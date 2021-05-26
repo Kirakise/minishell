@@ -13,7 +13,7 @@ void	execute(t_cmd *cmd, int fd_in, int fd_out)
 	if (!ft_strcmp("echo", cmd->exec_name))
 		ft_echo(cmd);
 	else if (!ft_strcmp("pwd", cmd->exec_name))
-		pwd();
+		pwd(cmd);
 	else if (!ft_strcmp("env", cmd->exec_name))
 		envprint(0);
 	else if (!ft_strcmp("cd", cmd->exec_name) || !ft_strcmp("exit",
