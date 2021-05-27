@@ -66,14 +66,17 @@ char	*tmpread(void)
 			tputs(delete_character, 1, ft_putchar);
 		}
 		else if (!ft_strcmp(str, "\3"))
+		{
+			s[0] = 0;
 			break ;
+		}
 		else if (!ft_strcmp(str, "\4") && !*s)
 		{
 			s = ft_strdup("exit");
 			ft_putstr(s);
 			break ;
 		}
-		else if (str[0] >= 20 && str[0] <= 126)
+		else if (str[0] >= 32 && str[0] <= 126)
 		{
 			write(1, str, l);
 			ft_realloc(&s, str);
