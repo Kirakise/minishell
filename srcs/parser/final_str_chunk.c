@@ -25,7 +25,7 @@ static int	str_iterate(char **s, char *str, int var)
 			var = 1;
 		else
 		{
-			if (**s == '\\' && !q && (**s + 1))
+			if (**s == '\\' && q != 1 && (*s)[1])
 				*s += 1;
 			str[i] = **s;
 			i++;

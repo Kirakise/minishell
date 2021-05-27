@@ -12,6 +12,8 @@ static void	check_syntax(char **s, char **err)
 		*err = ft_strdup(str - 1);
 		return ;
 	}
+	if (**s == '<' && *str == '>')//tf is this, really
+		str++;
 	while (ft_isspace(*str))
 		str++;
 	if (!*str && **s != ';')

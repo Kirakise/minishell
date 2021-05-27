@@ -26,8 +26,9 @@ static char	*get_var_value(char **input)
 	if (!name)
 		return (0);
 	value = find_var(name);//malloc
-	if (name)
-		free(name);
+	free(name);
+	if (!value)
+		return (ft_strdup(""));
 	return (value);
 }
 

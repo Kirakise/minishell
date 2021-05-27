@@ -34,7 +34,7 @@ static char	*str_iter(char *s, char **err, char *str)
 			handle_quotes(&q[0]);
 		else if (*s == '"' && !q[0] && !bslash)
 			handle_quotes(&q[1]);
-		else if (*s == '\\' && !q[0] && !q[1])
+		else if (*s == '\\' && s[1] && !q[0] && !q[1])
 			bslash = 1;
 		str[i] = *s;
 		i++;
