@@ -38,7 +38,7 @@ void	unset(t_cmd *cmd)
 	i = 0;
 	while (cmd->args[i])
 	{
-		if (var_isvalid(cmd->args[i]))
+		if (var_isvalid(cmd->args[i], 1))
 		{
 			s = find_var(cmd->args[i]);
 			if (s)

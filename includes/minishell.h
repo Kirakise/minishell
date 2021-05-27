@@ -56,7 +56,7 @@ void		ft_echo(t_cmd *cmd);
 void		cd(t_cmd *cmd);
 void		export(t_cmd *cmd);
 char		*get_name(char *s);
-int			var_isvalid(char *str);
+int			var_isvalid(char *str, int cmd_type);
 void		unset(t_cmd *cmd);
 void		add_var_exist(char *s);
 void		add_var(char *s);

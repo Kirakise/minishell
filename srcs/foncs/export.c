@@ -82,7 +82,7 @@ void	export(t_cmd *cmd)
 	i = 1;
 	while (cmd->args[i])
 	{
-		if (var_isvalid(cmd->args[i]))
+		if (var_isvalid(cmd->args[i], 0))
 		{
 			s = get_name(cmd->args[i]);
 			if (s)
