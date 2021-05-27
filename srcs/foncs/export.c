@@ -82,21 +82,32 @@ void	export(t_cmd *cmd)
 	i = 1;
 	while (cmd->args[i])
 	{
-		s = get_name(cmd->args[i]);
-		if (s)
+		if (var_isvalid(cmd->args[i]))
 		{
-			s2 = find_var(s);
-			if (!s2)
-				add_var(cmd->args[i]);
-			else
-				add_var_exist(cmd->args[i]);
-			free(s);
-			if (s2)
-				free(s2);
+			s = get_name(cmd->args[i]);
+			if (s)
+			{
+				s2 = find_var(s);
+				if (!s2)
+					add_var(cmd->args[i]);
+				else
+					add_var_exist(cmd->args[i]);
+				free(s);
+				if (s2)
+					free(s2);
+			}
+		}
+		else
+		{
+			ft_putstr("export: '");
+			ft_putstr(cmd->args[i]);
+			ft_putstr_nl("': not a valid identifier");
+			g_shell.status = 1;
 		}
 		i++;
 	}
 	if (!cmd->args[1] && !fork())
 		envprint(1);
-	wait(&g_shell.status);
+	if (g_shell.status == 0)
+		wait(&g_shell.status);
 }

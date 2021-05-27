@@ -23,6 +23,6 @@ int	do_exec(t_cmd *cmd)
 	dup2(g_shell.tmp_fd_1, 1);
 	ft_putstr("minishell: command not found: ");
 	ft_putstr_nl(cmd->exec_name);
-	exit(-1);
+	exit(1);//proper return value for "command not found" is 127, yet it doesn't work as expected
 	return (1);
 }

@@ -38,11 +38,22 @@ void	unset(t_cmd *cmd)
 	i = 0;
 	while (cmd->args[i])
 	{
-		s = find_var(cmd->args[i]);
-		if (s)
-			del_var(ft_strjoin(cmd->args[i], "="));
-		if (s)
-			free(s);
+		if (var_isvalid(cmd->args[i]))
+		{
+			s = find_var(cmd->args[i]);
+			if (s)
+			{
+				del_var(ft_strjoin(cmd->args[i], "="));
+				free(s);
+			}
+		}
+		else
+		{
+			ft_putstr("unset: '");
+			ft_putstr(cmd->args[i]);
+			ft_putstr_nl("': not a valid identifier");
+			g_shell.status = 1;
+		}
 		i++;
 	}
 }
