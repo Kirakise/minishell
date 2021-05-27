@@ -13,6 +13,7 @@ void	tmp1(void)
 	if (!s)
 	{
 		write(g_shell.tmp_fd_1, "HOME not set\n", 14);
+		g_shell.status = 1;
 		return ;
 	}
 	else if (s[0] != 0)
@@ -20,6 +21,7 @@ void	tmp1(void)
 	free(s);
 	if (error != 0)
 	{
+		g_shell.status = 1;
 		s = strerror(errno);
 		ft_putstr_nl(s);
 	}
@@ -34,6 +36,7 @@ void	tmp2(t_cmd *cmd)
 	error = chdir(cmd->args[1]);
 	if (error != 0)
 	{
+		g_shell.status = 1;
 		s = strerror(errno);
 		ft_putstr_nl(s);
 	}
@@ -49,6 +52,7 @@ void	tmp4(void)
 	if (!s)
 	{
 		write(g_shell.tmp_fd_1, "OLDPWD not set\n", 14);
+		g_shell.status = 1;
 		return ;
 	}
 	else if (s[0] != 0)
@@ -56,6 +60,7 @@ void	tmp4(void)
 	free(s);
 	if (error != 0)
 	{
+		g_shell.status = 1;
 		s = strerror(errno);
 		ft_putstr_nl(s);
 	}
@@ -70,6 +75,7 @@ void	tmp3(t_cmd *cmd)
 	error = chdir(cmd->args[1]);
 	if (error != 0)
 	{
+		g_shell.status = 1;
 		s = strerror(errno);
 		ft_putstr_nl(s);
 	}

@@ -14,5 +14,7 @@ void	pwd(void)
 		write(g_shell.fd_1, "\n", 1);
 		exit(0);
 	}
+	dup2(g_shell.tmp_fd_1, 1);
+	ft_putstr_nl("Error with pwd!\n");
 	exit(-1);
 }

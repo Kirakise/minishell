@@ -25,6 +25,7 @@ int	main(int argc, char **argv, char **envp)
 	g_shell.env = envcpy(envp);
 	if (setinit(&term))
 		return (0);
+	signal(SIGQUIT, SIG_IGN);
 	while (1)
 	{
 		write(g_shell.fd_1, "minishell> ", 11);

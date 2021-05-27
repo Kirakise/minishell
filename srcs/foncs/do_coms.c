@@ -98,6 +98,12 @@ void	do_coms(int i, t_cmd **cmd, int fd_in, int fd_out)
 	tmp_status = g_shell.status;
 	waitpid(pid, &g_shell.status, 0);
 	waitpid(pid2, &g_shell.status, 0);
-	if (g_shell.status == 0)
-		g_shell.status = tmp_status;
+	if (WIFEXITED(g_shell.status))
+		g_shell.status = WEXITSTATUS(g_shell.status);
+	else if (WIFSIGNALED(g_shell.status) && WTERMSIG(g_shell.status) == 3 && write(1, "Quit: 3\n", 9))
+		g_shell.status = 131;
+	else if (WIFSIGNALED(g_shell.status))
+		g_shell.status = WTERMSIG(g_shell.status) ;
+	else
+		wait(0);
 }
