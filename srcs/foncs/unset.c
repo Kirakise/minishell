@@ -14,7 +14,7 @@ void	del_var(char *s)
 		i++;
 	ret = calloc(i, sizeof(char *));
 	i = 0;
-	while (g_shell.env[i + found])
+	while (!found && g_shell.env[i + found])
 	{
 		if (!ft_strncmp(s, g_shell.env[i], ft_strlen(s)) && write(1, "asd\n", 4))
 		{
