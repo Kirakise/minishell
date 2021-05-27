@@ -10,7 +10,7 @@ void	envprint(int regime)
 	while (g_shell.env[i])
 	{
 		if (regime)
-			write(g_shell.fd_1, "declare -x ", 12);
+			write(g_shell.fd_1, "declare -x ", 11);
 		write(g_shell.fd_1, g_shell.env[i], ft_strlen(g_shell.env[i]));
 		write(g_shell.fd_1, "\n", 1);
 		i++;
