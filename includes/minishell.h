@@ -88,4 +88,7 @@ void		setc(struct termios *term);
 void		setic(struct termios *term);
 int			setinit(struct termios *term);
 void		handlesigint(int a);
+
+/*errors*/
+void malloc_err();
 #endif

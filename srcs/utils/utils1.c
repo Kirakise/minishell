@@ -48,7 +48,7 @@ char	**envcpy(char **line)
 		i++;
 	res = malloc(sizeof(char *) * (i + 1));
 	if (!res)
-		return (0);
+		malloc_err();
 	res[i] = 0;
 	i = 0;
 	while (line[i])
