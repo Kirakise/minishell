@@ -27,9 +27,10 @@ typedef struct s_shell
 
 typedef struct s_redir
 {
-	int		type; //type == 0 : '>', type == 1 : '>>', type == 2 : '<'
+	int		type;
 	char	*filename;
 }				t_redir;
+//	type == 0 : '>', type == 1 : '>>', type == 2 : '<'
 
 typedef struct s_cmd
 {
@@ -40,10 +41,6 @@ typedef struct s_cmd
 	int		pipe_out;
 	t_redir	**redir;
 }				t_cmd;
-/* Хай! Как видишь, структуру чуть поменял, поэтому в мейне и do_coms закомментил всякое.
-В redir_in имя последнего файла из '<'. То есть, надо считывать оттуда.
-В redir нулл-терминейтед массив (см структурку выше) из редиректов >/>>
-*/
 
 /*Fonctions*/
 void		do_coms(int i, t_cmd **cmd, int fd_in, int fd_out);
@@ -90,5 +87,5 @@ int			setinit(struct termios *term);
 void		handlesigint(int a);
 
 /*errors*/
-void malloc_err();
+void		malloc_err(void);
 #endif
