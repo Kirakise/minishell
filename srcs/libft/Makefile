@@ -1,20 +1,24 @@
 CC		=	gcc
 HDRPATH =	../../includes/
-CFLAGS	=	-Wall -Wextra -Werror -I./ -I$(HDRPATH)
+CFLAGS	=	-Wall -Wextra -Werror -I$(HDRPATH)
 HEADER	=	$(HDRPATH)libft.h
 NAME	=	libft.a
-SRCS	=	src/ft_atoi.c\
-			src/ft_memmove.c\
+SRCS	=	src/2list.c\
+			src/ft_atoi.c\
 			src/ft_bzero.c\
 			src/ft_calloc.c\
-			src/ft_realloc.c\
-			src/ft_strjoin.c\
-			src/string.c\
-			src/list.c\
-			src/ft_putstr.c\
 			src/ft_isalnum.c\
 			src/ft_itoa.c\
-			src/lst_to_arr.c
+			src/ft_memmove.c\
+			src/ft_putstr.c\
+			src/ft_realloc.c\
+			src/ft_split.c\
+			src/ft_strdup.c\
+			src/ft_strjoin.c\
+			src/ft_substr.c\
+			src/list.c\
+			src/lst_to_arr.c\
+			src/string.c\
 
 OBJS	=	$(SRCS:.c=.o)
 

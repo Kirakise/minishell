@@ -1,4 +1,4 @@
-#include "../../../includes/libft.h"
+#include "libft.h"
 
 void	**lst_to_arr(t_list *lst)
 {

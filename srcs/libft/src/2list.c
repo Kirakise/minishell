@@ -1,4 +1,4 @@
-#include "../../../includes/libft.h"
+#include "libft.h"
 
 t_2list	*tlist_new(void *content)
 {

@@ -1,30 +1,37 @@
 CC = gcc
-INC = includes/
-CFLAGS = -Wall -Wextra -Werror -I$(INC) -g
-SRCS = $(wildcard srcs/*.c srcs/foncs/*.c srcs/libft/src/*.c srcs/parser/*.c srcs/utils/*.c srcs/temp/*.c srcs/termcaps/*.c srcs/errors/*.c)
+CFLAGS = -Wall -Wextra -Werror -Iincludes/ -g
+SRCS = $(wildcard srcs/*.c srcs/foncs/*.c srcs/parser/*.c srcs/utils/*.c srcs/temp/*.c srcs/termcaps/*.c srcs/errors/*.c)
 OBJS = $(SRCS:%.c=%.o)
 HEADERS = $(INC)libft.h $(INC)minishell.h
+LFT_DIR = srcs/libft/
+LIBFT =	$(LFT_DIR)libft.a
 NAME = minishell
 
 ifdef FSANITIZE
 CFLAGS += -fsanitize=address
 endif
 
-all: $(NAME)
+all: lft $(NAME)
 
 asan:
 	$(MAKE) FSANITIZE=1 all
 
 $(NAME): $(OBJS)
-	$(CC) $(CFLAGS) $^ -ltermcap -o $(NAME)
-linux: $(OBJS)
-	$(CC) $(CFLAGS) $^ -lncurses -o $(NAME)
+	$(CC) $(CFLAGS) $^ -L$(LFT_DIR) -lft -ltermcap -o $(NAME)
 
-%.o: %.c Makefile $(HEADERS)
+linux: $(OBJS)
+	$(CC) $(CFLAGS) $^ -L$(LFT_DIR) -lncurses -o $(NAME)
+
+%.o: %.c $(HEADERS) $(LIBFT) Makefile
 	$(CC) $(CFLAGS) -c $< -o $@
+
+lft:
+	@$(MAKE) -j -C $(LFT_DIR)
 
 clean:
 	rm $(OBJS)
+
 fclean: clean
 	rm $(NAME)
+
 re: fclean all

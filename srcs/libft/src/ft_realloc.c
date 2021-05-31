@@ -1,4 +1,4 @@
-#include "../../../includes/libft.h"
+#include "libft.h"
 
 void	ft_realloc(char **s1, char *s2)
 {
