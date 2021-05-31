@@ -37,7 +37,32 @@ static void	access_history(char *str, char **s, int *end)
 	if (!*s)
 		*s = ft_strdup("");
 	ft_putstr(*s);
-		//write(g_shell.tmp_fd_1, s, ft_strlen(s));
+}
+
+int	foo(char **str, char **s, int l)
+{
+	if (!ft_strcmp(*str, "\x7f") && delete_last(*s) == 1)
+	{
+		tputs(cursor_left, 1, ft_putchar);
+		tputs(delete_character, 1, ft_putchar);
+	}
+	else if (!ft_strcmp(*str, "\3"))
+	{
+		(*s)[0] = 0;
+		return (1);
+	}
+	else if (!ft_strcmp(*str, "\4") && !*s)
+	{
+		*s = ft_strdup("exit");
+		ft_putstr(*s);
+		return (1);
+	}
+	else if ((*str)[0] >= 32 && (*str)[0] <= 126)
+	{
+		write(1, *str, l);
+		ft_realloc(s, *str);
+	}
+	return (0);
 }
 
 char	*tmpread(void)
@@ -60,29 +85,11 @@ char	*tmpread(void)
 			access_history(str, &s, &end);
 		else if (!ft_strcmp(str, "\e[C") || !ft_strcmp(str, "\e[D"))
 			;
-		else if (!ft_strcmp(str, "\x7f") && delete_last(s) == 1)
-		{
-			tputs(cursor_left, 1, ft_putchar);
-			tputs(delete_character, 1, ft_putchar);
-		}
-		else if (!ft_strcmp(str, "\3"))
-		{
-			s[0] = 0;
+		else if (foo(&str, &s, l))
 			break ;
-		}
-		else if (!ft_strcmp(str, "\4") && !*s)
-		{
-			s = ft_strdup("exit");
-			ft_putstr(s);
-			break ;
-		}
-		else if (str[0] >= 32 && str[0] <= 126)
-		{
-			write(1, str, l);
-			ft_realloc(&s, str);
-		}
 	}
-	free(str);
+	if (str)
+		free(str);
 	write(1, "\n", 1);
 	return (s);
 }

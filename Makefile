@@ -17,6 +17,8 @@ asan:
 
 $(NAME): $(OBJS)
 	$(CC) $(CFLAGS) $^ -ltermcap -o $(NAME)
+linux: $(OBJS)
+	$(CC) $(CFLAGS) $^ -lncurses -o $(NAME)
 
 %.o: %.c Makefile $(HEADERS)
 	$(CC) $(CFLAGS) -c $< -o $@

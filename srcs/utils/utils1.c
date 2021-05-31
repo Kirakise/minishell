@@ -31,6 +31,7 @@ char	*find_var(char *s1)
 		{
 			size = ft_strlen(g_shell.env[i]) - ft_strlen(s1) - 1;
 			ret = ft_strdup(g_shell.env[i] + ft_strlen(s1) + j + 1);
+			size++;
 			return (ret);
 		}
 		i++;

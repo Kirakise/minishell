@@ -54,7 +54,6 @@ void	free_cmd(t_cmd **cmd)
 
 void	parentproc(t_cmd **cmd, int i, int fd_in, int fd_out)
 {
-
 	close(fd_in);
 	close(fd_out);
 	subst_quotes_vars(cmd[i]);

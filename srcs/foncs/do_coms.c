@@ -28,16 +28,14 @@ void	execute(t_cmd *cmd, int fd_in, int fd_out)
 void	do_redirect(t_cmd *cmd, int *fd_out, int *fd_in)
 {
 	int	i;
-	int	tmp_fd;
 	int	fd;
 
 	i = 0;
-	tmp_fd = 1;
 	while (cmd->redir[i])
 	{
 		if (cmd->redir[i]->type == 0 || cmd->redir[i]->type == 1)
 		{
-			if (cmd->pipe && tmp_fd && write(*fd_out, "\0", 1))
+			if (cmd->pipe && write(*fd_out, "\0", 1))
 				close(*fd_out);
 			if (cmd->redir[i]->type == 0)
 				*fd_out = open(cmd->redir[i]->filename,
@@ -71,11 +69,25 @@ void	do_pipe(int i, t_cmd **cmd, int *fd_in, pid_t *pid)
 	close(fd[1]);
 }
 
+void	normfunc(pid_t pid, pid_t pid2)
+{
+	waitpid(pid, &g_shell.status, 0);
+	waitpid(pid2, &g_shell.status, 0);
+	if (WIFEXITED(g_shell.status))
+		g_shell.status = WEXITSTATUS(g_shell.status);
+	else if (WIFSIGNALED(g_shell.status) && WTERMSIG(g_shell.status) == 3
+		&& write(1, "Quit: 3\n", 9))
+		g_shell.status = 131;
+	else if (WIFSIGNALED(g_shell.status))
+		g_shell.status = WTERMSIG(g_shell.status) + 128;
+	else
+		wait(0);
+}
+
 void	do_coms(int i, t_cmd **cmd, int fd_in, int fd_out)
 {
 	pid_t	pid;
 	pid_t	pid2;
-	int		tmp_status;
 
 	pid = 0;
 	pid2 = 0;
@@ -95,15 +107,5 @@ void	do_coms(int i, t_cmd **cmd, int fd_in, int fd_out)
 		execute(cmd[i], fd_in, fd_out);
 	}
 	parentproc(cmd, i, fd_in, fd_out);
-	tmp_status = g_shell.status;
-	waitpid(pid, &g_shell.status, 0);
-	waitpid(pid2, &g_shell.status, 0);
-	if (WIFEXITED(g_shell.status))
-		g_shell.status = WEXITSTATUS(g_shell.status);
-	else if (WIFSIGNALED(g_shell.status) && WTERMSIG(g_shell.status) == 3 && write(1, "Quit: 3\n", 9))
-		g_shell.status = 131;
-	else if (WIFSIGNALED(g_shell.status))
-		g_shell.status = WTERMSIG(g_shell.status) + 128;
-	else
-		wait(0);
+	normfunc(pid, pid2);
 }

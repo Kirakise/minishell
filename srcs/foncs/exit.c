@@ -2,10 +2,8 @@
 
 extern t_shell	g_shell;
 
-void	sh_exit(t_cmd *cmd)
+void	checkinp2(t_cmd *cmd)
 {
-	int	i;
-
 	if (!cmd->args[1])
 		exit(0);
 	if (cmd->args[1] && cmd->args[2])
@@ -16,13 +14,19 @@ void	sh_exit(t_cmd *cmd)
 	}
 	if (!ft_strcmp(cmd->args[1], "--"))
 		exit(0);
-	i = 0;////here
-	if ((cmd->args[1][i] == '-' || cmd->args[1][i] == '+')
-			&& ft_isdigit(cmd->args[1][i + 1]))
+}
+
+void	sh_exit(t_cmd *cmd)
+{
+	int	i;
+
+	i = 0;
+	if ((cmd->args[1] && (cmd->args[1][i] == '-' || cmd->args[1][i] == '+')
+	&& ft_isdigit(cmd->args[1][i + 1])))
 		i++;
-	while (cmd->args[1][i] && ft_isdigit(cmd->args[1][i]))
+	while (cmd->args[1] && cmd->args[1][i] && ft_isdigit(cmd->args[1][i]))
 		i++;
-	if (cmd->args[1][i])
+	if (cmd->args[1] && cmd->args[1][i])
 	{
 		ft_putstr("exit: ");
 		ft_putstr(cmd->args[1]);

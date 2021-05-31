@@ -6,12 +6,10 @@
 
 extern t_shell	g_shell;
 
-int	do_exec(t_cmd *cmd)
+void	checkinp(t_cmd *cmd, struct stat tmp)
 {
-	char	*s;
 	int		i;
-	char	**dirs;
-	struct stat tmp;
+	char	*s;
 
 	if (ft_strchr('/', cmd->exec_name))
 	{
@@ -33,7 +31,17 @@ int	do_exec(t_cmd *cmd)
 			exit(126);
 		}
 	}
+}
+
+int	do_exec(t_cmd *cmd)
+{
+	char		*s;
+	int			i;
+	char		**dirs;
+	struct stat	tmp;
+
 	i = 0;
+	checkinp(cmd, tmp);
 	s = find_var("PATH");
 	dirs = ft_split(s, ':');
 	signal(SIGQUIT, SIG_DFL);
