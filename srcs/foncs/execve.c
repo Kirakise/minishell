@@ -45,7 +45,7 @@ int	do_exec(t_cmd *cmd)
 	s = find_var("PATH");
 	dirs = ft_split(s, ':');
 	signal(SIGQUIT, SIG_DFL);
-	while (dirs[i])
+	while (dirs && dirs[i])
 	{
 		s = ft_strjoin(dirs[i], "/");
 		s = ft_strjoin(s, cmd->exec_name);

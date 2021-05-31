@@ -53,7 +53,7 @@ void	set_status(pid_t pid, pid_t pid2)
 	else if (WIFSIGNALED(g_shell.status) && WTERMSIG(g_shell.status) == 3
 		&& write(1, "Quit: 3\n", 9))
 		g_shell.status = 131;
-	else if (WIFSIGNALED(g_shell.status))
+	else if (WIFSIGNALED(g_shell.status) && write(1, "\n", 1))
 		g_shell.status = WTERMSIG(g_shell.status) + 128;
 	else
 		wait(0);
@@ -75,10 +75,10 @@ void	do_coms(int i, t_cmd **cmd, int fd_in, int fd_out)
 		else
 			do_coms(i - 1, cmd, dup(g_shell.tmp_fd_0), dup(g_shell.tmp_fd_1));
 	}
+	subst_quotes_vars(cmd[i]);
 	pid2 = fork();
 	if (!pid2)
 	{
-		subst_quotes_vars(cmd[i]);
 		if (cmd[i]->redir)
 			do_redirect(cmd[i], &fd_out, &fd_in);
 		execute(cmd[i], fd_in, fd_out);
