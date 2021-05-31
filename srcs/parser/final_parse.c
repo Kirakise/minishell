@@ -22,9 +22,9 @@ static char	*get_var_value(char **input)
 		return (ft_itoa(g_shell.status));
 	}
 	*input = s + i;
-	name = ft_substr(s, 0, i);//malloc
+	name = ft_substr(s, 0, i);
 	if (!name)
-		return (0);
+		malloc_err();
 	value = find_var(name);//malloc
 	free(name);
 	if (!value)
@@ -62,7 +62,10 @@ static void	final_parse(char **str)
 		ret = parse_str_chunk(&s, &tmp);//malloc
 	}
 	if (ret == 0)
+	{
+		free(*str);
 		*str = join(res, tmp);//malloc
+	}
 }
 
 void	subst_quotes_vars(t_cmd *cmd)
