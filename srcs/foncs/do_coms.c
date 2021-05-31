@@ -69,7 +69,7 @@ void	do_pipe(int i, t_cmd **cmd, int *fd_in, pid_t *pid)
 	close(fd[1]);
 }
 
-void	normfunc(pid_t pid, pid_t pid2)
+void	set_status(pid_t pid, pid_t pid2)
 {
 	int	status;
 
@@ -112,5 +112,5 @@ void	do_coms(int i, t_cmd **cmd, int fd_in, int fd_out)
 		execute(cmd[i], fd_in, fd_out);
 	}
 	parentproc(cmd, i, fd_in, fd_out);
-	normfunc(pid, pid2);
+	set_status(pid, pid2);
 }

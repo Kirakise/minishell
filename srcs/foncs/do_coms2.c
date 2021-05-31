@@ -59,11 +59,11 @@ void	parentproc(t_cmd **cmd, int i, int fd_in, int fd_out)
 	subst_quotes_vars(cmd[i]);
 	if (!ft_strcmp("cd", cmd[i]->exec_name))
 		cd(cmd[i]);
-	if (!ft_strcmp("exit", cmd[i]->exec_name))
+	else if (!ft_strcmp("exit", cmd[i]->exec_name))
 		sh_exit(cmd[i]);
-	if (!ft_strcmp("export", cmd[i]->exec_name))
+	else if (!ft_strcmp("export", cmd[i]->exec_name))
 		export(cmd[i]);
-	if (!ft_strcmp("unset", cmd[i]->exec_name))
+	else if (!ft_strcmp("unset", cmd[i]->exec_name))
 		unset(cmd[i]);
 	restore_fd();
 }
