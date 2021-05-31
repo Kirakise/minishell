@@ -20,6 +20,8 @@ void	sh_exit(t_cmd *cmd)
 {
 	int	i;
 
+	if (!cmd->args[1])
+		exit(0);
 	i = 0;
 	if ((cmd->args[1] && (cmd->args[1][i] == '-' || cmd->args[1][i] == '+')
 	&& ft_isdigit(cmd->args[1][i + 1])))
