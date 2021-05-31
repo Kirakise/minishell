@@ -1,6 +1,6 @@
-CC = gcc
-CFLAGS = -Wall -Wextra -Werror -Iincludes/ -g
-SRCS =	srcs/main.c\
+CC		= gcc
+CFLAGS	= -Wall -Wextra -Werror -Iincludes/ -g
+SRCS	= srcs/main.c\
 		srcs/errors/error.c\
 		srcs/foncs/cd.c\
 		srcs/foncs/do_coms.c\
@@ -23,11 +23,11 @@ SRCS =	srcs/main.c\
 		srcs/temp/tmpread.c\
 		srcs/termcaps/setflags.c\
 		srcs/utils/utils1.c
-OBJS = $(SRCS:%.c=%.o)
+OBJS	= $(SRCS:%.c=%.o)
 HEADERS = $(INC)libft.h $(INC)minishell.h
 LFT_DIR = srcs/libft/
-LIBFT =	$(LFT_DIR)libft.a
-NAME = minishell
+LIBFT	= $(LFT_DIR)libft.a
+NAME	= minishell
 
 ifdef FSANITIZE
 CFLAGS += -fsanitize=address
