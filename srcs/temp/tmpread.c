@@ -46,7 +46,7 @@ int	foo(char **str, char **s, int l)
 		(*s)[0] = 0;
 		return (1);
 	}
-	else if (!ft_strcmp(*str, "\4") && !*s)
+	else if (!ft_strcmp(*str, "\4") && !**s)
 	{
 		*s = ft_strdup("exit");
 		ft_putstr(*s);
