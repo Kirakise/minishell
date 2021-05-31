@@ -25,34 +25,6 @@ void	execute(t_cmd *cmd, int fd_in, int fd_out)
 	exit(-1);
 }
 
-void	do_redirect(t_cmd *cmd, int *fd_out, int *fd_in)
-{
-	int	i;
-	int	fd;
-
-	i = 0;
-	while (cmd->redir[i])
-	{
-		if (cmd->redir[i]->type == 0 || cmd->redir[i]->type == 1)
-		{
-			if (cmd->pipe && write(*fd_out, "\0", 1))
-				close(*fd_out);
-			if (cmd->redir[i]->type == 0)
-				*fd_out = open(cmd->redir[i]->filename,
-						O_WRONLY | O_CREAT | O_TRUNC, 0664);
-			else if (cmd->redir[i]->type == 1)
-				*fd_out = open(cmd->redir[i]->filename,
-						O_WRONLY | O_CREAT | O_APPEND, 0664);
-		}
-		else
-		{
-			fd = open(cmd->redir[i]->filename, O_RDONLY);
-			dup2(fd, *fd_in);
-		}
-		i++;
-	}
-}
-
 void	do_pipe(int i, t_cmd **cmd, int *fd_in, pid_t *pid)
 {
 	int	fd[2];

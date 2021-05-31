@@ -2,7 +2,7 @@
 
 extern t_shell	g_shell;
 
-int	init_struct(int argc, char **argv)
+void	init_struct(int argc, char **argv)
 {
 	(void)argc;
 	(void)argv;
@@ -12,7 +12,6 @@ int	init_struct(int argc, char **argv)
 	g_shell.tmp_fd_0 = dup(g_shell.fd_0);
 	g_shell.pidt = -1;
 	g_shell.hist = 0;
-	return (1);
 }
 
 char	*find_var(char *s1)

@@ -45,6 +45,7 @@ typedef struct s_cmd
 /*Fonctions*/
 void		do_coms(int i, t_cmd **cmd, int fd_in, int fd_out);
 int			do_exec(t_cmd *cmd);
+void		do_redirect(t_cmd *cmd, int *fd_out, int *fd_in);
 void		free_cmd(t_cmd **cmd);
 void		parentproc(t_cmd **cmd, int i, int fd_in, int fd_out);
 void		pwd(void);
@@ -70,8 +71,7 @@ int			parse_redir_before(char **s, t_cmd *cmd, t_list **lst_redir);
 int			parse_redir_pipe(char **s, t_cmd *cmd, t_list **lst_redir);
 int			parse_str_chunk(char **input, char **res);
 
-/*Utils*/
-int			init_struct(int argc, char **argv);
+void		init_struct(int argc, char **argv);
 char		**envcpy(char **line);
 char		*find_var(char *s1);
 char		*tmpread(void);

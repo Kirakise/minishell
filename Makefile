@@ -1,10 +1,11 @@
 CC		= gcc
-CFLAGS	= -Wall -Wextra -Werror -Iincludes/
+CFLAGS	= -Wall -Wextra -Werror -Iincludes/ -g -fsanitize=address
 SRCS	= srcs/main.c\
 		srcs/errors/error.c\
 		srcs/foncs/cd.c\
 		srcs/foncs/do_coms.c\
 		srcs/foncs/do_coms2.c\
+		srcs/foncs/do_redirect.c\
 		srcs/foncs/echo.c\
 		srcs/foncs/env.c\
 		srcs/foncs/execve.c\
