@@ -16,7 +16,7 @@ void	del_var(char *s)
 	i = 0;
 	while (!found && g_shell.env[i + found])
 	{
-		if (!ft_strncmp(s, g_shell.env[i], ft_strlen(s)) && write(1, "asd\n", 4))
+		if (!ft_strncmp(s, g_shell.env[i], ft_strlen(s)))
 		{
 			free(g_shell.env[i]);
 			found = 1;
