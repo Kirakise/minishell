@@ -2,38 +2,49 @@
 
 extern t_shell	g_shell;
 
-void	checkinp2(t_cmd *cmd)
+void	check_validity(char *str, int *err)
 {
-	if (!cmd->args[1])
-		exit(0);
-	if (cmd->args[1] && cmd->args[2])
-	{
-		ft_putstr_nl("exit: too many arguments");
-		g_shell.status = 1;
-		return ;
-	}
-	if (!ft_strcmp(cmd->args[1], "--"))
-		exit(0);
+	int	i;
+
+	i = 0;
+	if ((str && (str[i] == '-' || str[i] == '+') && ft_isdigit(str[i + 1])))
+		i++;
+	while (str && str[i] && ft_isdigit(str[i]))
+		i++;
+	if (str && str[i])
+		*err = 255;
+}
+
+static void	exit_puterr(char *str)
+{
+	ft_putstr("exit: ");
+	ft_putstr(str);
+	ft_putstr_nl(": numeric argument required");
+	exit(255);
 }
 
 void	sh_exit(t_cmd *cmd)
 {
 	int	i;
+	int	err;
 
-	if (!cmd->args[1])
+	i = 1;
+	err = 0;
+	if (cmd->args[i] && !ft_strcmp(cmd->args[i], "--"))
+		i++;
+	if (!cmd->args[i])
 		exit(0);
-	i = 0;
-	if ((cmd->args[1] && (cmd->args[1][i] == '-' || cmd->args[1][i] == '+')
-	&& ft_isdigit(cmd->args[1][i + 1])))
-		i++;
-	while (cmd->args[1] && cmd->args[1][i] && ft_isdigit(cmd->args[1][i]))
-		i++;
-	if (cmd->args[1] && cmd->args[1][i])
+	check_validity(cmd->args[i], &err);
+	if (err)
+		exit_puterr(cmd->args[i]);
+	if (!cmd->args[i + 1])
+		exit(ft_atoi(cmd->args[i]));
+	i++;
+	while (cmd->args[i] && !err)
 	{
-		ft_putstr("exit: ");
-		ft_putstr(cmd->args[1]);
-		ft_putstr_nl(": numeric argument required");
-		exit(255);
+		check_validity(cmd->args[i], &err);
+		i++;
 	}
-	exit(ft_atoi(cmd->args[1]));
+	ft_putstr_nl("exit: too many arguments");
+	g_shell.status = 1;
 }
