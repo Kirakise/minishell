@@ -1,5 +1,5 @@
 CC		= gcc
-CFLAGS	= -Wall -Wextra -Werror -Iincludes/ -g
+CFLAGS	= -Wall -Wextra -Werror -Iincludes/
 SRCS	= srcs/main.c\
 		srcs/errors/error.c\
 		srcs/foncs/cd.c\
@@ -29,14 +29,7 @@ LFT_DIR = srcs/libft/
 LIBFT	= $(LFT_DIR)libft.a
 NAME	= minishell
 
-ifdef FSANITIZE
-CFLAGS += -fsanitize=address
-endif
-
 all: lft $(NAME)
-
-asan:
-	$(MAKE) FSANITIZE=1 all
 
 $(NAME): $(OBJS)
 	$(CC) $(CFLAGS) $^ -L$(LFT_DIR) -lft -ltermcap -o $(NAME)
