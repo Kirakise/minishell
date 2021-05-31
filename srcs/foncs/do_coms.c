@@ -71,6 +71,9 @@ void	do_pipe(int i, t_cmd **cmd, int *fd_in, pid_t *pid)
 
 void	normfunc(pid_t pid, pid_t pid2)
 {
+	int	status;
+
+	status = g_shell.status;
 	waitpid(pid, &g_shell.status, 0);
 	waitpid(pid2, &g_shell.status, 0);
 	if (WIFEXITED(g_shell.status))
@@ -82,6 +85,8 @@ void	normfunc(pid_t pid, pid_t pid2)
 		g_shell.status = WTERMSIG(g_shell.status) + 128;
 	else
 		wait(0);
+	if (status != 0 && g_shell.status == 0)
+		g_shell.status = status;
 }
 
 void	do_coms(int i, t_cmd **cmd, int fd_in, int fd_out)
