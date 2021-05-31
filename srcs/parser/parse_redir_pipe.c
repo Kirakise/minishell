@@ -10,6 +10,8 @@ static void	check_syntax(char **s, char **err)
 	{
 		*(str + 1) = 0;
 		*err = ft_strdup(str - 1);
+		if (!*err)
+			malloc_err();
 		return ;
 	}
 	while (ft_isspace(*str))
@@ -17,6 +19,8 @@ static void	check_syntax(char **s, char **err)
 	if (!*str && **s != ';')
 	{
 		*err = ft_strdup(*s);
+		if (!*err)
+			malloc_err();
 		return ;
 	}
 	*s = str;
@@ -26,14 +30,16 @@ static void	parse_redirect(char **s, char **err, t_list **lst, int type)
 {
 	t_redir	*el;
 
-	el = malloc(sizeof(t_redir));//malloc
+	el = malloc(sizeof(t_redir));
+	if (!el)
+		malloc_err();
 	if (!ft_strncmp(*s, ">>", 2))
 		*s += 1;
 	el->type = type;
 	check_syntax(s, err);
 	if (*err)
 		return ;
-	el->filename = parse_input(s, err);//malloc
+	el->filename = parse_input(s, err);
 	if (el->filename && *el->filename)
 		ft_lstadd_back(lst, ft_lstnew(el));
 	else
@@ -42,6 +48,8 @@ static void	parse_redirect(char **s, char **err, t_list **lst, int type)
 			free(el->filename);
 		free(el);
 		*err = ft_strdup(*s);
+		if (!*err)
+			malloc_err();
 	}
 }
 
@@ -57,7 +65,11 @@ int	parse_redir_pipe(char **s, t_cmd *cmd, t_list **lst_redir)
 			parse_redirect(s, &cmd->error, lst_redir, 0);
 	}
 	if (!cmd->error && *lst_redir)
+	{
 		cmd->redir = (t_redir **)lst_to_arr(*lst_redir);
+		if (!cmd->redir)
+			malloc_err();
+	}
 	if (!cmd->error && **s == '|')
 	{
 		check_syntax(s, &cmd->error);
@@ -69,7 +81,6 @@ int	parse_redir_pipe(char **s, t_cmd *cmd, t_list **lst_redir)
 		return (1);
 	return (0);
 }
-
 
 int	parse_redir_before(char **s, t_cmd *cmd, t_list **lst_redir)
 {

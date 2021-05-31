@@ -10,11 +10,17 @@ static void	handle_quotes(int *val)
 
 static char	*check_close_quotes(int single, int dbl)
 {
+	char	*res;
+
 	if (single)
-		return (ft_strdup("\'"));
-	if (dbl)
-		return (ft_strdup("\""));
-	return (0);
+		res = ft_strdup("\'");
+	else if (dbl)
+		res = ft_strdup("\"");
+	else
+		return (0);
+	if (!res)
+		malloc_err();
+	return (res);
 }
 
 static char	*str_iter(char *s, char **err, char *str)
@@ -54,9 +60,11 @@ char	*parse_input(char **input, char **err)
 		*input += 1;
 	str = malloc(sizeof(char) * (ft_strlen(*input) + 1));
 	if (!str)
-		exit(1); // malloc protection....
+		malloc_err();
 	*input = str_iter(*input, err, str);
-	tmp = ft_strdup(str);//malloc
+	tmp = ft_strdup(str);
+	if (!tmp)
+		malloc_err();
 	free(str);
 	while (ft_isspace(**input))
 		*input += 1;

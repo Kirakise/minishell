@@ -2,6 +2,15 @@
 
 extern t_shell	g_shell;
 
+static char	*handle_single_char(char **input, char c)
+{
+	if (c)
+		*input += 1;
+	if (c != '?')
+		return (ft_strdup("$"));
+	return (ft_itoa(g_shell.status));
+}
+
 static char	*get_var_value(char **input)
 {
 	int		i;
@@ -14,18 +23,12 @@ static char	*get_var_value(char **input)
 	while (ft_isalnum(s[i]))
 		i++;
 	if (i == 0)
-	{
-		if (s[i])
-			*input += 1;
-		if (s[i] != '?')
-			return (ft_strdup("$"));
-		return (ft_itoa(g_shell.status));
-	}
+		return (handle_single_char(input, s[i]));
 	*input = s + i;
 	name = ft_substr(s, 0, i);
 	if (!name)
 		malloc_err();
-	value = find_var(name);//malloc
+	value = find_var(name);
 	free(name);
 	if (!value)
 		return (ft_strdup(""));
@@ -36,7 +39,9 @@ static char	*join(char *res, char *tmp)
 {
 	char	*tmp2;
 
-	tmp2 = ft_strjoin(res, tmp);//malloc
+	tmp2 = ft_strjoin(res, tmp);
+	if (!tmp2)
+		malloc_err();
 	free(res);
 	free(tmp);
 	return (tmp2);
@@ -53,19 +58,20 @@ static void	final_parse(char **str)
 		return ;
 	s = *str;
 	res = ft_strdup("");
-	ret = parse_str_chunk(&s, &tmp);//malloc
+	if (!res)
+		malloc_err();
+	ret = parse_str_chunk(&s, &tmp);
 	while (ret)
 	{
-		res = join(res, tmp);//malloc
-		tmp = get_var_value(&s);//malloc
-		res = join(res, tmp);//malloc
-		ret = parse_str_chunk(&s, &tmp);//malloc
+		res = join(res, tmp);
+		tmp = get_var_value(&s);
+		if (!tmp)
+			malloc_err();
+		res = join(res, tmp);
+		ret = parse_str_chunk(&s, &tmp);
 	}
-	if (ret == 0)
-	{
-		free(*str);
-		*str = join(res, tmp);//malloc
-	}
+	free(*str);
+	*str = join(res, tmp);
 }
 
 void	subst_quotes_vars(t_cmd *cmd)

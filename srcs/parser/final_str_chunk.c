@@ -40,9 +40,9 @@ int	parse_str_chunk(char **input, char **res)
 {
 	int		var;
 
-	*res = malloc(sizeof(char) * (ft_strlen(*input) + 1));//malloc
+	*res = malloc(sizeof(char) * (ft_strlen(*input) + 1));
 	if (!*res)
-		return (-1);//
+		malloc_err();
 	var = 0;
 	return (str_iterate(input, *res, var));
 }

@@ -35,7 +35,9 @@ int	str_to_commands(char *s, t_list **cmd_list)
 
 	while (*s)
 	{
-		cmd = malloc(sizeof(t_cmd));//malloc
+		cmd = malloc(sizeof(t_cmd));
+		if (!cmd)
+			malloc_err();
 		init_cmd_el(cmd);
 		arg_list = 0;
 		redir_list = 0;
@@ -54,39 +56,6 @@ int	str_to_commands(char *s, t_list **cmd_list)
 	return (0);
 }
 
-/*static void	test_print(t_cmd **cmd_arr)
-{
-	int	i;
-	int	j;
-
-	i = 0;
-	while (cmd_arr[i])
-	{
-		printf("\n%-6s %s\n", "cmd   :   ", cmd_arr[i]->exec_name);
-		j = 0;
-		while (cmd_arr[i]->args[j])
-		{
-			printf("arg[%d]:    %s|\n", j, cmd_arr[i]->args[j]);
-			j++;
-		}
-		printf("pipe  :    %d\n", cmd_arr[i]->pipe);
-		j = 0;
-		while (cmd_arr[i]->redir && cmd_arr[i]->redir[j])
-		{
-			printf("redir : ");
-			if (cmd_arr[i]->redir[j]->type == 0)
-				printf(" > ");
-			else if (cmd_arr[i]->redir[j]->type == 1)
-				printf(">> ");
-			else
-				printf(" < ");
-			printf("%s|\n", cmd_arr[i]->redir[j]->filename);
-			j++;
-		}
-		i++;
-	}
-}*/
-
 t_cmd	**get_commands(char *s)
 {
 	t_list	*cmd_list;
@@ -96,14 +65,7 @@ t_cmd	**get_commands(char *s)
 		return (0);
 	cmd_list = 0;
 	if (str_to_commands(s, &cmd_list) != 0)
-	{
 		return (0);
-	}
 	cmd_arr = (t_cmd **)lst_to_arr(cmd_list);
-//	test_print(cmd_arr);
-/*	int i = 0;
-	while (cmd_arr[i])
-		subst_quotes_vars(cmd_arr[i++]);
-	test_print(cmd_arr);*/
 	return (cmd_arr);
 }
