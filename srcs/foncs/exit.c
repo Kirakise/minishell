@@ -2,7 +2,7 @@
 
 extern t_shell	g_shell;
 
-void	check_validity(char *str, int *err)
+static void	check_validity(char *str, int *err)
 {
 	int	i;
 
