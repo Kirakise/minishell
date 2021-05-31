@@ -20,7 +20,12 @@ static char	*get_var_value(char **input)
 
 	s = *input;
 	i = 0;
-	while (ft_isalnum(s[i]))
+	if (ft_isdigit(s[i]))
+	{
+		*input += 1;
+		return (ft_strdup(""));
+	}
+	while (ft_isalnum(s[i]) || s[i] == '_')
 		i++;
 	if (i == 0)
 		return (handle_single_char(input, s[i]));
