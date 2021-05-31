@@ -11,7 +11,7 @@ void	**lst_to_arr(t_list *lst)
 	size = ft_lst_getsize(lst);
 	arr = malloc(sizeof(t_list) * (size + 1));
 	if (!arr)
-		exit(1);//malloc
+		return (0);
 	i = 0;
 	while (lst)
 	{
