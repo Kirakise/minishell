@@ -4,7 +4,7 @@ extern t_shell	g_shell;
 
 static char	*handle_single_char(char **input, char c)
 {
-	if (c)
+	if (c && c != '$')
 		*input += 1;
 	if (c != '?')
 		return (ft_strdup("$"));
