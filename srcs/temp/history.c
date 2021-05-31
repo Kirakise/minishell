@@ -26,7 +26,7 @@ char	*get_history_line(t_2list **lst, int dir, int *end)
 	t_2list	*el;
 
 	if (!lst || !*lst)
-		return (0);
+		return (ft_strdup(""));
 	el = *lst;
 	if (*end == 0 && dir == 1)
 	{
@@ -40,7 +40,7 @@ char	*get_history_line(t_2list **lst, int dir, int *end)
 		if (!el->prev)
 		{
 			*end = 0;
-			return (0);
+			return (ft_strdup(""));
 		}
 		*lst = el->prev;
 	}

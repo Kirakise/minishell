@@ -7,11 +7,6 @@ static int	ft_putchar(int s)
 	return (write(g_shell.fd_1, &s, 1));
 }
 
-// static int	ft_putint(int a)
-// {
-// 	return (write(g_shell.fd_1, &a, 4));
-// }
-
 static int	delete_last(char *s)
 {
 	int	i;
@@ -35,7 +30,7 @@ static void	access_history(char *str, char **s, int *end)
 	else
 		*s = get_history_line(&g_shell.hist, -1, end);
 	if (!*s)
-		*s = ft_strdup("");
+		malloc_err();
 	ft_putstr(*s);
 }
 
