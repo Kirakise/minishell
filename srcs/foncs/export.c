@@ -15,6 +15,8 @@ char	*get_name(char *s)
 	if (!s[i])
 		return (0);
 	ret = calloc(i + 1, 1);
+	if (!ret)
+		malloc_err();
 	i = 0;
 	while (s[i] && s[i] != '=')
 	{
@@ -73,44 +75,41 @@ void	add_var(char *s)
 	g_shell.env = ret;
 }
 
-void	do_cycle(t_cmd *cmd, char *s, char *s2, int i)
+void	do_cycle(char *str)
 {
-	if (var_isvalid(cmd->args[i], 0))
-	{
-		s = get_name(cmd->args[i]);
-		if (s)
-		{
-			s2 = find_var(s);
-			if (!s2)
-				add_var(cmd->args[i]);
-			else
-				add_var_exist(cmd->args[i]);
-			free(s);
-			if (s2)
-				free(s2);
-		}
-	}
-	else
+	char	*s;
+	char	*s2;
+
+	if (!var_isvalid(str, 0))
 	{
 		ft_putstr("export: '");
-		ft_putstr(cmd->args[i]);
+		ft_putstr(str);
 		ft_putstr_nl("': not a valid identifier");
 		g_shell.status = 1;
+		return ;
 	}
+	s = get_name(str);
+	if (!s)
+		return ;
+	s2 = find_var(s);
+	free(s);
+	if (s2)
+	{
+		add_var_exist(str);
+		free(s2);
+	}
+	else
+		add_var(str);
 }
 
 void	export(t_cmd *cmd)
 {
-	char	*s;
-	char	*s2;
 	int		i;
 
 	i = 1;
-	s = 0;
-	s2 = 0;
 	while (cmd->args[i])
 	{
-		do_cycle(cmd, s, s2, i);
+		do_cycle(cmd->args[i]);
 		i++;
 	}
 	if (!cmd->args[1] && !fork())
