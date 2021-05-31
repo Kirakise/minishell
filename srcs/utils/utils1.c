@@ -31,6 +31,8 @@ char	*find_var(char *s1)
 		{
 			size = ft_strlen(g_shell.env[i]) - ft_strlen(s1) - 1;
 			ret = ft_strdup(g_shell.env[i] + ft_strlen(s1) + j + 1);
+			if (!ret)
+				malloc_err();
 			size++;
 			return (ret);
 		}
@@ -68,6 +70,8 @@ void	changeold(void)
 	s = malloc(256);
 	getcwd(s, 255);
 	s2 = ft_strjoin("OLDPWD=", s);
+	if (!s2)
+		malloc_err();
 	free(s);
 	s = find_var("OLDPWD");
 	if (s)
