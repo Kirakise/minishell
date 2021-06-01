@@ -54,8 +54,11 @@ int	do_exec(t_cmd *cmd)
 	}
 	execve(cmd->exec_name, cmd->args, g_shell.env);
 	dup2(g_shell.tmp_fd_1, 1);
-	ft_putstr("minishell: command not found: ");
-	ft_putstr_nl(cmd->exec_name);
-	exit(127);
+	if (cmd->exec_name && cmd->exec_name[0])
+	{
+		ft_putstr("minishell: command not found: ");
+		ft_putstr_nl(cmd->exec_name);
+		exit(127);
+	}
 	return (1);
 }
