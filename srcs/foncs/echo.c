@@ -26,7 +26,7 @@ void	ft_echo(t_cmd *cmd)
 		write(g_shell.fd_1, cmd->args[i], ft_strlen(cmd->args[i]));
 		i++;
 		if (cmd->args[i])
-			write(1, " ", 1);
+			write(g_shell.fd_1, " ", 1);
 	}
 	if (!cmd->args[1] || (cmd->args[1] && !is_n(cmd->args[1])))
 		write(g_shell.fd_1, "\n", 1);
