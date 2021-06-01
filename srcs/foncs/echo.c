@@ -4,11 +4,9 @@ extern t_shell	g_shell;
 
 static int	is_n(char *str)
 {
-	if (*str != '-')
+	if (ft_strncmp(str, "-n", 2))
 		return (0);
-	str++;
-	if (*str != 'n')
-		return (0);
+	str += 2;
 	while (*str == 'n')
 		str++;
 	if (!*str)
