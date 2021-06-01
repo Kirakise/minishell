@@ -2,12 +2,26 @@
 
 extern t_shell	g_shell;
 
+static int	is_n(char *str)
+{
+	if (*str != '-')
+		return (0);
+	str++;
+	if (*str != 'n')
+		return (0);
+	while (*str == 'n')
+		str++;
+	if (!*str)
+		return (1);
+	return (0);
+}
+
 void	ft_echo(t_cmd *cmd)
 {
 	int	i;
 
 	i = 1;
-	if (cmd->args[i] && !ft_strcmp(cmd->args[i], "-n"))
+	while (cmd->args[i] && is_n(cmd->args[i]))
 		i++;
 	while (cmd->args[i])
 	{
@@ -16,7 +30,7 @@ void	ft_echo(t_cmd *cmd)
 		if (cmd->args[i])
 			write(1, " ", 1);
 	}
-	if (!cmd->args[1] || (cmd->args[1] && ft_strcmp(cmd->args[1], "-n")))
+	if (!cmd->args[1] || (cmd->args[1] && !is_n(cmd->args[1])))
 		write(g_shell.fd_1, "\n", 1);
 	exit(0);
 }
