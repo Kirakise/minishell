@@ -83,10 +83,13 @@ void	subst_quotes_vars(t_cmd *cmd)
 {
 	int	i;
 
-	final_parse(&cmd->exec_name);
 	i = 0;
 	while (cmd->args[i])
 		final_parse(&cmd->args[i++]);
+	free(cmd->exec_name);
+	cmd->exec_name = ft_strdup(cmd->args[0]);
+	if (!cmd->exec_name)
+		malloc_err();
 	i = 0;
 	while (cmd->redir && cmd->redir[i])
 		final_parse(&cmd->redir[i++]->filename);
