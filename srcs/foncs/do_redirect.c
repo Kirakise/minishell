@@ -33,10 +33,8 @@ static void	open_files(t_redir *redir, int pipe, int *fd_out, int *fd_in)
 void	do_redirect(t_cmd *cmd, int *fd_out, int *fd_in)
 {
 	int	i;
-	int	err;
 
 	i = 0;
-	err = 0;
 	while (cmd->redir[i])
 	{
 		open_files(cmd->redir[i], cmd->pipe, fd_out, fd_in);

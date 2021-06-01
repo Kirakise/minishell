@@ -33,10 +33,11 @@ NAME	= minishell
 all: lft $(NAME)
 
 $(NAME): $(OBJS)
-	$(CC) $(CFLAGS) $^ -L$(LFT_DIR) -lft -ltermcap -o $(NAME)
-
-linux: $(OBJS)
-	$(CC) $(CFLAGS) $^ -L$(LFT_DIR) -lncurses -o $(NAME)
+	if [ "$(shell uname -s)" == "Linux" ]; then \
+		$(CC) $(CFLAGS) $^ -L$(LFT_DIR) -lft -lncurses -o $(NAME); \
+	else \
+		$(CC) $(CFLAGS) $^ -L$(LFT_DIR) -lft -ltermcap -o $(NAME); \
+	fi
 
 %.o: %.c $(HEADERS) $(LIBFT) Makefile
 	$(CC) $(CFLAGS) -c $< -o $@
@@ -45,6 +46,7 @@ lft:
 	@$(MAKE) -j -C $(LFT_DIR)
 
 clean:
+	cd $(LFT_DIR) && make fclean
 	rm $(OBJS)
 
 fclean: clean
