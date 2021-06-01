@@ -18,31 +18,22 @@ void	tmp1(void)
 	}
 	else if (s[0] != 0)
 		error = chdir((s));
-	free(s);
 	if (error != 0)
-	{
-		g_shell.status = 1;
-		s = strerror(errno);
-		ft_putstr_nl(s);
-	}
+		ft_puterr("cd", s, 1);
+	free(s);
 }
 
 void	tmp2(t_cmd *cmd)
 {
 	int		error;
-	char	*s;
 
 	changeold();
 	error = chdir(cmd->args[1]);
 	if (error != 0)
-	{
-		g_shell.status = 1;
-		s = strerror(errno);
-		ft_putstr_nl(s);
-	}
+		ft_puterr("cd", cmd->args[1], 1);
 }
 
-void	tmp4(void)
+void	tmp3(void)
 {
 	int		error;
 	char	*s;
@@ -57,28 +48,9 @@ void	tmp4(void)
 	}
 	else if (s[0] != 0)
 		error = chdir((s));
+	if (error != 0)
+		ft_puterr("cd", s, 1);
 	free(s);
-	if (error != 0)
-	{
-		g_shell.status = 1;
-		s = strerror(errno);
-		ft_putstr_nl(s);
-	}
-}
-
-void	tmp3(t_cmd *cmd)
-{
-	int		error;
-	char	*s;
-
-	changeold();
-	error = chdir(cmd->args[1]);
-	if (error != 0)
-	{
-		g_shell.status = 1;
-		s = strerror(errno);
-		ft_putstr_nl(s);
-	}
 }
 
 void	cd(t_cmd *cmd)
@@ -86,9 +58,7 @@ void	cd(t_cmd *cmd)
 	if (!(cmd->args[1]) || !ft_strcmp(cmd->args[1], "~"))
 		tmp1();
 	else if (!ft_strcmp(cmd->args[1], "-"))
-		tmp4();
-	else if (cmd->args[1][0] == '/')
-		tmp2(cmd);
+		tmp3();
 	else
-		tmp3(cmd);
+		tmp2(cmd);
 }

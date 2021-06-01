@@ -87,5 +87,6 @@ int			setinit(struct termios *term);
 void		handlesigint(int a);
 
 /*errors*/
+void		ft_puterr(char *program_name, char *arg, int status);
 void		malloc_err(void);
 #endif
