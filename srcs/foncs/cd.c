@@ -2,7 +2,17 @@
 
 extern t_shell	g_shell;
 
-void	tmp1(void)
+static void	ft_puterr(char *program_name, char *arg, int status)
+{
+	g_shell.status = status;
+	ft_putstr(program_name);
+	ft_putstr(": ");
+	ft_putstr(arg);
+	ft_putstr(": ");
+	ft_putstr_nl(strerror(errno));
+}
+
+static void	tmp1(void)
 {
 	int		error;
 	char	*s;
@@ -23,7 +33,7 @@ void	tmp1(void)
 	free(s);
 }
 
-void	tmp2(t_cmd *cmd)
+static void	tmp2(t_cmd *cmd)
 {
 	int		error;
 
@@ -33,7 +43,7 @@ void	tmp2(t_cmd *cmd)
 		ft_puterr("cd", cmd->args[1], 1);
 }
 
-void	tmp3(void)
+static void	tmp3(void)
 {
 	int		error;
 	char	*s;
