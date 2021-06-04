@@ -23,26 +23,28 @@ static void	exit_puterr(char *str)
 	exit(255);
 }
 
-void	sh_exit(t_cmd *cmd)
+void	sh_exit(t_cmd **cmd, int j)
 {
 	int	i;
 	int	err;
 
 	i = 1;
 	err = 0;
-	if (cmd->args[i] && !ft_strcmp(cmd->args[i], "--"))
+	if (j > 0 && cmd[j - 1]->pipe)
+		return ;
+	if (cmd[j]->args[i] && !ft_strcmp(cmd[j]->args[i], "--"))
 		i++;
-	if (!cmd->args[i])
+	if (!cmd[j]->args[i])
 		exit(0);
-	check_validity(cmd->args[i], &err);
+	check_validity(cmd[j]->args[i], &err);
 	if (err)
-		exit_puterr(cmd->args[i]);
-	if (!cmd->args[i + 1])
-		exit(ft_atoi(cmd->args[i]));
+		exit_puterr(cmd[j]->args[i]);
+	if (!cmd[j]->args[i + 1])
+		exit(ft_atoi(cmd[j]->args[i]));
 	i++;
-	while (cmd->args[i] && !err)
+	while (cmd[j]->args[i] && !err)
 	{
-		check_validity(cmd->args[i], &err);
+		check_validity(cmd[j]->args[i], &err);
 		i++;
 	}
 	ft_putstr_nl("exit: too many arguments");

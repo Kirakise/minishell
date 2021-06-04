@@ -59,7 +59,7 @@ void	parentproc(t_cmd **cmd, int i, int fd_in, int fd_out)
 	if (!ft_strcmp("cd", cmd[i]->exec_name))
 		cd(cmd[i]);
 	else if (!ft_strcmp("exit", cmd[i]->exec_name))
-		sh_exit(cmd[i]);
+		sh_exit(cmd, i);
 	else if (!ft_strcmp("export", cmd[i]->exec_name))
 		export(cmd[i]);
 	else if (!ft_strcmp("unset", cmd[i]->exec_name))

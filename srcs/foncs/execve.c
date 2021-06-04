@@ -52,7 +52,8 @@ int	do_exec(t_cmd *cmd)
 		execve(s, cmd->args, g_shell.env);
 		i++;
 	}
-	execve(cmd->exec_name, cmd->args, g_shell.env);
+	if (ft_strchr('/', cmd->exec_name))
+		execve(cmd->exec_name, cmd->args, g_shell.env);
 	dup2(g_shell.tmp_fd_1, 1);
 	if (cmd->exec_name && cmd->exec_name[0])
 	{

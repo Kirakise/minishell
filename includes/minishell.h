@@ -58,7 +58,7 @@ int			var_isvalid(char *str, int cmd_type);
 void		unset(t_cmd *cmd);
 void		add_var_exist(char *s);
 void		add_var(char *s);
-void		sh_exit(t_cmd *cmd);
+void		sh_exit(t_cmd **cmd, int j);
 
 /*Parser*/
 t_cmd		**get_commands(char *s);
