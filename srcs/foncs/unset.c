@@ -21,8 +21,11 @@ void	del_var(char *s)
 			free(g_shell.env[i]);
 			found = 1;
 		}
+		else
+		{
 		ret[i] = g_shell.env[i + found];
 		i++;
+		}
 	}
 	i = 0;
 	free(s);
