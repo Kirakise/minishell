@@ -31,6 +31,13 @@ void	checkinp(t_cmd *cmd)
 			ft_putstr_nl(" is a directory");
 			exit(126);
 		}
+		else if ((tmp.st_mode & S_IXUSR) == 0)
+		{
+			ft_putstr("minishell: ");
+			ft_putstr(cmd->exec_name);
+			ft_putstr_nl(" Permission denied");
+			exit(126);
+		}
 	}
 }
 
