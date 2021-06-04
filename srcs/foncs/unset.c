@@ -2,16 +2,23 @@
 
 extern t_shell	g_shell;
 
+int	getlen(void)
+{
+	int	i;
+
+	i = 0;
+	while (g_shell.env[i])
+		i++;
+}
+
 void	del_var(char *s)
 {
 	int		i;
 	int		found;
 	char	**ret;
 
-	i = 0;
+	i = getlen();
 	found = 0;
-	while (g_shell.env[i])
-		i++;
 	ret = calloc(i, sizeof(char *));
 	i = 0;
 	while (g_shell.env[i + found])
@@ -23,11 +30,10 @@ void	del_var(char *s)
 		}
 		else
 		{
-		ret[i] = g_shell.env[i + found];
-		i++;
+			ret[i] = g_shell.env[i + found];
+			i++;
 		}
 	}
-	i = 0;
 	free(s);
 	free(g_shell.env);
 	g_shell.env = ret;

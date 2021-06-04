@@ -6,6 +6,30 @@
 
 extern t_shell	g_shell;
 
+static void	puterror(int exitstatus, t_cmd *cmd, int regime)
+{
+	if (regime == 1)
+	{
+		ft_putstr("minishell: ");
+		ft_putstr(cmd->exec_name);
+		ft_putstr_nl(" is a directory");
+		exit(126);
+	}
+	else if (regime == 2)
+	{
+		ft_putstr("minishell: ");
+		ft_putstr(cmd->exec_name);
+		ft_putstr_nl(" Permission denied");
+		exit(126);
+	}
+	else if (regime == 3)
+	{
+		ft_putstr("minishell: command not found: ");
+		ft_putstr_nl(cmd->exec_name);
+		exit(127);
+	}
+}
+
 void	checkinp(t_cmd *cmd)
 {
 	int			i;
@@ -25,19 +49,9 @@ void	checkinp(t_cmd *cmd)
 			exit(127);
 		}
 		if (S_ISDIR(tmp.st_mode))
-		{
-			ft_putstr("minishell: ");
-			ft_putstr(cmd->exec_name);
-			ft_putstr_nl(" is a directory");
-			exit(126);
-		}
+			puterror(126, cmd, 1);
 		else if ((tmp.st_mode & S_IXUSR) == 0)
-		{
-			ft_putstr("minishell: ");
-			ft_putstr(cmd->exec_name);
-			ft_putstr_nl(" Permission denied");
-			exit(126);
-		}
+			puterror(126, cmd, 2);
 	}
 }
 
@@ -63,10 +77,6 @@ int	do_exec(t_cmd *cmd)
 		execve(cmd->exec_name, cmd->args, g_shell.env);
 	dup2(g_shell.tmp_fd_1, 1);
 	if (cmd->exec_name && cmd->exec_name[0])
-	{
-		ft_putstr("minishell: command not found: ");
-		ft_putstr_nl(cmd->exec_name);
-		exit(127);
-	}
+		puterror(127, cmd, 3);
 	return (1);
 }
