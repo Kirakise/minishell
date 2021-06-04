@@ -57,8 +57,8 @@ void	set_status(pid_t pid, pid_t pid2)
 		g_shell.status = WTERMSIG(g_shell.status) + 128;
 	else
 		wait(0);
-	if (status != 0 && g_shell.status == 0)
-		g_shell.status = status;
+	// if (status != 0 && g_shell.status == 0)
+	// 	g_shell.status = status;
 }
 
 void	do_coms(int i, t_cmd **cmd, int fd_in, int fd_out)

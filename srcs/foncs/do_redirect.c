@@ -27,6 +27,7 @@ static void	open_files(t_redir *redir, int pipe, int *fd_out, int *fd_in)
 		ft_putstr_nl(": No such file or directory");
 		err = 1;
 		g_shell.status = 1;
+		exit(1);
 	}
 }
 
