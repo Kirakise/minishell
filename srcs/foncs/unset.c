@@ -9,6 +9,7 @@ int	getlen(void)
 	i = 0;
 	while (g_shell.env[i])
 		i++;
+	return (i);
 }
 
 void	del_var(char *s)
