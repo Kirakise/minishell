@@ -53,7 +53,7 @@ void	do_pipe(int i, t_cmd **cmd, int *fd_in, pid_t *pid)
 // 	return (0);
 // }
 
-void	set_status(pid_t pid, pid_t pid2)
+void	set_status(t_cmd *cmd, pid_t pid, pid_t pid2)
 {
 	int	status;
 
@@ -71,7 +71,7 @@ void	set_status(pid_t pid, pid_t pid2)
 		g_shell.status = WTERMSIG(g_shell.status) + 128;
 	else
 		wait(0);
-	if (!g_shell.status && status)
+	if (!g_shell.status && status && !ft_strcmp("export", cmd->exec_name))
 		g_shell.status = status;
 }
 
@@ -98,5 +98,5 @@ void	do_coms(int i, t_cmd **cmd, int fd_in, int fd_out)
 		execute(cmd[i], fd_in, fd_out);
 	}
 	parentproc(cmd, i, fd_in, fd_out);
-	set_status(pid, pid2);
+	set_status(cmd[i], pid, pid2);
 }
