@@ -43,6 +43,9 @@ void	do_pipe(int i, t_cmd **cmd, int *fd_in, pid_t *pid)
 
 void	set_status(t_cmd *cmd, pid_t pid, pid_t pid2)
 {
+	int status;
+
+	status = g_shell.status;
 	if (!ft_strcmp(cmd->exec_name, "echo") || !ft_strcmp(cmd->exec_name, "export") || !ft_strcmp(cmd->exec_name, "exit") ||
 	!ft_strcmp(cmd->exec_name, "pwd") || !ft_strcmp(cmd->exec_name, "cd") || !ft_strcmp(cmd->exec_name, "unset") || !ft_strcmp(cmd->exec_name, "env"))
 	{
@@ -61,6 +64,8 @@ void	set_status(t_cmd *cmd, pid_t pid, pid_t pid2)
 		g_shell.status = WTERMSIG(g_shell.status) + 128;
 	else
 		wait(0);
+	if (!g_shell.status && status)
+		g_shell.status = status;
 }
 
 void	do_coms(int i, t_cmd **cmd, int fd_in, int fd_out)
