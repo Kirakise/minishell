@@ -8,32 +8,31 @@ extern t_shell	g_shell;
 
 void	puterror(t_cmd *cmd, int regime)
 {
+	ft_putstr("minishell: ");
+	ft_putstr(cmd->exec_name);
 	if (regime == 1)
 	{
-		ft_putstr("minishell: ");
-		ft_putstr(cmd->exec_name);
-		ft_putstr_nl(" is a directory");
+		ft_putstr_nl(": is a directory");
 		exit(126);
 	}
 	else if (regime == 2)
 	{
-		ft_putstr("minishell: ");
-		ft_putstr(cmd->exec_name);
-		ft_putstr_nl(" Permission denied");
+		ft_putstr_nl(": Permission denied");
 		exit(126);
 	}
 	else if (regime == 3)
 	{
-		ft_putstr("minishell: command not found: ");
-		ft_putstr_nl(cmd->exec_name);
+		ft_putstr_nl(": command not found");
 		exit(127);
 	}
+	ft_putstr(": ");
+	ft_putstr_nl(strerror(errno));
+	exit(127);
 }
 
 void	checkinp(t_cmd *cmd)
 {
 	int			i;
-	char		*s;
 	struct stat	tmp;
 
 	if (ft_strchr('/', cmd->exec_name))
@@ -43,11 +42,7 @@ void	checkinp(t_cmd *cmd)
 		else
 			i = stat(ft_strjoin_3(find_var("PWD"), "/", cmd->exec_name), &tmp);
 		if (i == -1)
-		{
-			s = strerror(errno);
-			ft_putstr_nl(s);
-			exit(127);
-		}
+			puterror(cmd, 0);
 		if (S_ISDIR(tmp.st_mode))
 			puterror(cmd, 1);
 		else if ((tmp.st_mode & S_IXUSR) == 0)
