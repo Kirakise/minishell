@@ -48,11 +48,13 @@ void	check_export_redir(t_cmd *cmd)
 	int	i;
 	int	j;
 
+	if (!cmd->redir)
+		return ;
 	i = 1;
 	while (cmd->args[i])
 	{
 		j = 0;
-		while (cmd->redir && cmd->redir[j])
+		while (cmd->redir[j])
 		{
 			if (check_for_variables(cmd->args[i], cmd->redir[j]->filename))
 			{
