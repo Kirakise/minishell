@@ -42,11 +42,11 @@ int	str_to_commands(char *s, t_list **cmd_list)
 		arg_list = 0;
 		redir_list = 0;
 		parse_redir_before(&s, cmd, &redir_list);
-		if (!cmd->error)
+		if (*s && !cmd->error)
 			parse_command(&s, cmd, &arg_list);
-		if (!cmd->error)
+		if (*s && !cmd->error)
 			parse_arguments(&s, cmd, &arg_list);
-		if (!cmd->error)
+		if (*s && !cmd->error)
 			parse_redir_pipe(&s, cmd, &redir_list);
 		if (cmd->error)
 			return (syntax_err(cmd->error));
@@ -61,7 +61,11 @@ t_cmd	**get_commands(char *s)
 	t_list	*cmd_list;
 	t_cmd	**cmd_arr;
 
-	if (!s || !*s)
+	if (!s)
+		return (0);
+	while (ft_isspace(*s))
+		s++;
+	if (!*s)
 		return (0);
 	cmd_list = 0;
 	if (str_to_commands(s, &cmd_list) != 0)
