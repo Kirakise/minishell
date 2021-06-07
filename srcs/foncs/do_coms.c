@@ -57,7 +57,7 @@ void	set_status(t_cmd *cmd, pid_t pid, pid_t pid2)
 	else if (WIFSIGNALED(g_shell.status) && WTERMSIG(g_shell.status) == 3
 		&& write(1, "Quit: 3\n", 9))
 		g_shell.status = 131;
-	else if (WIFSIGNALED(g_shell.status) && write(1, "\n", 1))
+	else if (WIFSIGNALED(g_shell.status))
 		g_shell.status = WTERMSIG(g_shell.status) + 128;
 	else
 		wait(0);
