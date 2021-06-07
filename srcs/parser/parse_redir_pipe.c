@@ -6,7 +6,7 @@ static void	check_syntax(char **s, char **err)
 
 	str = *s;
 	str++;
-	if (*str == **s)
+	if (*str == '<' || *str == '>')
 	{
 		*(str + 1) = 0;
 		*err = ft_strdup(str - 1);
