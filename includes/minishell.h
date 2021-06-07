@@ -71,7 +71,7 @@ int			parse_command(char **s, t_cmd *cmd, t_list **arg_list);
 int			parse_arguments(char **s, t_cmd *cmd, t_list **arg_list);
 int			parse_redir_before(char **s, t_cmd *cmd, t_list **lst_redir);
 int			parse_redir_pipe(char **s, t_cmd *cmd, t_list **lst_redir);
-int			parse_str_chunk(char **input, char **res);
+int			parse_str_chunk(char **input, char **res, int *quotes);
 void		check_export_redir(t_cmd *cmd);
 
 void		init_struct(int argc, char **argv);

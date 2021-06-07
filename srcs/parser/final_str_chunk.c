@@ -8,24 +8,22 @@ static void	handle_quotes(int *q, int type)
 		*q = 0;
 }
 
-static int	str_iterate(char **s, char *str, int var)
+static int	str_iterate(char **s, char *str, int var, int *q)
 {
 	int	i;
-	int	q;
 
 	i = 0;
-	q = 0;
 	while (**s && !var)
 	{
-		if (**s == '\'' && q != 2)
-			handle_quotes(&q, 1);
-		else if (**s == '"' && q != 1)
-			handle_quotes(&q, 2);
-		else if (**s == '$' && q != 1)
+		if (**s == '\'' && *q != 2)
+			handle_quotes(q, 1);
+		else if (**s == '"' && *q != 1)
+			handle_quotes(q, 2);
+		else if (**s == '$' && *q != 1)
 			var = 1;
 		else
 		{
-			if (**s == '\\' && (*s)[1] && (!q || (q == 2 && (*s)[1] == '\\')))
+			if (**s == '\\' && (*s)[1] && (!*q || (*q == 2 && (*s)[1] == '\\')))
 				*s += 1;
 			str[i] = **s;
 			i++;
@@ -36,7 +34,7 @@ static int	str_iterate(char **s, char *str, int var)
 	return (var);
 }
 
-int	parse_str_chunk(char **input, char **res)
+int	parse_str_chunk(char **input, char **res, int *quotes)
 {
 	int		var;
 
@@ -44,5 +42,5 @@ int	parse_str_chunk(char **input, char **res)
 	if (!*res)
 		malloc_err();
 	var = 0;
-	return (str_iterate(input, *res, var));
+	return (str_iterate(input, *res, var, quotes));
 }
