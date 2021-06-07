@@ -19,7 +19,6 @@ int	ft_exit(t_cmd **cmd, int status)
 {
 	free_cmd(cmd);
 	history_free(&g_shell.hist);
-	while (1);
 	exit(status);
 }
 
