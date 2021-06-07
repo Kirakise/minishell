@@ -48,8 +48,6 @@ int	foo(char **str, char **s, int l)
 	}
 	else if (!ft_strcmp(*str, "\4") && !**s)
 	{
-		// *s = ft_strdup("exit");
-		// ft_putstr(*s);
 		free(*str);
 		free(*s);
 		ft_putstr_nl("exit");
