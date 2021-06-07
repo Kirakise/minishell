@@ -20,7 +20,7 @@ static int	syntax_err(char *err)
 		ft_putstr_nl("Syntax error");
 		return (1);
 	}
-	ft_putstr("Syntax error near '");
+	ft_putstr("Syntax error near `");
 	ft_putstr(err);
 	ft_putstr("'\n");
 	free(err);
