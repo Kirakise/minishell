@@ -38,7 +38,7 @@ void	checkinp(t_cmd *cmd)
 
 	if (ft_strchr('/', cmd->exec_name))
 	{
-		if (cmd->exec_name[0] == '/')
+		if (cmd->exec_name[0] == '/' || cmd->exec_name[0] == '.')
 			i = stat(cmd->exec_name, &tmp);
 		else
 			i = stat(ft_strjoin_3(find_var("PWD"), "/", cmd->exec_name), &tmp);

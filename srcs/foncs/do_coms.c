@@ -59,14 +59,10 @@ void	set_status(t_cmd *cmd, pid_t pid, pid_t pid2)
 	int	status;
 
 	status = g_shell.status;
-	if (is_a_builtin(cmd->exec_name))
-	{
-		waitpid(pid, 0, 0);
-		waitpid(pid2, 0, 0);
-		return ;
-	}
 	waitpid(pid, &g_shell.status, 0);
 	waitpid(pid2, &g_shell.status, 0);
+	if (is_a_builtin(cmd->exec_name))
+		return ;
 	if (WIFEXITED(g_shell.status))
 		g_shell.status = WEXITSTATUS(g_shell.status);
 	else if (WIFSIGNALED(g_shell.status) && WTERMSIG(g_shell.status) == 3
