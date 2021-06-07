@@ -20,7 +20,7 @@ static int	syntax_err(char *err)
 		ft_putstr_nl("minishell: syntax error");
 		return (1);
 	}
-	ft_putstr("minishell: syntax error near unexpected token`");
+	ft_putstr("minishell: syntax error near unexpected token `");
 	ft_putstr(err);
 	ft_putstr("'\n");
 	free(err);
