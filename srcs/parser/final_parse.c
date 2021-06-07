@@ -86,6 +86,8 @@ void	subst_quotes_vars(t_cmd *cmd)
 	i = 0;
 	while (cmd->args[i])
 		final_parse(&cmd->args[i++]);
+	if (!ft_strcmp(cmd->args[0], "export"))
+		check_export_redir(cmd);
 	free(cmd->exec_name);
 	cmd->exec_name = ft_strdup(cmd->args[0]);
 	if (!cmd->exec_name)

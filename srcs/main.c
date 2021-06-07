@@ -15,6 +15,39 @@ static void	exec_commands(t_cmd **cmd)
 	free_cmd(cmd);
 }
 
+/*static void	test_print(t_cmd **cmd_arr)
+{
+	int	i;
+	int	j;
+
+	i = 0;
+	while (cmd_arr[i])
+	{
+		printf("\n%-6s %s|\n", "cmd   :   ", cmd_arr[i]->exec_name);
+		j = 0;
+		while (cmd_arr[i]->args[j])
+		{
+			printf("arg[%d]:    %s|\n", j, cmd_arr[i]->args[j]);
+			j++;
+		}
+		printf("pipe  :    %d\n", cmd_arr[i]->pipe);
+		j = 0;
+		while (cmd_arr[i]->redir && cmd_arr[i]->redir[j])
+		{
+			printf("redir : ");
+			if (cmd_arr[i]->redir[j]->type == 0)
+				printf(" > ");
+			else if (cmd_arr[i]->redir[j]->type == 1)
+				printf(">> ");
+			else
+				printf(" < ");
+			printf("%s|\n", cmd_arr[i]->redir[j]->filename);
+			j++;
+		}
+		i++;
+	}
+}*/
+
 int	main(int argc, char **argv, char **envp)
 {
 	char			*s;
@@ -33,6 +66,7 @@ int	main(int argc, char **argv, char **envp)
 		s = tmpread();
 		setc(&term);
 		cmd = get_commands(s);
+	//	test_print(cmd);
 		history_update(&g_shell.hist, s);
 		exec_commands(cmd);
 	}

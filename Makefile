@@ -14,6 +14,7 @@ SRCS	= srcs/main.c\
 		srcs/foncs/pwd.c\
 		srcs/foncs/unset.c\
 		srcs/foncs/var_validation.c\
+		srcs/parser/check_export_redir.c\
 		srcs/parser/final_parse.c\
 		srcs/parser/final_str_chunk.c\
 		srcs/parser/get_commands.c\
@@ -24,8 +25,8 @@ SRCS	= srcs/main.c\
 		srcs/temp/tmpread.c\
 		srcs/termcaps/setflags.c\
 		srcs/utils/utils1.c
-OBJS	= $(SRCS:%.c=%.o)
-HEADERS = $(INC)libft.h $(INC)minishell.h
+OBJS	= $(SRCS:.c=.o)
+HEADERS = includes/libft.h includes/minishell.h
 LFT_DIR = srcs/libft/
 LIBFT	= $(LFT_DIR)libft.a
 NAME	= minishell
@@ -33,23 +34,20 @@ NAME	= minishell
 all: lft $(NAME)
 
 $(NAME): $(OBJS)
-	if [ "$(shell uname -s)" == "Linux" ]; then \
-		$(CC) $(CFLAGS) $^ -L$(LFT_DIR) -lft -lncurses -o $(NAME); \
-	else \
-		$(CC) $(CFLAGS) $^ -L$(LFT_DIR) -g -lft -ltermcap -o $(NAME); \
-	fi
+	$(CC) $(CFLAGS) $^ -L$(LFT_DIR) -lft -ltermcap -o $(NAME)
 
 %.o: %.c $(HEADERS) $(LIBFT) Makefile
-	$(CC) $(CFLAGS) -c -g $< -o $@
+	$(CC) $(CFLAGS) -c $< -o $@
 
 lft:
 	@$(MAKE) -j -C $(LFT_DIR)
 
 clean:
-	cd $(LFT_DIR) && make fclean
 	rm $(OBJS)
 
 fclean: clean
 	rm $(NAME)
 
 re: fclean all
+
+.PHONY: all clean fclean re bonus lft
