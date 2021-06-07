@@ -41,11 +41,15 @@ void	do_pipe(int i, t_cmd **cmd, int *fd_in, pid_t *pid)
 	close(fd[1]);
 }
 
-void	set_status(pid_t pid, pid_t pid2)
+void	set_status(t_cmd *cmd, pid_t pid, pid_t pid2)
 {
-	int	status;
-
-	status = g_shell.status;
+	if (!ft_strcmp(cmd->exec_name, "echo") || !ft_strcmp(cmd->exec_name, "export") || !ft_strcmp(cmd->exec_name, "exit") ||
+	!ft_strcmp(cmd->exec_name, "pwd") || !ft_strcmp(cmd->exec_name, "cd") || !ft_strcmp(cmd->exec_name, "unset") || !ft_strcmp(cmd->exec_name, "env"))
+	{
+		waitpid(pid, 0, 0);
+		waitpid(pid2, 0, 0);
+		return ;
+	}
 	waitpid(pid, &g_shell.status, 0);
 	waitpid(pid2, &g_shell.status, 0);
 	if (WIFEXITED(g_shell.status))
@@ -53,7 +57,7 @@ void	set_status(pid_t pid, pid_t pid2)
 	else if (WIFSIGNALED(g_shell.status) && WTERMSIG(g_shell.status) == 3
 		&& write(1, "Quit: 3\n", 9))
 		g_shell.status = 131;
-	else if (WIFSIGNALED(g_shell.status) && write(1, "\n", 1))
+	else if (WIFSIGNALED(g_shell.status))
 		g_shell.status = WTERMSIG(g_shell.status) + 128;
 	else
 		wait(0);
@@ -82,5 +86,5 @@ void	do_coms(int i, t_cmd **cmd, int fd_in, int fd_out)
 		execute(cmd[i], fd_in, fd_out);
 	}
 	parentproc(cmd, i, fd_in, fd_out);
-	set_status(pid, pid2);
+	set_status(cmd[i], pid, pid2);
 }

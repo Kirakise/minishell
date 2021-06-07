@@ -23,6 +23,7 @@ typedef struct s_shell
 	pid_t	pidt;
 	int		status;
 	int		pipe0_open;
+	int		buitin;
 }		t_shell;
 
 typedef struct s_redir
