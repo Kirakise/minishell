@@ -76,6 +76,6 @@ int	do_exec(t_cmd *cmd)
 		execve(cmd->exec_name, cmd->args, g_shell.env);
 	dup2(g_shell.tmp_fd_1, 1);
 	if (cmd->exec_name && cmd->exec_name[0])
-		puterror(cmd, 0);
+		puterror(cmd, 3);
 	return (1);
 }
