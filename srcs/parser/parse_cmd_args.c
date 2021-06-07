@@ -5,7 +5,7 @@ int	parse_command(char **s, t_cmd *cmd, t_list **arg_list)
 	char	*str;
 
 	cmd->exec_name = parse_input(s, &cmd->error);
-	if (cmd->error)
+	if (cmd->error.val)
 		return (1);
 	str = ft_strdup(cmd->exec_name);
 	if (!str)
@@ -22,7 +22,7 @@ int	parse_arguments(char **s, t_cmd *cmd, t_list **arg_list)
 	{
 		str = 0;
 		str = parse_input(s, &cmd->error);
-		if (cmd->error)
+		if (cmd->error.val)
 			return (1);
 		if (*str)
 			ft_lstadd_back(arg_list, ft_lstnew(str));

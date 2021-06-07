@@ -4,7 +4,8 @@ extern t_shell	g_shell;
 
 static void	init_cmd_el(t_cmd *cmd)
 {
-	cmd->error = 0;
+	cmd->error.type = 0;
+	cmd->error.val = 0;
 	cmd->pipe = 0;
 	cmd->pipe_out = 0;
 	cmd->exec_name = 0;
@@ -12,18 +13,23 @@ static void	init_cmd_el(t_cmd *cmd)
 	cmd->redir = 0;
 }
 
-static int	syntax_err(char *err)
+static int	syntax_err(t_err *err)
 {
 	g_shell.status = 258;
-	if (!err)
+	ft_putstr("minishell: ");
+	if (err->type == 1)
 	{
-		ft_putstr_nl("minishell: syntax error");
-		return (1);
+		ft_putstr("syntax error near `");
+		ft_putstr(err->val);
+		ft_putstr_nl("'. Multiline commands are not supported");
 	}
-	ft_putstr("minishell: syntax error near unexpected token `");
-	ft_putstr(err);
-	ft_putstr("'\n");
-	free(err);
+	else
+	{
+		ft_putstr("syntax error near unexpected token `");
+		ft_putstr(err->val);
+		ft_putstr("'\n");
+	}
+	free(err->val);
 	return (1);
 }
 
@@ -42,14 +48,14 @@ int	str_to_commands(char *s, t_list **cmd_list)
 		arg_list = 0;
 		redir_list = 0;
 		parse_redir_before(&s, cmd, &redir_list);
-		if (!cmd->error)
+		if (!cmd->error.val)
 			parse_command(&s, cmd, &arg_list);
-		if (!cmd->error)
+		if (!cmd->error.val)
 			parse_arguments(&s, cmd, &arg_list);
-		if (!cmd->error)
+		if (!cmd->error.val)
 			parse_redir_pipe(&s, cmd, &redir_list);
-		if (cmd->error)
-			return (syntax_err(cmd->error));
+		if (cmd->error.val)
+			return (syntax_err(&cmd->error));
 		cmd->args = (char **)lst_to_arr(arg_list);
 		ft_lstadd_back(cmd_list, ft_lstnew(cmd));
 	}

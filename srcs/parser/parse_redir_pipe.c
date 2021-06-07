@@ -1,16 +1,16 @@
 #include "../../includes/minishell.h"
 
-static void	check_syntax(char **s, char **err)
+static void	check_syntax(char **s, t_err *err)
 {
 	char	*str;
 
 	str = *s;
 	str++;
-	if (*str == '<' || *str == '>')
+	if (*str == **s || ft_strchr(*str, "<>|;"))
 	{
 		*(str + 1) = 0;
-		*err = ft_strdup(str - 1);
-		if (!*err)
+		err->val = ft_strdup(str - 1);
+		if (!err->val)
 			malloc_err();
 		return ;
 	}
@@ -18,15 +18,15 @@ static void	check_syntax(char **s, char **err)
 		str++;
 	if (!*str && **s != ';')
 	{
-		*err = ft_strdup(*s);
-		if (!*err)
+		err->val = ft_strdup(*s);
+		if (!err->val)
 			malloc_err();
 		return ;
 	}
 	*s = str;
 }
 
-static void	parse_redirect(char **s, char **err, t_list **lst, int type)
+static void	parse_redirect(char **s, t_err *err, t_list **lst, int type)
 {
 	t_redir	*el;
 
@@ -37,7 +37,7 @@ static void	parse_redirect(char **s, char **err, t_list **lst, int type)
 		*s += 1;
 	el->type = type;
 	check_syntax(s, err);
-	if (*err)
+	if (err->val)
 		return ;
 	el->filename = parse_input(s, err);
 	if (el->filename && *el->filename)
@@ -47,15 +47,15 @@ static void	parse_redirect(char **s, char **err, t_list **lst, int type)
 		if (el->filename)
 			free(el->filename);
 		free(el);
-		*err = ft_strdup(*s);
-		if (!*err)
+		err->val = ft_strdup(*s);
+		if (!err->val)
 			malloc_err();
 	}
 }
 
 int	parse_redir_pipe(char **s, t_cmd *cmd, t_list **lst_redir)
 {
-	while (**s && !ft_strchr(**s, ";|") && !cmd->error)
+	while (**s && !ft_strchr(**s, ";|") && !cmd->error.val)
 	{
 		if (**s == '<')
 			parse_redirect(s, &cmd->error, lst_redir, 2);
@@ -64,20 +64,20 @@ int	parse_redir_pipe(char **s, t_cmd *cmd, t_list **lst_redir)
 		else if (**s == '>')
 			parse_redirect(s, &cmd->error, lst_redir, 0);
 	}
-	if (!cmd->error && *lst_redir)
+	if (!cmd->error.val && *lst_redir)
 	{
 		cmd->redir = (t_redir **)lst_to_arr(*lst_redir);
 		if (!cmd->redir)
 			malloc_err();
 	}
-	if (!cmd->error && **s == '|')
+	if (!cmd->error.val && **s == '|')
 	{
 		check_syntax(s, &cmd->error);
 		cmd->pipe = 1;
 	}
-	if (!cmd->error && **s == ';')
+	if (!cmd->error.val && **s == ';')
 		check_syntax(s, &cmd->error);
-	if (cmd->error)
+	if (cmd->error.val)
 		return (1);
 	return (0);
 }
@@ -86,7 +86,7 @@ int	parse_redir_before(char **s, t_cmd *cmd, t_list **lst_redir)
 {
 	while (ft_isspace(**s))
 		*s += 1;
-	while ((**s == '<' || **s == '>') && !cmd->error)
+	while ((**s == '<' || **s == '>') && !cmd->error.val)
 	{
 		while (ft_isspace(**s))
 			*s += 1;
@@ -99,7 +99,7 @@ int	parse_redir_before(char **s, t_cmd *cmd, t_list **lst_redir)
 		while (ft_isspace(**s))
 			*s += 1;
 	}
-	if (cmd->error)
+	if (cmd->error.val)
 		return (1);
 	return (0);
 }

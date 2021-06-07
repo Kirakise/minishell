@@ -1,5 +1,5 @@
 CC		= gcc
-CFLAGS	= -Wall -Wextra -Werror -Iincludes/ -g -fsanitize=address
+CFLAGS	= -Wall -Wextra -Werror -Iincludes/ -g
 SRCS	= srcs/main.c\
 		srcs/errors/error.c\
 		srcs/foncs/cd.c\
@@ -21,6 +21,7 @@ SRCS	= srcs/main.c\
 		srcs/parser/parse_cmd_args.c\
 		srcs/parser/parse_input.c\
 		srcs/parser/parse_redir_pipe.c\
+		srcs/parser/parse_string.c\
 		srcs/temp/history.c\
 		srcs/temp/tmpread.c\
 		srcs/termcaps/setflags.c\
@@ -34,19 +35,24 @@ NAME	= minishell
 all: lft $(NAME)
 
 $(NAME): $(OBJS)
-	$(CC) $(CFLAGS) $^ -L$(LFT_DIR) -lft -ltermcap -o $(NAME)
+	if [ "$(shell uname -s)" == "Linux" ]; then \
+		$(CC) $(CFLAGS) $^ -L$(LFT_DIR) -lft -lncurses -o $(NAME); \
+	else \
+		$(CC) $(CFLAGS) $^ -L$(LFT_DIR) -g -lft -ltermcap -o $(NAME); \
+	fi
 
 %.o: %.c $(HEADERS) $(LIBFT) Makefile
-	$(CC) $(CFLAGS) -c $< -o $@
+	$(CC) $(CFLAGS) -c -g $< -o $@
 
 lft:
 	@$(MAKE) -j -C $(LFT_DIR)
 
 clean:
 	rm $(OBJS)
+	@$(MAKE) clean -j -C $(LFT_DIR)
 
 fclean: clean
-	rm $(NAME)
+	rm $(NAME) $(LIBFT)
 
 re: fclean all
 

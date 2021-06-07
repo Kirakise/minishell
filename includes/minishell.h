@@ -26,6 +26,12 @@ typedef struct s_shell
 	int		buitin;
 }		t_shell;
 
+typedef struct s_err
+{
+	int		type;
+	char	*val;
+}				t_err;
+
 typedef struct s_redir
 {
 	int		type;
@@ -35,7 +41,7 @@ typedef struct s_redir
 
 typedef struct s_cmd
 {
-	char	*error;
+	t_err	error;
 	char	*exec_name;
 	char	**args;
 	int		pipe;
@@ -66,7 +72,8 @@ int			ft_exit(t_cmd **cmd, int status);
 t_cmd		**get_commands(char *s);
 void		subst_quotes_vars(t_cmd *cmd);
 /*Parser backend*/
-char		*parse_input(char **input, char **err);
+char		*parse_input(char **input, t_err *err);
+char		*parse_string(char *s, t_err *err, char *str);
 int			parse_command(char **s, t_cmd *cmd, t_list **arg_list);
 int			parse_arguments(char **s, t_cmd *cmd, t_list **arg_list);
 int			parse_redir_before(char **s, t_cmd *cmd, t_list **lst_redir);

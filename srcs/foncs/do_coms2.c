@@ -24,7 +24,7 @@ static void	free_cmd_el(t_cmd *cmd)
 	}
 	free(cmd->args);
 	free(cmd->exec_name);
-	free(cmd->error);
+	free(cmd->error.val);
 	if (cmd->redir)
 	{
 		j = 0;

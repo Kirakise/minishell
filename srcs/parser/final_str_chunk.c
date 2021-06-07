@@ -23,7 +23,8 @@ static int	str_iterate(char **s, char *str, int var, int *q)
 			var = 1;
 		else
 		{
-			if (**s == '\\' && (*s)[1] && (!*q || (*q == 2 && (*s)[1] == '\\')))
+			if (**s == '\\' && (*s)[1]
+				&& (!*q || (*q == 2 && ft_strchr((*s)[1], "$\\\""))))
 				*s += 1;
 			str[i] = **s;
 			i++;
