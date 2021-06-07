@@ -41,13 +41,25 @@ void	do_pipe(int i, t_cmd **cmd, int *fd_in, pid_t *pid)
 	close(fd[1]);
 }
 
+static int	is_a_builtin(char *exec_name)
+{
+	if (!ft_strcmp(exec_name, "echo")
+		|| !ft_strcmp(exec_name, "export")
+		|| !ft_strcmp(exec_name, "exit")
+		|| !ft_strcmp(exec_name, "pwd")
+		|| !ft_strcmp(exec_name, "cd")
+		|| !ft_strcmp(exec_name, "unset")
+		|| !ft_strcmp(exec_name, "env"))
+		return (1);
+	return (0);
+}
+
 void	set_status(t_cmd *cmd, pid_t pid, pid_t pid2)
 {
-	int status;
+	int	status;
 
 	status = g_shell.status;
-	if (!ft_strcmp(cmd->exec_name, "echo") || !ft_strcmp(cmd->exec_name, "export") || !ft_strcmp(cmd->exec_name, "exit") ||
-	!ft_strcmp(cmd->exec_name, "pwd") || !ft_strcmp(cmd->exec_name, "cd") || !ft_strcmp(cmd->exec_name, "unset") || !ft_strcmp(cmd->exec_name, "env"))
+	if (is_a_builtin(cmd->exec_name))
 	{
 		waitpid(pid, 0, 0);
 		waitpid(pid2, 0, 0);
