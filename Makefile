@@ -36,11 +36,11 @@ $(NAME): $(OBJS)
 	if [ "$(shell uname -s)" == "Linux" ]; then \
 		$(CC) $(CFLAGS) $^ -L$(LFT_DIR) -lft -lncurses -o $(NAME); \
 	else \
-		$(CC) $(CFLAGS) $^ -L$(LFT_DIR) -lft -ltermcap -o $(NAME); \
+		$(CC) $(CFLAGS) $^ -L$(LFT_DIR) -g -lft -ltermcap -o $(NAME); \
 	fi
 
 %.o: %.c $(HEADERS) $(LIBFT) Makefile
-	$(CC) $(CFLAGS) -c $< -o $@
+	$(CC) $(CFLAGS) -c -g $< -o $@
 
 lft:
 	@$(MAKE) -j -C $(LFT_DIR)

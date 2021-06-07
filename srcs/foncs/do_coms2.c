@@ -54,11 +54,10 @@ void	free_cmd(t_cmd **cmd)
 
 void	parentproc(t_cmd **cmd, int i, int fd_in, int fd_out)
 {
-	int tmp;
+	int	tmp;
 
 	close(fd_in);
 	close(fd_out);
-	tmp = 0;
 	if (!ft_strcmp("cd", cmd[i]->exec_name))
 	{
 		if (i > 0 && cmd[i - 1]->pipe)

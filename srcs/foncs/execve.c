@@ -53,6 +53,10 @@ void	checkinp(t_cmd *cmd)
 		else if ((tmp.st_mode & S_IXUSR) == 0)
 			puterror(cmd, 2);
 	}
+	else if (cmd->exec_name[0] == '\0' && !cmd->redir)
+		puterror(cmd, 3);
+	else if (cmd->exec_name[0] == '\0' && cmd->redir)
+		exit(0);
 }
 
 int	do_exec(t_cmd *cmd)
