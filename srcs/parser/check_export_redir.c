@@ -52,7 +52,7 @@ void	check_export_redir(t_cmd *cmd)
 	while (cmd->args[i])
 	{
 		j = 0;
-		while (cmd->redir[j])
+		while (cmd->redir && cmd->redir[j])
 		{
 			if (check_for_variables(cmd->args[i], cmd->redir[j]->filename))
 			{
