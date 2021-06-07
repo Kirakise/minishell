@@ -58,6 +58,7 @@ static void	final_parse(char **str)
 	char	*res;
 	char	*tmp;
 	int		ret;
+	int		quotes;
 
 	if (!str || !*str)
 		return ;
@@ -65,7 +66,8 @@ static void	final_parse(char **str)
 	res = ft_strdup("");
 	if (!res)
 		malloc_err();
-	ret = parse_str_chunk(&s, &tmp);
+	quotes = 0;
+	ret = parse_str_chunk(&s, &tmp, &quotes);
 	while (ret)
 	{
 		res = join(res, tmp);
@@ -73,7 +75,7 @@ static void	final_parse(char **str)
 		if (!tmp)
 			malloc_err();
 		res = join(res, tmp);
-		ret = parse_str_chunk(&s, &tmp);
+		ret = parse_str_chunk(&s, &tmp, &quotes);
 	}
 	free(*str);
 	*str = join(res, tmp);
