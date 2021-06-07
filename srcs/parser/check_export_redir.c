@@ -56,7 +56,6 @@ void	check_export_redir(t_cmd *cmd)
 		{
 			if (check_for_variables(cmd->args[i], cmd->redir[j]->filename))
 			{
-				ft_putstr_nl("privet");
 				handle_err(&cmd->redir[j]->filename);
 				return ;
 			}
