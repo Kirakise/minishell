@@ -41,28 +41,27 @@ void	do_pipe(int i, t_cmd **cmd, int *fd_in, pid_t *pid)
 	close(fd[1]);
 }
 
-static int	is_a_builtin(char *exec_name)
-{
-	if (!ft_strcmp(exec_name, "echo")
-		|| !ft_strcmp(exec_name, "export")
-		|| !ft_strcmp(exec_name, "exit")
-		|| !ft_strcmp(exec_name, "pwd")
-		|| !ft_strcmp(exec_name, "cd")
-		|| !ft_strcmp(exec_name, "unset")
-		|| !ft_strcmp(exec_name, "env"))
-		return (1);
-	return (0);
-}
+// static int	is_a_builtin(char *exec_name)
+// {
+// 	if (!ft_strcmp(exec_name, "export")
+// 		|| !ft_strcmp(exec_name, "exit")
+// 		|| !ft_strcmp(exec_name, "pwd")
+// 		|| !ft_strcmp(exec_name, "cd")
+// 		|| !ft_strcmp(exec_name, "unset")
+// 		|| !ft_strcmp(exec_name, "env"))
+// 		return (1);
+// 	return (0);
+// }
 
-void	set_status(t_cmd *cmd, pid_t pid, pid_t pid2)
+void	set_status(pid_t pid, pid_t pid2)
 {
 	int	status;
 
 	status = g_shell.status;
-	waitpid(pid, &g_shell.status, 0);
-	waitpid(pid2, &g_shell.status, 0);
-	if (is_a_builtin(cmd->exec_name))
-		return ;
+	if (pid)
+		waitpid(pid, &g_shell.status, 0);
+	if (pid2)
+		waitpid(pid2, &g_shell.status, 0);
 	if (WIFEXITED(g_shell.status))
 		g_shell.status = WEXITSTATUS(g_shell.status);
 	else if (WIFSIGNALED(g_shell.status) && WTERMSIG(g_shell.status) == 3
@@ -99,5 +98,5 @@ void	do_coms(int i, t_cmd **cmd, int fd_in, int fd_out)
 		execute(cmd[i], fd_in, fd_out);
 	}
 	parentproc(cmd, i, fd_in, fd_out);
-	set_status(cmd[i], pid, pid2);
+	set_status(pid, pid2);
 }

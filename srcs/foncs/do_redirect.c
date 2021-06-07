@@ -20,7 +20,6 @@ static void	open_files(t_redir *redir, int pipe, int *fd_out, int *fd_in)
 		return ;
 	}
 	fd = open(redir->filename, O_RDONLY);
-	dup2(fd, *fd_in);
 	if (fd < 0 && !err)
 	{
 		ft_putstr(redir->filename);
@@ -29,6 +28,7 @@ static void	open_files(t_redir *redir, int pipe, int *fd_out, int *fd_in)
 		g_shell.status = 1;
 		exit(1);
 	}
+	dup2(fd, *fd_in);
 }
 
 void	do_redirect(t_cmd *cmd, int *fd_out, int *fd_in)

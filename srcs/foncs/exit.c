@@ -35,11 +35,11 @@ void	sh_exit(t_cmd **cmd, int j)
 	int	i;
 	int	err;
 
-	ft_putstr_nl("exit");
 	i = 1;
 	err = 0;
 	if (j > 0 && cmd[j - 1]->pipe)
 		return ;
+	ft_putstr_nl("exit");
 	if (cmd[j]->args[i] && !ft_strcmp(cmd[j]->args[i], "--"))
 		i++;
 	if (!cmd[j]->args[i])
