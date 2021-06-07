@@ -60,6 +60,7 @@ void		unset(t_cmd *cmd);
 void		add_var_exist(char *s);
 void		add_var(char *s);
 void		sh_exit(t_cmd **cmd, int j);
+int			ft_exit(t_cmd **cmd, int status);
 
 /*Parser*/
 t_cmd		**get_commands(char *s);

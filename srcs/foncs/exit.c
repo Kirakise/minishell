@@ -15,12 +15,20 @@ static void	check_validity(char *str, int *err)
 		*err = 255;
 }
 
-static void	exit_puterr(char *str)
+int	ft_exit(t_cmd **cmd, int status)
 {
-	ft_putstr("exit: ");
+	free_cmd(cmd);
+	history_free(&g_shell.hist);
+	while (1);
+	exit(status);
+}
+
+static void	exit_puterr(t_cmd **cmd, char *str)
+{
+	ft_putstr("minishell: exit: ");
 	ft_putstr(str);
 	ft_putstr_nl(": numeric argument required");
-	exit(255);
+	ft_exit(cmd, 255);
 }
 
 void	sh_exit(t_cmd **cmd, int j)
@@ -28,6 +36,7 @@ void	sh_exit(t_cmd **cmd, int j)
 	int	i;
 	int	err;
 
+	ft_putstr_nl("exit");
 	i = 1;
 	err = 0;
 	if (j > 0 && cmd[j - 1]->pipe)
@@ -35,18 +44,18 @@ void	sh_exit(t_cmd **cmd, int j)
 	if (cmd[j]->args[i] && !ft_strcmp(cmd[j]->args[i], "--"))
 		i++;
 	if (!cmd[j]->args[i])
-		exit(0);
+		ft_exit(cmd, 0);
 	check_validity(cmd[j]->args[i], &err);
 	if (err)
-		exit_puterr(cmd[j]->args[i]);
+		exit_puterr(cmd, cmd[j]->args[i]);
 	if (!cmd[j]->args[i + 1])
-		exit(ft_atoi(cmd[j]->args[i]));
+		ft_exit(cmd, ft_atoi(cmd[j]->args[i]));
 	i++;
 	while (cmd[j]->args[i] && !err)
 	{
 		check_validity(cmd[j]->args[i], &err);
 		i++;
 	}
-	ft_putstr_nl("exit: too many arguments");
+	ft_putstr_nl("minishell: exit: too many arguments");
 	g_shell.status = 1;
 }

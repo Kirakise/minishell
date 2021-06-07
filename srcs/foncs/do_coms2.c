@@ -44,6 +44,8 @@ void	free_cmd(t_cmd **cmd)
 	int	i;
 
 	i = 0;
+	if (!cmd)
+		return ;
 	while (cmd[i])
 	{
 		free_cmd_el(cmd[i]);

@@ -48,8 +48,12 @@ int	foo(char **str, char **s, int l)
 	}
 	else if (!ft_strcmp(*str, "\4") && !**s)
 	{
-		*s = ft_strdup("exit");
-		ft_putstr(*s);
+		// *s = ft_strdup("exit");
+		// ft_putstr(*s);
+		free(*str);
+		free(*s);
+		ft_putstr_nl("exit");
+		ft_exit(0, 0);
 		return (1);
 	}
 	else if ((*str)[0] >= 32 && (*str)[0] <= 126)
