@@ -95,12 +95,12 @@ void	envprint(int regime)
 			i++;
 		}
 		free(env);
-		exit(0);
 	}
-	while (g_shell.env[i])
-	{
-		print_var(g_shell.env[i]);
-		i++;
-	}
+	else
+		while (g_shell.env[i])
+		{
+			print_var(g_shell.env[i]);
+			i++;
+		}
 	exit(0);
 }

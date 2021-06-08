@@ -39,6 +39,7 @@ void	export(t_cmd *cmd)
 	if (!cmd->args[1] && !fork())
 		envprint(1);
 	wait(&g_shell.status);
+	wait(&g_shell.status);
 	if (status && g_shell.status == 0)
 		g_shell.status = status;
 }
