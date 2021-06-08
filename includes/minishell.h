@@ -23,7 +23,6 @@ typedef struct s_shell
 	pid_t	pidt;
 	int		status;
 	int		pipe0_open;
-	int		buitin;
 }		t_shell;
 
 typedef struct s_err
@@ -81,7 +80,7 @@ int			parse_redir_before(char **s, t_cmd *cmd, t_list **lst_redir);
 int			parse_redir_pipe(char **s, t_cmd *cmd, t_list **lst_redir);
 int			parse_str_chunk(char **input, char **res, int *quotes);
 void		check_export_redir(t_cmd *cmd);
-
+/*Utils*/
 void		init_struct(int argc, char **argv);
 char		**envcpy(char **line);
 char		*find_var(char *s1);
@@ -91,12 +90,12 @@ char		*get_history_line(t_2list **lst, int dir, int *end);
 void		history_free(t_2list **hist);
 void		changeold(void);
 
-/*termcaps*/
+/*Termcaps*/
 void		setc(struct termios *term);
 void		setic(struct termios *term);
 int			setinit(struct termios *term);
 void		handlesigint(int a);
 
-/*errors*/
+/*Errors*/
 void		malloc_err(void);
 #endif
