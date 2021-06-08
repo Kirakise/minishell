@@ -2,7 +2,7 @@
 
 extern t_shell	g_shell;
 
-int	do_export(char *str)
+static int	update_env(char *str)
 {
 	char	*s;
 	char	*s2;
@@ -32,7 +32,7 @@ void	export(t_cmd *cmd)
 	i = 1;
 	while (cmd->args[i])
 	{
-		do_export(cmd->args[i]);
+		update_env(cmd->args[i]);
 		i++;
 	}
 	status = g_shell.status;
