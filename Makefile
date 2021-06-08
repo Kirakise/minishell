@@ -10,6 +10,8 @@ SRCS	= srcs/main.c\
 		srcs/foncs/env.c\
 		srcs/foncs/execve.c\
 		srcs/foncs/exit.c\
+		srcs/foncs/export_add.c\
+		srcs/foncs/export_utils.c\
 		srcs/foncs/export.c\
 		srcs/foncs/pwd.c\
 		srcs/foncs/unset.c\

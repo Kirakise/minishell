@@ -26,7 +26,8 @@ char	*find_var(char *s1)
 	while (g_shell.env[i])
 	{
 		if (!ft_strncmp(s1, g_shell.env[i], ft_strlen(s1))
-			&& g_shell.env[i][ft_strlen(s1)] == '=')
+			&& (g_shell.env[i][ft_strlen(s1)] == '='
+			|| !g_shell.env[i][ft_strlen(s1)]))
 		{
 			size = ft_strlen(g_shell.env[i]) - ft_strlen(s1) - 1;
 			ret = ft_strdup(g_shell.env[i] + ft_strlen(s1) + j + 1);

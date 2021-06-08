@@ -60,6 +60,7 @@ void		envprint(int regime);
 void		ft_echo(t_cmd *cmd);
 void		cd(t_cmd *cmd);
 void		export(t_cmd *cmd);
+int			export_puterr(char *str);
 char		*get_name(char *s);
 int			var_isvalid(char *str, int cmd_type);
 void		unset(t_cmd *cmd);
