@@ -28,7 +28,7 @@ int	main(int argc, char **argv, char **envp)
 	signal(SIGQUIT, SIG_IGN);
 	while (1)
 	{
-		write(g_shell.fd_1, "minishell> ", 11);
+		write(1, "minishell> ", 11);
 		setic(&term);
 		s = tmpread();
 		setc(&term);
@@ -36,5 +36,5 @@ int	main(int argc, char **argv, char **envp)
 		history_update(&g_shell.hist, s);
 		exec_commands(cmd);
 	}
-	history_free(&g_shell.hist);
+	return (0);
 }
