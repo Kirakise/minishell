@@ -18,6 +18,7 @@ SRCS	=	src/2list.c\
 			src/ft_substr.c\
 			src/list.c\
 			src/lst_to_arr.c\
+			src/safe_free.c\
 			src/string.c\
 
 OBJS	=	$(SRCS:.c=.o)

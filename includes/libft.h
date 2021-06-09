@@ -40,6 +40,7 @@ char				**ft_split(char const *str, char c);
 char				*ft_substr(char const *s, unsigned int start, size_t len);
 char				*ft_itoa(int n);
 int					ft_atoi(const char *str);
+void				safe_free(void *mem);
 
 /* Lists */
 t_list				*ft_lstnew(void *content);
