@@ -20,6 +20,6 @@ void	**lst_to_arr(t_list *lst)
 		lst = lst->next;
 	}
 	arr[i] = 0;
-	ft_lstdestroy(&lst_tmp);
+	ft_lstdestroy(&lst_tmp, 0);
 	return (arr);
 }

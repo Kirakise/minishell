@@ -57,7 +57,7 @@ int	ft_lstadd_back(t_list **lst, t_list *new)
 	return (0);
 }
 
-int	ft_lstdestroy(t_list **lst)
+int	ft_lstdestroy(t_list **lst, int mode)
 {
 	t_list	*el;
 	t_list	*tmp;
@@ -68,6 +68,8 @@ int	ft_lstdestroy(t_list **lst)
 	while (el)
 	{
 		tmp = el->next;
+		if (mode)
+			free(el->content);
 		el->content = 0;
 		el->next = 0;
 		free(el);
