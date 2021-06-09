@@ -41,17 +41,15 @@ void	do_pipe(int i, t_cmd **cmd, int *fd_in, pid_t *pid)
 	close(fd[1]);
 }
 
-// static int	is_a_builtin(char *exec_name)
-// {
-// 	if (!ft_strcmp(exec_name, "export")
-// 		|| !ft_strcmp(exec_name, "exit")
-// 		|| !ft_strcmp(exec_name, "pwd")
-// 		|| !ft_strcmp(exec_name, "cd")
-// 		|| !ft_strcmp(exec_name, "unset")
-// 		|| !ft_strcmp(exec_name, "env"))
-// 		return (1);
-// 	return (0);
-// }
+static int	is_a_builtin(char *exec_name)
+{
+	if (!ft_strcmp(exec_name, "export")
+		|| !ft_strcmp(exec_name, "exit")
+		|| !ft_strcmp(exec_name, "cd")
+		|| !ft_strcmp(exec_name, "unset"))
+		return (1);
+	return (0);
+}
 
 void	set_status(t_cmd *cmd, pid_t pid, pid_t pid2)
 {
@@ -62,16 +60,16 @@ void	set_status(t_cmd *cmd, pid_t pid, pid_t pid2)
 		waitpid(pid, &g_shell.status, 0);
 	if (pid2)
 		waitpid(pid2, &g_shell.status, 0);
-	if (WIFEXITED(g_shell.status))
+	if (WIFEXITED(g_shell.status) && !is_a_builtin(cmd->exec_name))
 		g_shell.status = WEXITSTATUS(g_shell.status);
 	else if (WIFSIGNALED(g_shell.status) && WTERMSIG(g_shell.status) == 3
-		&& write(1, "Quit: 3\n", 9))
+	&& !is_a_builtin(cmd->exec_name) && write(1, "Quit: 3\n", 9))
 		g_shell.status = 131;
-	else if (WIFSIGNALED(g_shell.status))
+	else if (WIFSIGNALED(g_shell.status) && !is_a_builtin(cmd->exec_name))
 		g_shell.status = WTERMSIG(g_shell.status) + 128;
 	else
 		wait(0);
-	if (!g_shell.status && status && !ft_strcmp("export", cmd->exec_name))
+	if (!g_shell.status && status && is_a_builtin(cmd->exec_name))
 		g_shell.status = status;
 }
 
