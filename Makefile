@@ -1,5 +1,5 @@
 CC		= gcc
-CFLAGS	= -Wall -Wextra -Werror -Iincludes/ -g
+CFLAGS	= -Wall -Wextra -Werror -Iincludes/
 SRCS	= srcs/main.c\
 		srcs/errors/error.c\
 		srcs/foncs/cd.c\
