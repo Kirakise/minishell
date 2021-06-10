@@ -37,7 +37,7 @@ NAME	= minishell
 all: lft $(NAME)
 
 $(NAME): $(OBJS)
-		$(CC) $(CFLAGS) $^ -L$(LFT_DIR) -g -lft -ltermcap -o $(NAME);
+		$(CC) $(CFLAGS) $^ -L$(LFT_DIR) -g -lft -ltermcap -o $(NAME)
 
 %.o: %.c $(HEADERS) $(LIBFT) Makefile
 	$(CC) $(CFLAGS) -c -g $< -o $@
