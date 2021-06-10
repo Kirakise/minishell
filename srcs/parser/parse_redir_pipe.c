@@ -26,6 +26,13 @@ static void	check_syntax(char **s, t_err *err)
 	*s = str;
 }
 
+static void	free_el(t_redir *el)
+{
+	if (el->filename)
+		free(el->filename);
+	free(el);
+}
+
 static void	parse_redirect(char **s, t_err *err, t_list **lst, int type)
 {
 	t_redir	*el;
@@ -40,17 +47,17 @@ static void	parse_redirect(char **s, t_err *err, t_list **lst, int type)
 		malloc_err();
 	el->type = type;
 	el->filename = parse_input(s, err);
-	if (el->filename && *el->filename)
-		ft_lstadd_back(lst, ft_lstnew(el));
-	else
+	if (!err->val && el->filename && *el->filename)
 	{
-		if (el->filename)
-			free(el->filename);
-		free(el);
-		err->val = ft_strdup(*s);
-		if (!err->val)
-			malloc_err();
+		ft_lstadd_back(lst, ft_lstnew(el));
+		return ;
 	}
+	free_el(el);
+	if (err->val)
+		return ;
+	err->val = ft_strdup(*s);
+	if (!err->val)
+		malloc_err();
 }
 
 int	parse_redir_pipe(char **s, t_cmd *cmd, t_list **lst_redir)
@@ -100,6 +107,9 @@ int	parse_redir_before(char **s, t_cmd *cmd, t_list **lst_redir)
 			*s += 1;
 	}
 	if (cmd->error.val)
+	{
+		ft_lstdestroy(lst_redir, 1);
 		return (1);
+	}
 	return (0);
 }

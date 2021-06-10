@@ -7,6 +7,12 @@ char	*parse_input(char **input, t_err *err)
 
 	while (ft_isspace(**input))
 		*input += 1;
+	if (**input == ';')
+	{
+		err->val = ft_strdup(";");
+		if (!err->val)
+			malloc_err();
+	}
 	str = malloc(sizeof(char) * (ft_strlen(*input) + 1));
 	if (!str)
 		malloc_err();

@@ -23,7 +23,10 @@ int	parse_arguments(char **s, t_cmd *cmd, t_list **arg_list)
 		str = 0;
 		str = parse_input(s, &cmd->error);
 		if (cmd->error.val)
+		{
+			free(str);
 			return (1);
+		}
 		if (*str)
 			ft_lstadd_back(arg_list, ft_lstnew(str));
 		else

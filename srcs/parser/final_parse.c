@@ -4,11 +4,12 @@ extern t_shell	g_shell;
 
 static char	*handle_single_char(char **input, char c)
 {
-	if (c && c != '$')
+	if (c == '?')
+	{
 		*input += 1;
-	if (c != '?')
-		return (ft_strdup("$"));
-	return (ft_itoa(g_shell.status));
+		return (ft_itoa(g_shell.status));
+	}
+	return (ft_strdup("$"));
 }
 
 static char	*get_var_value(char **input)
