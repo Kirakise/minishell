@@ -40,7 +40,7 @@ $(NAME): $(OBJS)
 		$(CC) $(CFLAGS) $^ -L$(LFT_DIR) -g -lft -ltermcap -o $(NAME)
 
 %.o: %.c $(HEADERS) $(LIBFT) Makefile
-	$(CC) $(CFLAGS) -c -g $< -o $@
+	$(CC) $(CFLAGS) -c $< -o $@
 
 lft:
 	@$(MAKE) -j -C $(LFT_DIR)
