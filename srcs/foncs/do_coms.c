@@ -63,7 +63,7 @@ void	set_status(t_cmd *cmd, pid_t pid, pid_t pid2)
 	if (WIFEXITED(g_shell.status) && !is_a_builtin(cmd->exec_name))
 		g_shell.status = WEXITSTATUS(g_shell.status);
 	else if (WIFSIGNALED(g_shell.status) && WTERMSIG(g_shell.status) == 3
-	&& !is_a_builtin(cmd->exec_name) && write(1, "Quit: 3\n", 9))
+		&& !is_a_builtin(cmd->exec_name) && write(1, "Quit: 3\n", 9))
 		g_shell.status = 131;
 	else if (WIFSIGNALED(g_shell.status) && !is_a_builtin(cmd->exec_name))
 		g_shell.status = WTERMSIG(g_shell.status) + 128;
